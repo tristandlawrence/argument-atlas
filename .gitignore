@@ -1,0 +1,16 @@
+# macOS
+.DS_Store
+code/.DS_Store
+
+# Claude local settings
+.claude/settings.local.json
+
+# SQLite databases (dev/local)
+code/dev.db
+code/prisma/dev.db
+code/prisma/prisma/dev.db
+*.db
+*.db-journal
+
+# stray duplicate prisma dir from misrun command
+code/prisma/prisma/

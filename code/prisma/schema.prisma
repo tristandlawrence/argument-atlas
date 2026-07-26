@@ -1,0 +1,128 @@
+// filepath: prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Item {
+  id             String   @id @default(cuid())
+  type           String   // "debate" or "argument"
+  title          String   // For debates: the debate topic. For arguments: the argument title/summary
+  content        String   // For debates: description. For arguments: the full argument text
+  relationshipType String? // "for", "against", "supporting", "opposing" - describes relationship to parent
+  parentId       String?  // For items: the debate/argument they belong to
+  argumentType   String   @default("opinion") // "fact", "opinion", "value", "proposal"
+  evidenceStrength String @default("moderate") // "strong", "moderate", "weak", "none"
+  sentimentScore Float?   // Overall sentiment score (-1 to 1)
+  sentimentLabel String?  // "positive", "negative", "neutral"
+  votesFor       Int      @default(0) // Votes on item's persuasiveness
+  votesAgainst   Int      @default(0) // Votes against item's persuasiveness
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  
+  // Self-referencing relationships
+  parent         Item?    @relation("ItemHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children       Item[]   @relation("ItemHierarchy")
+  
+  // Support relationships - tracks how well children support this item
+  childSupports   ArgumentSupport[] @relation("ParentItem")
+  parentSupport   ArgumentSupport[] @relation("ChildItem")
+  
+  votes          Vote[]
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  image         String?   // Gravatar URL
+  password      String?   // Hashed password
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  votes         Vote[]
+  supportVotes  SupportVote[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Vote {
+  id       String   @id @default(cuid())
+  userId   String
+  itemId   String
+  vote     String   // "for" or "against"
+  createdAt DateTime @default(now())
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item     Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemId]) // One vote per user per item
+}
+
+model ArgumentSupport {
+  id            String   @id @default(cuid())
+  parentItemId  String
+  childItemId   String
+  supportType   String   // "supporting" or "opposing"
+  votesFor      Int      @default(0)
+  votesAgainst  Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  
+  parent        Item     @relation("ParentItem", fields: [parentItemId], references: [id], onDelete: Cascade)
+  child         Item     @relation("ChildItem", fields: [childItemId], references: [id], onDelete: Cascade)
+  supportVotes  SupportVote[]
+  
+  @@unique([parentItemId, childItemId]) // One support relationship per parent-child pair
+}
+
+model SupportVote {
+  id                String   @id @default(cuid())
+  userId            String
+  argumentSupportId String
+  vote              String   // "for" or "against" - votes on how well the child supports parent
+  createdAt         DateTime @default(now())
+  
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  argumentSupport   ArgumentSupport   @relation(fields: [argumentSupportId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, argumentSupportId]) // One vote per user per support relationship
+}
+

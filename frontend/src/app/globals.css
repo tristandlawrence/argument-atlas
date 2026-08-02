@@ -1,0 +1,129 @@
+/* Design tokens — requirements-delta.md §1. Do not add colours outside this table. */
+
+:root {
+  /* L1 — Warm broadsheet (light, default) */
+  --ground: #f7f4ee;
+  --surface: #ffffff;
+  --surface-alt: #fbf8f2;
+  --rule: #dcd5c8;
+  --rule-soft: #e7e1d6;
+  --text: #171512;
+  --text-2: #6e6558;
+  --text-3: #a39b8d;
+  --primary: #14636b;
+  --primary-ink: #0e484e;
+  --accent: #b5701a;
+  --accent-wash: #f6ecdc;
+  --supports: #4f7a52;
+  --supports-ink: #3d5f40;
+  --supports-wash: #e8efe6;
+  --contradicts: #b24a2e;
+  --contradicts-wash: #f7e7e1;
+  --track: #efeae0;
+  --overlay-ink: #171512;
+  --overlay-text: #f7f4ee;
+
+  /* Rating quadrant washes */
+  --quad-steelman: #f3efe7;
+  --quad-compelling: #e8efe6;
+  --quad-weak: #fbfaf7;
+  --quad-partisan: #f7e7e1;
+
+  /* Type */
+  --font-serif: var(--font-source-serif-4), Georgia, serif;
+  --font-sans: var(--font-public-sans), -apple-system, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), 'Courier New', monospace;
+
+  /* Strength marks — requirements-delta.md §4 */
+  --weight-decisive: 7px;
+  --weight-relevant: 4px;
+  --weight-tangential: 2px;
+  --opacity-decisive: 1;
+  --opacity-relevant: 0.65;
+  --opacity-tangential: 0.4;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  /* D1 — Ink night (dark) */
+  --ground: #16130f;
+  --surface: #1e1a15;
+  --surface-alt: #241f18;
+  --rule: #322b22;
+  --rule-soft: #2a251e;
+  --text: #efe8db;
+  --text-2: #a0968a;
+  --text-3: #6b6357;
+  --primary: #58b6ba;
+  --primary-ink: #7cc9cc;
+  --accent: #d9a441;
+  --accent-wash: #2a2317;
+  --supports: #7fa86a;
+  --supports-ink: #9dc088;
+  --supports-wash: #1f2a1c;
+  --contradicts: #d9714f;
+  --contradicts-wash: #2c1c15;
+  --track: #241f18;
+  --overlay-ink: #efe8db;
+  --overlay-text: #171512;
+
+  --quad-steelman: #241f18;
+  --quad-compelling: #1f2a1c;
+  --quad-weak: #1a1712;
+  --quad-partisan: #2c1c15;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+html,
+body {
+  max-width: 100vw;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  color: var(--text);
+  background: var(--ground);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--primary-ink);
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}

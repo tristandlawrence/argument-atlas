@@ -1,0 +1,86 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rowWrap {
+  position: relative;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.row:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.relationTag {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 3px 7px;
+  flex-shrink: 0;
+  width: 92px;
+  text-align: center;
+}
+
+.claimText {
+  flex: 1;
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.claimTextCol {
+  flex: 1;
+}
+
+.contextLine {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  margin-top: 3px;
+}
+
+.floating {
+  position: absolute;
+  width: min(520px, 92vw);
+  max-height: 520px;
+  overflow-y: auto;
+  z-index: 40;
+}
+
+.floatingBelow {
+  top: calc(100% - 2px);
+}
+
+.floatingAbove {
+  bottom: calc(100% - 2px);
+}
+
+.alignLeft {
+  left: 0;
+}
+
+.alignRight {
+  right: 0;
+}
+
+.inlineCard {
+  margin-top: 2px;
+}

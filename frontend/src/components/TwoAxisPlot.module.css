@@ -1,0 +1,136 @@
+.wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.axisLabel {
+  width: 14px;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.axisLabelText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--text-2);
+}
+
+.plotColumn {
+  flex: 1;
+  min-width: 0;
+}
+
+.plot {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.quadrant {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+}
+
+.qSteelman {
+  left: 0;
+  top: 0;
+  background: var(--quad-steelman);
+}
+
+.qCompelling {
+  left: 50%;
+  top: 0;
+  background: var(--quad-compelling);
+}
+
+.qWeak {
+  left: 0;
+  top: 50%;
+  background: var(--quad-weak);
+}
+
+.qPartisan {
+  left: 50%;
+  top: 50%;
+  background: var(--quad-partisan);
+}
+
+.vLine {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule);
+}
+
+.hLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--rule);
+}
+
+.corner {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.cornerTL {
+  left: 7px;
+  top: 7px;
+  color: var(--accent);
+}
+
+.cornerTR {
+  right: 7px;
+  top: 7px;
+  color: var(--supports-ink);
+}
+
+.cornerBL {
+  left: 7px;
+  bottom: 7px;
+  color: var(--text-3);
+}
+
+.cornerBR {
+  right: 7px;
+  bottom: 7px;
+  color: var(--contradicts);
+}
+
+.dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--text);
+  opacity: 0.72;
+  transform: translate(-50%, -50%);
+}
+
+.footerAxis {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--text-2);
+  margin-top: 6px;
+}

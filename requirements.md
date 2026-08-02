@@ -1,4 +1,8 @@
-# Debattic - Project Requirements
+# Argument Atlas (Debattic) — Project Requirements
+
+This file merges the original `requirements.md` with `design/requirements-delta.md`, which had accumulated a second UI/backend redesign pass as a stand-alone amendments document. The delta is retired; this is now the single source of truth. Sections below are marked **(build status)** where the current codebase (`backend/`, `frontend/`) is known to diverge from or not yet cover the spec.
+
+---
 
 ## Project Overview
 
@@ -8,76 +12,13 @@ Debattic is the technology project of the **Engage for Australia** movement. EfA
 
 The design philosophy is closer to Wikipedia than to a social network: the **argument or debate is the unit**, not the person or the post. Structure and quality matter more than recency or individual identity. Users are expected to improve and refine shared content, not just publish and move on.
 
----
-
-## Tone & Brand
+**Naming:** TBD — Debattic / Argument Atlas / Crux remain in contention. The EfA affiliation informs the values but is not dominant in the product's own branding.
 
 **Tagline:** *Arguments worth having.*
-
-**Naming:** TBD — whether the public product is called Debattic, Argument Atlas, or another name is outstanding. The EfA affiliation informs the values but is not dominant in the product's own branding.
 
 **Copy voice:** Clear, serious, and warm — not casual, not academic. Short sentences. Treat the user as an intelligent adult who chose to be here. Focus debates on arguments and positions, not on people.
 
 The platform's values — civic purpose, evidence discipline, respect for the effort of participation, and the belief that changing your mind is honourable — are expressed through the product itself, not through explicit EfA branding.
-
----
-
-## Colour Palette
-
-Users can toggle between light and dark mode. A compact view is also available as a separate layout preference (see UI Preferences below).
-
-### Light mode
-
-| Role | Colour | Hex |
-| --- | --- | --- |
-| Primary (brand, CTAs, links) | Deep teal | `#0B7285` |
-| Primary light (hover, section backgrounds) | Teal 100 | `#E3F7FA` |
-| Accent (highlights, active states) | Warm amber | `#D97706` |
-| Accent light (badges, tags) | Yellow | `#FCD34D` |
-| Supporting / for | Sage green | `#2D9E6B` |
-| Opposing / against | Warm terracotta | `#C0533A` |
-| Weak arguments (low score visual treatment) | Muted stone | `#9CA3AF` |
-| Background | Warm off-white | `#F9F7F4` |
-| Surface (cards) | White | `#FFFFFF` |
-| Border | Warm grey | `#E8E2D9` |
-| Text primary | Charcoal | `#1A202C` |
-| Text secondary | Warm mid-grey | `#6B7280` |
-
-### Dark mode
-
-| Role | Colour | Hex |
-| --- | --- | --- |
-| Primary (brand, CTAs, links) | Teal (brightened for dark bg) | `#0E9AA7` |
-| Primary light (hover, section backgrounds) | Dark teal | `#0C3540` |
-| Accent (highlights, active states) | Amber | `#F59E0B` |
-| Accent light (badges, tags) | Yellow | `#FCD34D` |
-| Supporting / for | Sage green (lightened) | `#34A870` |
-| Opposing / against | Terracotta (lightened) | `#D96B50` |
-| Weak arguments | Stone | `#6B7280` |
-| Background | Near-black warm | `#111318` |
-| Surface (cards) | Dark surface | `#1C2128` |
-| Border | Dark warm border | `#2D3442` |
-| Text primary | Off-white | `#E8EDF2` |
-| Text secondary | Mid grey | `#9CA3AF` |
-
----
-
-## UI Preferences
-
-Users can personalise their viewing experience via a persistent preferences panel. Preferences are stored in localStorage initially and synced to the user record once authenticated.
-
-### Dark / light mode
-
-- Toggles between the light and dark colour palettes above
-- Defaults to the system preference (`prefers-color-scheme`)
-- Toggle accessible from the main navigation on all pages
-
-### Compact view
-
-- A layout density preference that reduces card padding, inter-card gaps, and line height by one step
-- Aimed at power users who want to see more content without scrolling
-- Implemented via a `data-view="compact"` attribute on the root element — no separate component variants needed
-- Toggle accessible alongside the dark mode toggle
 
 ---
 
@@ -86,392 +27,348 @@ Users can personalise their viewing experience via a persistent preferences pane
 - **Structure over time**: debates and arguments are persistent, improvable objects — not a feed
 - **Community over individual**: arguments are collaboratively maintained; attribution is secondary to quality
 - **Anonymised aggregate data**: demographic data is captured to enable policy-relevant analysis but is never presented or used at the individual level
-- **Weak arguments surface organically**: there is no "debunked" designation. Arguments that score low on both persuasiveness and quality appear in the Weak quadrant of the scatterplot. The community verdict is the verdict — no moderator labels required
+- **Weak arguments surface organically**: there is no "debunked" designation. Arguments that score low on both agreement and quality appear in the Weak quadrant of the scatterplot. The community verdict is the verdict — no moderator labels required
+- **Rating comes after reading.** Nobody is asked to judge a claim above the material that explains it — voting sits at the bottom of the page, after context and both directions of argument.
+- **Never let a relationship be legible only by position on the page.** Colour, column, or layout never carry meaning alone — the relation is always also stated in words.
 
 ---
 
-## Phased Roadmap
+## One object type: the Claim **(build status: shipped)**
 
-### Phase 1: Prototype (Complete)
+Debates and arguments collapse into **one type: a claim**. An argument is just a claim with a connection to a parent claim. There is no separate argument page and no separate results page — a claim page shows the claim, what it connects to in both directions, and its analytics, in one fixed order:
 
-**Goal:** Hard-coded arguments, focus on 3 pages and UI
+1. **Claim header** — classification badges, claim, one-line description
+2. **Context & history** — background prose, a dated "how we got here" timeline, a note on where the disagreement actually sits, and claim metadata (age, revisions, connection count, evidence count)
+3. **Where this claim is used** — the upward direction: parent claims this one supports or contradicts, including uses in other debates, visibly marked as such. A claim cited as decisive in four places has four things depending on it — this view is what makes that exposure legible.
+4. **What supports it / What contradicts it** — the downward direction, two columns
+5. **Rate this claim** — the two voting signals, presented last, beside the results plot
 
-#### Pages
-
-1. **Home/Landing Page** — Browse topics, see overview of debates
-2. **Debate Detail Page** — View arguments for/against a contention, vote on persuasiveness
-3. **Results/Analytics Page** — Visualise argument effectiveness, public opinion trends
-
-#### Features
-
-- Hard-coded debate topics and arguments
-- Voting system (vote on most persuasive arguments)
-- Clean, modern UI focused on readability
-- Responsive design
-
-#### Tech Stack
-
-- **Framework:** Next.js (React)
-- **Styling:** Tailwind CSS
-- **Language:** TypeScript
-- **Data:** Seeded database for prototype
+This supersedes the original Phase 1 plan of separate `debate/[id]`, `argument/[id]`, and `results/[id]` pages.
 
 ---
 
-### Phase 2: MVP
+## Colour Palette **(build status: shipped, replaces earlier palette)**
 
-**Goal:** Invite-only community that can collaboratively structure, edit, and curate debates and arguments
+Structure is broadsheet — ink typography, hairline rules, no decorative colour. Hues carry meaning only. Two themes, one token set.
 
-#### Access Model
+### Light — "Warm broadsheet" (L1)
 
-- **Invite-only at launch**: all new accounts require an invite from an existing user or admin
-- Invite links/codes managed by admins
-- No open registration until Phase 3
-- **Anonymous (unauthenticated) users** can read all debates, arguments, results and analytics but cannot vote, edit, create, or flag content
+| Token | Role | Hex |
+| --- | --- | --- |
+| `--ground` | page background | `#F7F4EE` |
+| `--surface` | cards, rows, header | `#FFFFFF` |
+| `--surface-alt` | secondary band inside cards | `#FBF8F2` |
+| `--rule` | borders, hairlines | `#DCD5C8` |
+| `--rule-soft` | internal dividers | `#E7E1D6` |
+| `--text` | primary text | `#171512` |
+| `--text-2` | secondary text | `#6E6558` |
+| `--text-3` | metadata, muted | `#A39B8D` |
+| `--primary` | nav, links, CTA | `#14636B` |
+| `--accent` | tags, dates | `#B5701A` |
+| `--supports` | supporting relation | `#4F7A52` |
+| `--supports-ink` | supporting text on light | `#3D5F40` |
+| `--contradicts` | contradicting relation | `#B24A2E` |
+| `--track` | empty bar track | `#EFEAE0` |
 
-#### Homepage
+Quadrant washes: steelman `#F3EFE7`, compelling `#E8EFE6`, weak `#FBFAF7`, partisan `#F7E7E1`.
 
-- The homepage explains what Debattic is and what it is for, for a first-time visitor
-- Below the explanation: list of debates, browsable by tag/category
-- Homepage includes the platform's tagline and a clear call to action (sign in / request invite)
+### Dark — "Ink night" (D1)
 
-#### Tagging & Search
-
-- Every debate and argument can be tagged with one or more topics (e.g. Climate, Housing, Democracy, Health)
-- Tags are drawn from a curated taxonomy managed by admins, with the ability to propose new tags
-- A search feature covers debate titles, argument content, and tags
-- Both tagging and search are part of the initial release
-
-#### User Authentication & Profiles
-
-- Email/password credentials (no social login required for MVP)
-- Minimal user profile: username, join date, contribution count
-- Contribution history (full list of edits, arguments created, evidence submitted) deferred to a near-term phase — data is captured from day one but the UI is not built initially
-
-#### Demographic Data Capture
-
-Captured at sign-up via a short optional survey. Fields TBD pending confirmation, likely:
-
-- Age range (e.g. 18–24, 25–34, etc.)
-- Country / region
-- Political orientation (self-reported — exact framing TBD; options include a left/center/right scale or issue-based questions)
-
-**Privacy constraint:** demographic data is never presented or used at the individual level. All analysis using this data must be aggregate and anonymised. A privacy policy covering this must ship with the MVP.
-
-#### Privacy Policy
-
-- Must be drafted and published before MVP launch
-- Must cover: what data is collected, how demographic data is used (aggregate only), data retention, right to deletion
-- Should be written in plain language accessible to a general audience
-
-#### Community Editing (Wikipedia Model)
-
-- Any registered user can edit existing debates and arguments
-- Edit scope: **wording and content** — users can improve how an argument is written
-- Edit scope: **classification metadata** — argument type (fact/opinion/value/proposal), evidence strength
-- Edit scope: **structural position** — moving an argument between "for" and "against" requires moderator approval [TBD: or a vote threshold]
-- Full **version history** is maintained for every argument and debate, with the ability to view and revert to any prior version
-- Edits are attributed to the editing user in the version history
-
-#### Edit Prompt UI
-
-After a user gives a low quality score to an argument, the UI prompts: *"You rated this argument as poorly constructed — want to help improve it?"* with a direct link to the edit view. This creates an active improvement loop where low-quality ratings drive refinement.
-
-#### Dual Voting System
-
-Each vote captures two independent signals on a single argument:
-
-##### Signal 1 — Persuasiveness
-
-"Did you find this argument persuasive?" Captures the personal effect of the argument — whether it moved the user — independent of how well it is constructed. This is the core opinion-polling signal.
-
-##### Signal 2 — Quality
-
-"Is this a well-constructed argument?" Captures perceived argument quality, independent of personal persuasion. A user who was not persuaded can still rate the argument as well-constructed (the "steelman" signal — valuable for policy analysis).
-
-##### Scale
-
-Both signals use a **5-point scale** (1 = strongly disagree / not at all persuasive, 5 = strongly agree / highly persuasive).
-
-##### Voting UX
-
-- The UI shows **two pairs of thumbs** — one for persuasiveness, one for quality — for fast, low-friction interaction
-- Thumbs up maps to 4 (agree), thumbs down to 2 (disagree); 3 is only set via the refinement modal
-- On click, the vote is recorded immediately and a **refinement modal** opens showing two 5-point selectors for optional precision
-- Dismissing the modal without refining leaves the initial mapped score in place
-- Users **can update their vote** at any time — all revisions are timestamped, enabling opinion-change tracking over time
-
-One interaction per user per argument (both signals captured together).
-
-#### Argument Card Visual Design
-
-Argument cards — both on debate pages and when appearing as supporting/opposing arguments — display three signals simultaneously:
-
-- **Left border**: colour indicates relationship to the current argument (sage green = supporting, terracotta = opposing); saturation and thickness scale with relative persuasiveness — vivid and thick for highly persuasive, desaturated and thin for weak
-- **Mini scatterplot**: always visible on the card, showing where this argument sits on the persuasiveness/quality axes. The dot position conveys both signals at a glance
-- **Badges**: argument type (fact/opinion/value/proposal) and evidence strength, kept compact
-
-On hover or tap, the card expands to show the full argument text and a larger labelled scatterplot.
-
-Arguments scoring low on both axes (Weak quadrant) are rendered with a stone-coloured border and a muted visual weight — no special label, no moderation action. The score is the signal.
-
-#### Analytics & Results — Argument View
-
-The argument analytics page visualises both vote signals simultaneously:
-
-##### Scatterplot (primary view)
-
-- X-axis: Persuasiveness score (1–5: not at all → highly persuasive)
-- Y-axis: Quality score (1–5: poorly → well constructed)
-- Each voter's response is a point; density of points shows the distribution
-- Quadrant overlay divides the space into four named zones:
-  - **Compelling** (top-right): high persuasiveness, high quality — consensus pick
-  - **Steelman** (top-left): low persuasiveness, high quality — well-argued but didn't move people; uniquely valuable for policy analysis
-  - **Partisan** (bottom-right): high persuasiveness, low quality — moved people but argument is not well-made
-  - **Weak** (bottom-left): low persuasiveness, low quality — broadly dismissed
-- The quadrant framing and the scatterplot distribution are shown simultaneously
-
-##### Supporting context
-
-- Edit history summary: number of edits, whether quality score improved after major revisions
-- Demographic breakdown of votes *(aggregate, anonymised — once sufficient data exists)*
-- Argument-vs-sibling comparison *(deferred to Phase 3)*
-
-##### Miniature cached scatterplot
-
-Visible on argument cards without hover. Precomputed and cached on the argument record — never fetched live. Also appears in expanded form in the hover/tap detail panel.
-
-#### Analytics & Results — Debate View
-
-- Overall for/against engagement
-- Aggregate persuasiveness and quality scores across arguments on each side
-- Arguments sorted by quality score, not just raw vote count
-- Distribution of where voters land on the scatterplot across the whole debate
-
-#### Argument Support Model (Option B + Evidence)
-
-Arguments follow a **graph structure**: any argument can support or oppose any other argument, including arguments from different debates. This enables:
-
-- Citing a well-established argument from one debate as supporting evidence in another
-- Showing that an argument in debate A directly rebuts an argument in debate B
-- Building up a cross-linked knowledge graph of arguments over time
-
-In addition, arguments can have **evidence items** attached — external sources that directly substantiate or challenge the argument's claim. Any registered user can submit evidence.
-
-Evidence item fields:
-
-- Title / citation (required)
-- URL (required — external link)
-- Description / excerpt (optional)
-- Evidence type (required — selected from fixed list below)
-
-Evidence types:
-
-| Type | Examples |
+| Token | Hex |
 | --- | --- |
-| **Academic research** | Peer-reviewed journal articles, academic books |
-| **Official data** | Government statistics, ONS, Eurostat, World Bank, UN data |
-| **Official report** | Parliamentary/government/regulatory reports and inquiries |
-| **Legal text** | Legislation, court judgments, treaties, regulations |
-| **Think tank / NGO** | Policy institute publications, civil society reports |
-| **Journalism** | News articles from established outlets |
-| **Fact-check** | Full Fact, Snopes, PolitiFact and equivalent organisations |
-| **Poll or survey** | Public opinion data, survey research |
-| **Video** | Documentary, speech, testimony, lecture recording |
-| **Primary source** | Speeches, manifestos, historical documents, official statements |
-| **Personal / blog** | Blog posts, personal essays, op-eds, social media posts |
+| `--ground` | `#16130F` |
+| `--surface` | `#1E1A15` |
+| `--rule` | `#322B22` |
+| `--text` | `#EFE8DB` |
+| `--text-2` | `#A0968A` |
+| `--text-3` | `#6B6357` |
+| `--primary` | `#58B6BA` |
+| `--accent` | `#D9A441` |
+| `--supports` | `#7FA86A` |
+| `--contradicts` | `#D9714F` |
 
-The evidence type tags the *source*, not the argument direction. Whether evidence supports or challenges the argument is captured by the `supportType` field ("supporting" / "opposing") on the `ArgumentSupport` relationship.
+D1 is the same hue family rotated onto a warm near-black, so the themes map token-for-token.
 
-#### Debate and Argument Creation
+**Dark mode is a requirement, not an option.** Defaults to `prefers-color-scheme`; the nav toggle overrides and persists (localStorage, then the user record once authenticated).
 
-- Any registered user can create new debates and submit new arguments
-- Any registered user can submit evidence attached to an argument
-- New content goes live immediately but is subject to community editing and moderation
-- Debate titles, descriptions, and argument content are all community-editable
-- Creation forms must work on mobile; complex editing is optimised for desktop
+### Type
 
-#### Moderation (Admin)
+- Headings and claims: **Source Serif 4**
+- UI and body: **Public Sans**
+- Labels, metadata, timestamps, axis labels, scores: **IBM Plex Mono**
 
-- Admin panel for managing content, users, and invites
-- Admins can: delete content, ban users, revert edits, manage invite codes, manage the tag taxonomy
-- Content flagging: any user can flag an argument or debate for moderator review
-- Admins can approve or reject structural changes (e.g. moving arguments between for/against)
-- There is no "debunked" designation — argument quality is determined by community scores, not moderator labels
+Never use colour alone to carry the supports/contradicts distinction — the relation is always also stated in words.
 
-#### Argument Lock *(future moderation feature — design TBD)*
+### UI Preferences
 
-A moderator should be able to lock a specific argument to prevent further edits and/or votes when community activity is introducing inaccuracies rather than improving quality. This is distinct from deletion — a locked argument remains fully visible, with a clear indicator that it has been locked and why.
-
-Open design questions:
-
-- Should locking prevent edits only, votes only, or both independently?
-- Should locks be temporary (with an expiry) or indefinite until a moderator unlocks?
-- Should the reason for locking be publicly visible on the argument?
-- Can a lock be escalated from a flag, or only applied directly by a moderator?
-
-This feature is not scoped for Phase 2 MVP but the data model should not preclude it — a `lockedAt`, `lockedBy`, and `lockReason` field on the Argument model would be sufficient.
-
-#### Sentiment Analysis
-
-- The existing `sentimentScore` and `sentimentLabel` schema fields are candidates for removal — they predate the dual voting system and are redundant with scatterplot data [TBD: confirm removal in schema migration]
-
-#### Tech Stack Additions
-
-- **Database:** PostgreSQL (upgrade from SQLite for production)
-- **Auth:** NextAuth.js (credentials provider, invite-only)
-- **Deployment:** Vercel
-- **Internationalisation:** `next-intl` — all UI strings externalised from day one; English only at launch
-- **Version history storage:** TBD (database table vs. append-only log)
+- **Dark / light mode** — as above.
+- **Compact view** *(build status: not yet implemented)* — a layout density preference that reduces card padding, inter-card gaps, and line height by one step, for users who want to see more content without scrolling. Intended as a `data-view="compact"` attribute on the root element — no separate component variants needed.
 
 ---
 
-### Phase 3: Open Moderation & Social
+## Connection strength **(build status: shipped)**
 
-**Goal:** Widen participation, connect to external data, begin policy-relevant data use
+`Connection` (formerly `ArgumentSupport`) carries a community-rated strength: **tangential / relevant / decisive**.
 
-#### Access Model
+- Rated **on the connection, not the claim** — the same claim can be decisive in one debate and tangential in another. The rating is per parent–child pair.
+- Rendered in list rows as a horizontal bar whose **thickness** encodes the value: decisive 7px, relevant 4px (65% opacity), tangential 2px (40% opacity). Bar colour follows the relation.
+- The same 7/4/2px thicknesses are reused for the distribution bars inside the hover card, so the row mark and the chart are one visual language.
+- **No standalone legend.** The explanation lives in the hover card attached to the bar it describes.
 
-- Open registration (no invite required)
-- **Contributor role**: lower-access moderation tier open to any registered user — can edit, flag, and vote on argument quality, but cannot delete content, ban users, or manage invites
-- Full moderator role remains invite/admin-assigned
+Definitions (used verbatim in tooltips):
 
-#### Features
+| Value | Supporting connection | Contradicting connection |
+| --- | --- | --- |
+| Decisive | The parent claim largely stands or falls on this one. | It defeats the parent claim if accepted. |
+| Relevant | It adds real weight, but the parent claim survives without it. | It counts against the parent claim without settling it. |
+| Tangential | True perhaps, but it does little work for this claim. | True perhaps, but it does not land against this claim. |
 
-- Open registration with demographic survey
-- Contributor moderation tier
-- User contribution history pages
-- Social network integration — connect accounts, share debates
-- Show what a user's network thinks vs. general public opinion
-- Ingest external polling data on similar questions for comparison
-- Advanced analytics and data visualisations using anonymised demographic breakdowns
-- Argument-vs-sibling comparison view
-- API for third-party integrations (e.g. policy research, journalism tools)
+Community votes are a signal, not the setting — an editor sets each connection's **stated strength** separately (see Editing, below), with the vote distribution shown as reference above the control.
 
 ---
 
-## User Roles
+## The hover card **(build status: shipped)**
+
+Every connected-claim row in every direction — upward and downward — opens the same card on hover (tap on touch; focus for keyboard). The card floats: nothing in the list below it moves. It opens downward when near the top of the viewport and upward otherwise.
+
+Two labelled bands, answering two different questions:
+
+**Band 1 — "The claim itself"**
+- The claim's body text
+- Type and evidence-strength badges
+- Two score bars: *People agree* and *Well made*, plus the rater count (see Voting, below, for the scale actually used)
+- A miniature two-axis plot (x = agree, y = well made) showing the rating distribution
+- Labels are dotted-underlined and explain themselves on hover — no explanatory body copy in the card
+
+**Band 2 — "As used here · supports/contradicts"**
+- A sentence naming the relationship in full (e.g. "Supports '<parent claim>'") so the relation is never legible only by column position
+- A distribution bar chart of decisive / relevant / tangential votes for *this connection*, using the 7/4/2px thicknesses
+- A **Vote** control to the right of each bar, so voting happens on the value being voted for
+- Term labels dotted-underlined, with the connection-strength definitions on hover
+
+**Footer** — the claim's own graph counts and a **"Read more and rate it →"** call to action.
+
+The two bands must remain visually distinct. Their job is to keep apart "is this claim any good?" and "how much does it do for the claim it's attached to?" — these are independent judgements and the UI must never blur them.
+
+**Mobile** *(build status: `useIsNarrow` fallback shipped)* — hover cards fall back to tap-to-expand inline instead of a floating card on touch/narrow viewports; the two-column supports/contradicts grid stacks.
+
+**Accessibility:** everything on hover must also work on keyboard focus and tap.
+
+---
+
+## Voting
+
+Each vote captures two independent signals on a claim, kept deliberately separate from connection-strength voting (which is cast only from the hover card or the claim's own page):
+
+- **Signal 1 — "Do you agree?"** Captures the personal effect of the claim — whether it moved the user — independent of how well it is constructed. This is the core opinion-polling signal.
+- **Signal 2 — "Is this well constructed?"** Captures perceived quality, independent of personal agreement. A user who was not persuaded can still rate a claim as well-constructed (the "steelman" signal — valuable for policy analysis).
+
+**Scale — (build status: shipped as binary, deviates from original 5-point design).** The original spec called for a 5-point scale per signal with a thumbs-based quick-vote plus an optional refinement modal. The shipped implementation uses a plain **yes/no vote per signal, displayed as a percentage** of respondents — a deliberate simplification agreed with the project owner, trading distributional nuance for a much lower-friction voting UI. The two-axis scatterplot (below) still reads as a distribution because it plots the *aggregate* percentages across many binary votes, not a single respondent's 5-point position.
+
+One interaction per user per claim (both signals captured together); users can update their vote at any time.
+
+**Scatterplot (results view)**
+- X-axis: agreement · Y-axis: quality — **both axes must be labelled**
+- Quadrant overlay: **Compelling** (high/high, consensus pick), **Steelman** (low agreement/high quality — well-argued but didn't move people, uniquely valuable for policy analysis), **Partisan** (high agreement/low quality), **Weak** (low/low — broadly dismissed, no special label or moderation action; the score is the signal)
+- Rater count appears exactly once per page, in the stats row beneath the plot
+- A miniature, cached version of the same plot appears on hover cards and rows without a live fetch
+
+---
+
+## Classification tooltips **(build status: shipped)**
+
+Every classification badge explains itself on hover, focus, or tap. Same copy wherever the badge appears — claim header, hover card, editor.
+
+| Badge | Copy |
+| --- | --- |
+| Fact | A claim about what is the case. It can be checked against evidence, and evidence can settle it. |
+| Opinion | A judgement about how to read the facts. Legitimate, but not the kind of claim evidence alone can settle. |
+| Value | A claim about what matters or what is right. Rests on principles rather than evidence — disagreement here is not error. |
+| Proposal | A claim about what should be done. Usually stands on facts and values underneath it, which can be argued separately. |
+| Strong evidence | Supported by sources that directly substantiate the claim — research, official data, primary documents. |
+| Moderate evidence | Supported, but indirectly or partially: reporting, secondary analysis, or evidence covering part of the claim. |
+| Weak evidence | Sources are thin, contested, or only loosely connected to what the claim actually asserts. |
+| No evidence | Nothing attached yet. Not a verdict on the claim — an invitation to supply what is missing. |
+
+---
+
+## Editing **(build status: shipped, identity model incomplete — see Open Items)**
+
+Editing happens in a **side panel** beside the live claim, never on a separate page. Three tabs: Write / Evidence / History.
+
+- **Write** — claim, body, type, evidence strength, tags, and a required one-line "why this change?"
+- **Evidence** — attach and remove evidence items (type, citation, URL); also hosts per-connection strength editing
+- **History** — revision list with author, date and change summary; readable diff; revert without leaving the page
+- Entry points: the edit affordance on any claim, and a one-time dismissible prompt after a low quality rating: *"You rated this claim as poorly constructed — want to help improve it?"*, linking directly to the edit view
+
+**Structural changes do not require moderator approval.** Re-parenting a claim, or flipping it between supports and contradicts, is an ordinary edit: it publishes immediately, appears in history, and anyone can revert it. (The original spec left structural-move approval as for-vs-moderator TBD; this resolves it in favour of the open-edit model, backstopped by contested status below.)
+
+Per-connection strength editing: the distribution (decisive/relevant/tangential counts, same bar thicknesses) is shown as reference above a segmented control that sets the connection's stated strength; a one-line reason is required; the change is recorded in history and anyone can revert it.
+
+Debate titles, descriptions, and claim content are all community-editable, per the original Wikipedia-model principle. Any registered user can create new claims and submit new connections/evidence; new content goes live immediately, subject to the contested-status safety valve below.
+
+---
+
+## Contested status **(build status: entry logic shipped; no review/exit UI — see Open Items)**
+
+A claim enters **contested** status when:
+
+1. Three or more reverts by different users inside 24 hours
+2. Flags from more than a handful of distinct accounts
+3. A moderator applies it directly, with a public reason
+
+While contested, edits by non-moderators queue for review before publishing. Reading, rating and commenting stay open — only publishing waits. The status and its reason are shown publicly on the claim. It expires automatically after a quiet period; there are no permanent locks.
+
+Data model: `contestedAt`, `contestedReason`, `contestedUntil` on the claim; pending edits held as `ClaimRevision`/`ConnectionRevision` rows with a `pending` flag.
+
+This is distinct from the separate, not-yet-designed **Argument Lock** concept (see Open Items) — contested status is an automatic, temporary, community-triggered pause; a lock would be a persistent, moderator-only action.
+
+---
+
+## Accounts and sign-in **(build status: shipped, Google + Microsoft live; identity not yet enforced server-side — see Open Items)**
+
+Real accounts via **Better Auth** (Prisma-adapted, self-hosted) replace the original NextAuth-credentials-only plan and the anonymous-only model. Any combination of the methods below can be linked to one account.
+
+**Methods**
+- Email + password, with required email verification before the account is treated as verified
+- Forgotten-password reset by email link
+- App-based 2FA (TOTP: QR enrolment + backup codes), optional, enabled from account settings
+- Passkeys (WebAuthn), any number per account, added from account settings
+- OAuth2: Google and Microsoft are live; Apple, Facebook, Twitter/X, Discord and Reddit are wired in code and rendered in the sign-in/sign-up UI in a fixed order, but shown disabled with a "coming soon" mark until credentials are configured — nothing is hidden, so the eventual rollout doesn't change layout
+- Account linking is enabled across all methods (email-password counts as a linkable method), so a person can add e.g. Google to an account they first created with a password
+
+**Demographic fields, collected at sign-up (all optional)** — supersedes the original "age range / region / political orientation" placeholder fields:
+- Postcode, with a lookup that resolves state deterministically and federal electorate from a curated reference table where available (postcodes can span more than one electorate; there is no complete authoritative postcode→electorate dataset, only AEC GIS boundaries, so the UI falls back to state-only plus a link to the AEC's own tool when an electorate can't be resolved)
+- Gender, age range, education level, relationship status — option sets chosen to align with how Newspoll/Essential and similar firms report cross-tabs, so this platform's aggregates read the same way
+
+**Privacy rule — aggregate-only cross-tabs**, fulfilling the original "never presented at the individual level" principle:
+- Individual votes are never joined to a person's demographic profile in any API response
+- Demographic breakdowns are served only as per-value aggregates (`GET /claims/:id/demographics/:dimension`), and any group smaller than a minimum size (20 raters) is dropped from the response entirely rather than shown with a small, potentially re-identifying count — the same small-cell suppression pollsters use
+- This is enforced at the query layer (`claimVoteDemographicBreakdown`), not just as a UI convention
+
+A published privacy policy covering this (what's collected, aggregate-only use, retention, right to deletion) is still required before any real user signs up — see Open Items.
+
+---
+
+## Access model and roles
+
+*(build status: not yet implemented — every account today has identical access; this whole section is forward-looking)*
 
 | Role | Access |
 | --- | --- |
-| **Public (unauthenticated)** | Read debates, arguments, results — no voting, editing, or flagging |
-| **Registered user** | Vote (dual signal, updatable), create debates/arguments, edit content, flag content, attach evidence, use tags and search |
-| **Contributor** *(Phase 3)* | All of above + lightweight moderation |
-| **Moderator/Admin** | Full moderation: delete, ban, revert, manage invites and tag taxonomy |
+| **Public (unauthenticated)** | Read claims and their connections, results — no voting, editing, or flagging |
+| **Registered user** | Vote (both signals, updatable), create claims/connections, edit content, flag content, attach evidence, use tags and search |
+| **Contributor** *(Phase 3)* | All of the above + lightweight moderation |
+| **Moderator/Admin** | Full moderation: delete, ban, revert, manage invites and tag taxonomy, apply/lift contested status, review the pending-edit queue |
+
+**Launch access model (undecided against current build):** the original spec called for invite-only registration at MVP, widening to open registration in Phase 3. The shipped sign-up flow is currently open registration with no invite gate — this needs an explicit decision before wider release: either build the invite gate, or consciously drop it and update this section.
 
 ---
 
-## Core Data Models
+## Data Models
 
-### Contention (Debate)
+Current schema (`backend/prisma/schema.prisma`), renamed from the original Contention/Argument language to match the shipped one-object-type model:
 
-- Title
-- Description
-- Tags (many-to-many)
-- Status (active / archived)
-- Created by, created date
-- Version history
+### Claim (formerly Contention + Argument, now unified)
+- Slug, title, one-liner, body
+- Type: fact / opinion / value / proposal
+- Evidence strength: none / weak / moderate / strong
+- Tags (string array; original spec's separate `Tag` model with admin-managed taxonomy is not yet built — see Open Items)
+- Context block: background prose + dated timeline
+- Contested fields: `contestedAt`, `contestedReason`, `contestedUntil`
+- Revision history, votes, reverts, flags
+- Connections in both directions (`usedIn` / `arguedBy`)
 
-### Argument
+### Connection (formerly ArgumentSupport)
+- `fromClaimId`, `toClaimId`, `relation` (supports/contradicts), `statedStrength` (tangential/relevant/decisive), `statedReason`
+- Community strength votes, revision history
 
-- Contention it belongs to
-- Position (for / against)
-- Content and summary
-- Argument type (fact / opinion / value / proposal)
-- Evidence strength (strong / moderate / weak / none)
-- Cached scatterplot summary (precomputed persuasiveness + quality distribution for card display)
-- Tags (many-to-many, inherited from parent debate by default, overridable)
-- Version history
-- Supporting arguments and evidence (via ArgumentSupport)
+### ClaimVote
+- `agree` (boolean), `wellConstructed` (boolean) — see Voting scale note above
+- One per (claim, voter)
 
-### Tag *(new for Phase 2)*
+### EvidenceItem
+- Type, citation, URL, linked claim. Evidence-type taxonomy (academic research, official data, official report, legal text, think tank/NGO, journalism, fact-check, poll or survey, video, primary source, personal/blog) carries over unchanged from the original spec.
 
-- Name
-- Slug
-- Description (optional)
-- Created / managed by admin
+### ClaimRevision / ConnectionRevision (formerly EditHistory)
+- Author, summary, snapshot, `pending` flag, timestamp
 
-### Evidence *(new for Phase 2)*
+### ClaimRevert / ClaimFlag
+- Feed the contested-status auto-trigger logic
 
-- Title / citation (required)
-- URL (required)
-- Description / excerpt (optional)
-- Evidence type: one of academic research / official data / official report / legal text / think tank or NGO / journalism / fact-check / poll or survey / video / primary source / personal or blog
-- Submitted by user
-- Linked to argument via ArgumentSupport
+### User / Session / Account / Verification / TwoFactor / Passkey
+- Better Auth's standard tables plus the demographic fields listed under Accounts, above
 
-### ArgumentSupport
+### Postcode
+- Reference table for the postcode → state/electorate lookup
 
-- Parent item (argument or debate)
-- Child item (argument or evidence item)
-- Relationship type: "supporting" or "opposing"
-- Votes on support strength
+**Not yet modelled:** a `Tag` entity with admin-managed taxonomy (tags are currently a free string array on `Claim`); a `role` field on `User` for moderator/admin distinction; an invite/invite-code model.
 
-### Vote *(updated for Phase 2)*
+---
 
-- User
-- Argument voted on
-- Persuasiveness score: 1–5
-- Quality score: 1–5
-- Created timestamp
-- Updated timestamp (updatable; all revisions timestamped for opinion-change tracking)
+## Tech Stack **(build status: current, differs from original plan)**
 
-### User
-
-- Email, name, avatar
-- Invite source
-- Demographic data (age range, region, political orientation) — stored but only used in aggregate
-
-### EditHistory *(new for Phase 2)*
-
-- Item edited (debate or argument)
-- Editing user
-- Previous content snapshot
-- Timestamp
-- Revert status
+| Layer | Original plan | Shipped |
+| --- | --- | --- |
+| Frontend framework | Next.js (CRA initially prototyped) | Next.js 16, App Router, Turbopack |
+| Backend | Next.js API routes | Standalone Express 5 API |
+| Database | SQLite → Postgres for production | Postgres (local `prisma dev`) from the start |
+| ORM | Prisma | Prisma (`prisma-client` TS generator) |
+| Auth | NextAuth.js, credentials only | Better Auth — email/password, OAuth, TOTP, passkeys |
+| Realtime | Pusher | Not implemented (not currently required) |
+| Styling | Tailwind CSS | CSS Modules + design-token CSS custom properties |
+| i18n | `next-intl`, all strings externalised from day one | Not implemented — see Open Items |
+| Deployment | Vercel | Not yet decided (split frontend/backend changes the deployment shape Vercel alone assumed) |
 
 ---
 
 ## Non-Functional Requirements
 
-- **Performance:** Fast page loads; scatterplot data precomputed and cached on argument records, not fetched live
-- **Accessibility:** WCAG compliant, keyboard navigable; colour coding always supplemented with text labels (not colour-only encoding)
-- **Mobile:** Reading, voting, creating arguments, submitting evidence, and tagging all supported on mobile. Complex editing (version comparison, revert, structural moves) is designed for desktop but not blocked on mobile.
-- **Internationalisation:** All UI strings externalised into translation files via `next-intl` from day one. English only at launch; adding further languages requires no code changes. Database content is not translated.
-- **Security:** Input sanitisation, rate limiting, secure auth, no individual-level demographic exposure
-- **Privacy:** GDPR-aware data handling; privacy policy published at MVP launch
+- **Performance:** Fast page loads; scatterplot data precomputed and cached on claim/connection records, not fetched live.
+- **Accessibility:** WCAG compliant, keyboard navigable; colour coding always supplemented with text labels (not colour-only encoding). Hover-card interactions must also work on keyboard focus and touch.
+- **Mobile:** Reading, voting, creating claims, submitting evidence, and tagging all supported on mobile. Complex editing (version comparison, revert, structural moves) is designed for desktop but not blocked on mobile.
+- **Internationalisation:** All UI strings externalised into translation files via `next-intl` from day one — **not yet done**. English only at launch either way.
+- **Security:** Input sanitisation, rate limiting, secure auth, no individual-level demographic exposure. **Currently a gap**: mutating API endpoints trust client-supplied identity (`x-voter-id` header, freeform `authorName`) rather than the authenticated session; there is no rate limiting or moderator-only gating on any endpoint yet. See Open Items.
+- **Privacy:** GDPR/Australian-Privacy-Act-aware data handling; privacy policy published before real users are onboarded — **not yet drafted**.
 
 ---
 
-## Out of Scope
+## Out of scope
 
 ### Permanently out of scope
-
 - Mobile native apps
 - Individual-level demographic data presentation (always anonymised and aggregate)
-- "Debunked" designation — argument quality is determined by community votes, not moderator labels
+- "Debunked" designation — claim quality is determined by community votes, not moderator labels
 
-### Out of scope until Phase 3
-
-- Open registration
-- Contributor/lower-access moderator role
+### Deferred to a later phase
+- Contributor role (lightweight moderation tier below full moderator/admin)
 - User contribution history pages
-- Social network API integrations
-- External polling data ingestion
-- Advanced demographic analytics
+- Social network integrations, showing what a user's network thinks vs. general public
+- Ingesting external polling data for comparison
 - Argument-vs-sibling comparison view
 - Third-party API
 
-### Deferred / TBD
+---
 
-- Exact naming: Debattic vs. Argument Atlas vs. other
-- Exact demographic survey fields and political orientation framing
-- Version history storage implementation
-- Structural edit approval flow (moderator-gated vs. vote threshold)
-- Whether to retain or remove legacy `votesFor` / `votesAgainst` and `sentimentScore` / `sentimentLabel` fields during schema migration
-- Tag taxonomy: initial set of tags
-- Argument lock design: lock scope (edits / votes / both), duration, public visibility of reason, escalation path from flag
+## Open Items
+
+Carried over from `requirements-delta.md`'s "Open / not yet designed" plus gaps identified in a subsequent requirements/security/architecture review:
+
+- **Server-side identity enforcement.** Voting (`x-voter-id`) and editing (`authorName`) both trust client-supplied values instead of the authenticated session. This needs fixing before the account system is actually meaningful for attribution or abuse prevention — currently anyone can vote or edit as any identity.
+- **Moderator role.** Contested status assumes "a moderator applies it directly," but there is no `role` field or moderator concept anywhere yet, and no UI to review the `pending` edit queue a contested claim accumulates.
+- **Rate limiting.** None exists on vote/flag/revert/sign-up endpoints.
+- **Request validation.** No schema validation (e.g. zod) at the API boundary; malformed enum values currently 500 instead of 400.
+- **Access model decision.** Invite-only (original spec) vs. open registration (shipped) needs an explicit call.
+- **Tag taxonomy.** Admin-managed `Tag` model with search, vs. the current free-string tags array.
+- **Search.** Claim titles/content/tags — specified in the original MVP scope, not yet built (homepage is currently an unfiltered list).
+- **Argument Lock** *(distinct from contested status)* — a moderator-only persistent lock on a single claim, design still open: scope (edits/votes/both), duration, public visibility of reason, escalation path from a flag.
+- **Privacy policy** — must be drafted and published before real users sign up, given demographic + political-opinion data collection.
+- **Compact view** UI density preference — specified, not built.
+- **i18n scaffolding** (`next-intl`) — specified, not built.
+- **v7 hover-card changes agreed but not yet drawn**: move the claim's own supporting/contradicting list and the CTA into band 1 of the hover card; rewrite relationship headings so the referenced claim is named inline rather than implied by column position.
+- **Plain-language mechanism** (glossary terms, or a required plain-English summary per claim) — deferred, not dropped.
+- **Sentiment fields** — legacy `sentimentScore`/`sentimentLabel` from the pre-unification schema; confirmed removed in the current schema, no action needed.
 
 ---
 
-Last updated: 12 May 2026
+Last updated: 2 August 2026.

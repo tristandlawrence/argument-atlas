@@ -1,0 +1,44 @@
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 28px 80px;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 24px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.row {
+  display: block;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  color: var(--text);
+}
+
+.row:hover {
+  border-color: var(--text-2);
+  text-decoration: none;
+}
+
+.rowTitle {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.rowMeta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  margin-top: 4px;
+}

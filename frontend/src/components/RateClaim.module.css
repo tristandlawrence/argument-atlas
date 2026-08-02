@@ -1,0 +1,77 @@
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--text);
+  padding: 26px 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 36px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.heading {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin: 0 0 6px;
+}
+
+.blurb {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0 0 20px;
+  max-width: 420px;
+}
+
+.signalRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.signalLabel {
+  font-size: 14px;
+  width: 150px;
+  font-weight: 500;
+}
+
+.choice {
+  padding: 9px 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+.choiceActive {
+  color: var(--surface);
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.statsRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.statsRow strong {
+  color: var(--text);
+  font-size: 15px;
+}

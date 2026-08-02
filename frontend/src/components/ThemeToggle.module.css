@@ -1,0 +1,20 @@
+.toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.option {
+  padding: 5px 9px;
+  color: var(--text-2);
+  background: none;
+  border: none;
+}
+
+.optionActive {
+  background: var(--text);
+  color: var(--ground);
+  font-weight: 600;
+}

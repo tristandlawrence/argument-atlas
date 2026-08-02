@@ -1,0 +1,316 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Debates and arguments collapse into one type: a Claim. An argument is just
+// a claim with a Connection to a parent claim. Connections are first-class —
+// strength lives on the connection, not on either claim, because the same
+// claim can be decisive in one debate and tangential in another.
+// ---------------------------------------------------------------------------
+
+enum ClaimType {
+  FACT
+  OPINION
+  VALUE
+  PROPOSAL
+}
+
+enum EvidenceStrength {
+  NONE
+  WEAK
+  MODERATE
+  STRONG
+}
+
+enum ConnectionRelation {
+  SUPPORTS
+  CONTRADICTS
+}
+
+enum ConnectionStrength {
+  TANGENTIAL
+  RELEVANT
+  DECISIVE
+}
+
+model Claim {
+  id               String           @id @default(cuid())
+  slug             String           @unique
+  title            String
+  oneLiner         String
+  body             String
+  type             ClaimType
+  evidenceStrength EvidenceStrength @default(NONE)
+  tags             String[]
+
+  contextBackground   String
+  contextDisagreement String
+
+  contestedAt     DateTime?
+  contestedReason String?
+  contestedUntil  DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  timeline      ClaimTimelineEvent[]
+  evidenceItems EvidenceItem[]
+  revisions     ClaimRevision[]
+  votes         ClaimVote[]
+  reverts       ClaimRevert[]
+  flags         ClaimFlag[]
+
+  // Connections where this claim is the child — "where this claim is used" (upward)
+  usedIn   Connection[] @relation("FromClaim")
+  // Connections where this claim is the parent — "what supports/contradicts it" (downward)
+  arguedBy Connection[] @relation("ToClaim")
+
+  @@index([slug])
+}
+
+model Connection {
+  id             String             @id @default(cuid())
+  fromClaimId    String
+  toClaimId      String
+  fromClaim      Claim              @relation("FromClaim", fields: [fromClaimId], references: [id])
+  toClaim        Claim              @relation("ToClaim", fields: [toClaimId], references: [id])
+  relation       ConnectionRelation
+  statedStrength ConnectionStrength
+  statedReason   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  strengthVotes ConnectionStrengthVote[]
+  revisions     ConnectionRevision[]
+
+  @@unique([fromClaimId, toClaimId])
+  @@index([toClaimId])
+  @@index([fromClaimId])
+}
+
+model ConnectionStrengthVote {
+  id           String             @id @default(cuid())
+  connectionId String
+  connection   Connection         @relation(fields: [connectionId], references: [id])
+  voterId      String
+  value        ConnectionStrength
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  @@unique([connectionId, voterId])
+}
+
+// Two independent signals, per delta §6. Modelled as booleans (a deliberate
+// deviation from the reference mockups' "out of 5" score bars — see
+// requirements-delta.md §5/§6 vs. the shipped UI copy, resolved with the
+// project owner in favour of a plain yes/no vote displayed as a percentage).
+
+model ClaimVote {
+  id              String   @id @default(cuid())
+  claimId         String
+  claim           Claim    @relation(fields: [claimId], references: [id])
+  voterId         String
+  agree           Boolean
+  wellConstructed Boolean
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([claimId, voterId])
+}
+
+model EvidenceItem {
+  id        String   @id @default(cuid())
+  claimId   String
+  claim     Claim    @relation(fields: [claimId], references: [id])
+  type      String
+  citation  String
+  url       String?
+  createdAt DateTime @default(now())
+}
+
+model ClaimTimelineEvent {
+  id        String @id @default(cuid())
+  claimId   String
+  claim     Claim  @relation(fields: [claimId], references: [id])
+  label     String
+  text      String
+  sortOrder Int
+}
+
+// Revision history for a claim's own fields (Write/Evidence tab edits).
+
+model ClaimRevision {
+  id         String   @id @default(cuid())
+  claimId    String
+  claim      Claim    @relation(fields: [claimId], references: [id])
+  authorId   String
+  authorName String
+  summary    String
+  snapshot   Json
+  pending    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+// Revision history for a connection's structural fields (relation, strength,
+// re-parenting). Structural changes publish immediately per delta §8 unless
+// the child claim is contested, in which case they queue as `pending`.
+
+model ConnectionRevision {
+  id           String     @id @default(cuid())
+  connectionId String
+  connection   Connection @relation(fields: [connectionId], references: [id])
+  authorId     String
+  authorName   String
+  summary      String
+  snapshot     Json
+  pending      Boolean    @default(false)
+  createdAt    DateTime   @default(now())
+}
+
+// Contested-status automation inputs, per delta §10.
+
+model ClaimRevert {
+  id         String   @id @default(cuid())
+  claimId    String
+  claim      Claim    @relation(fields: [claimId], references: [id])
+  revertedBy String
+  createdAt  DateTime @default(now())
+}
+
+model ClaimFlag {
+  id        String   @id @default(cuid())
+  claimId   String
+  claim     Claim    @relation(fields: [claimId], references: [id])
+  flaggedBy String
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model User {
+  id                 String      @id
+  name               String
+  email              String
+  emailVerified      Boolean     @default(false)
+  image              String?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  twoFactorEnabled   Boolean?    @default(false)
+  postcode           String?
+  state              String?
+  federalElectorate  String?
+  gender             String?
+  ageRange           String?
+  educationLevel     String?
+  relationshipStatus String?
+  sessions           Session[]
+  accounts           Account[]
+  twofactors         TwoFactor[]
+  passkeys           Passkey[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model TwoFactor {
+  id                      String    @id
+  secret                  String
+  backupCodes             String
+  userId                  String
+  user                    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified                Boolean?  @default(true)
+  failedVerificationCount Int?      @default(0)
+  lockedUntil             DateTime?
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
+}
+
+model Passkey {
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+  aaguid       String?
+
+  @@index([userId])
+  @@index([credentialID])
+  @@map("passkey")
+}
+
+// Reference data for the sign-up postcode → electorate lookup, sourced from
+// the AEC. Some postcodes span more than one federal electorate, hence the
+// array rather than a single value — the sign-up flow asks the person to
+// confirm which one applies when there's more than one option.
+model Postcode {
+  postcode          String   @id
+  state             String
+  federalElectorates String[]
+}

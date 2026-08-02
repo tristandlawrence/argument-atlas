@@ -1,0 +1,173 @@
+.card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  box-shadow: 0 14px 30px rgba(23, 21, 18, 0.18);
+}
+
+.cardInline {
+  box-shadow: none;
+  border: 1px solid var(--rule);
+}
+
+.bandOne {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.bandLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.body {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0 0 11px;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.scoreArea {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+}
+
+.scoreCol {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.raterCount {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+
+.ownArgs {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.ownArgsLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-bottom: 7px;
+}
+
+.ownArgRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 0;
+}
+
+.ownArgLabel {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.ownArgText {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.4;
+}
+
+.readMore {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.bandTwo {
+  padding: 14px 16px;
+  background: var(--surface-alt);
+}
+
+.bandTwoHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 9px;
+  gap: 12px;
+}
+
+.relationSentence {
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.howStrongly {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.distRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.distLabel {
+  font-size: 11px;
+  width: 70px;
+  flex-shrink: 0;
+  color: var(--text-2);
+}
+
+.distTrack {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  height: 11px;
+}
+
+.distCount {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  width: 24px;
+  text-align: right;
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.voteButton {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 4px 10px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--text-2);
+  flex-shrink: 0;
+}
+
+.voteButton:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}

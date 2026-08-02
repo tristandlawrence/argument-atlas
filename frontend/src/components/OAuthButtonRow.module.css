@@ -1,0 +1,39 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.button:hover {
+  border-color: var(--text-2);
+}
+
+.buttonDisabled {
+  color: var(--text-3);
+  cursor: not-allowed;
+  background: var(--surface-alt);
+}
+
+.buttonDisabled:hover {
+  border-color: var(--rule);
+}
+
+.comingSoon {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+}

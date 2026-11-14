@@ -1,6 +1,8 @@
 # Argument Atlas (Debattic) — Project Requirements
 
-This file merges the original `requirements.md` with `design/requirements-delta.md`, which had accumulated a second UI/backend redesign pass as a stand-alone amendments document. The delta is retired; this is now the single source of truth. Sections below are marked **(build status)** where the current codebase (`backend/`, `frontend/`) is known to diverge from or not yet cover the spec.
+This is the single source of truth for the product. Sections are marked **(build status)** where the current codebase (`backend/`, `frontend/`) is known to diverge from or not yet cover the spec. The **Roadmap** at the end sequences the open work into phases; each open item below names its phase.
+
+**Revision note, 14 November 2026.** This revision follows a content and requirements review. It adds: a seed content policy and a new seed; a claim authoring standard; an "unsure" option and a vote history; a persuasion signal; revision semantics that protect existing votes; duplicate detection and merge; a per-claim discussion space; derived evidence strength; ordering rules; a rule on score visibility before voting; numeric contested thresholds; a statement of what the aggregates are and are not; and the phased roadmap. Nothing already shipped is reversed.
 
 ---
 
@@ -30,6 +32,9 @@ The platform's values — civic purpose, evidence discipline, respect for the ef
 - **Weak arguments surface organically**: there is no "debunked" designation. Arguments that score low on both agreement and quality appear in the Weak quadrant of the scatterplot. The community verdict is the verdict — no moderator labels required
 - **Rating comes after reading.** Nobody is asked to judge a claim above the material that explains it — voting sits at the bottom of the page, after context and both directions of argument.
 - **Never let a relationship be legible only by position on the page.** Colour, column, or layout never carry meaning alone — the relation is always also stated in words.
+- **A claim is one proposition.** If it needs "and", "because" or a dash to hold together, it is two claims. The structure can only do its work when each node can be judged on its own.
+- **The crux is a claim, not a paragraph.** Where a debate actually turns is itself something people disagree about, and it gets the same treatment as any other claim: its own supports, contradicts and votes.
+- **Changing your mind is data.** The platform's most valuable signal is a vote that moved after reading. It is recorded (in aggregate), never discarded, and never shown against a person.
 
 ---
 
@@ -41,9 +46,45 @@ Debates and arguments collapse into **one type: a claim**. An argument is just a
 2. **Context & history** — background prose, a dated "how we got here" timeline, a note on where the disagreement actually sits, and claim metadata (age, revisions, connection count, evidence count)
 3. **Where this claim is used** — the upward direction: parent claims this one supports or contradicts, including uses in other debates, visibly marked as such. A claim cited as decisive in four places has four things depending on it — this view is what makes that exposure legible.
 4. **What supports it / What contradicts it** — the downward direction, two columns
-5. **Rate this claim** — the two voting signals, presented last, beside the results plot
+5. **Rate this claim** — the voting signals, presented last, beside the results plot
 
 This supersedes the original Phase 1 plan of separate `debate/[id]`, `argument/[id]`, and `results/[id]` pages.
+
+**Claims are a graph, not a tree.** The same claim can sit under several parents, in several debates, with a different connection strength in each. Nothing in the UI or data model may assume a claim has exactly one parent.
+
+**Question roots** *(decision: Phase 3, decide now)*. The one-object model forces every debate root to be a yes/no proposition. Some public questions are naturally multi-option ("How should Australia firm its grid?") with competing sibling proposals. Phase 3 adds a *question* framing for a root: a claim of type Proposal may be marked as one of several answers to a shared question, and the sibling comparison view (deferred below) renders them side by side. Until then, authors write each answer as its own proposal and link them with contradicting connections. This decision is recorded now so that nothing built in Phases 0–2 assumes roots are always propositions.
+
+---
+
+## Claim authoring standard **(new)**
+
+These rules apply to seeded content and to the guidance shown to users in the editor. They exist because the structure only works when nodes are clean.
+
+- **One proposition per claim.** A title that conjoins two assertions is split. "Moderation technology exists and liability supplies the incentive" is two claims with a supporting connection between them.
+- **Title states the claim, not the topic.** "Negative gearing should be limited to new builds" is a claim. "Negative gearing" is a topic. A reader must be able to agree or disagree with the title alone.
+- **The claim is one somebody actually holds.** Roots are framed as a position a real participant would defend, not as a strawman ("should pass in its current form") chosen to be easy to reject.
+- **Type follows the claim, not the author's intent.** A Fact is checkable against evidence. An Opinion is a judgement on the facts. A Value rests on principle. A Proposal is a course of action. Misclassification is an ordinary edit and anyone may fix it (see Classification, below).
+- **Facts carry evidence.** A Fact claim with no evidence item shows the "No evidence" badge and is expected to acquire one. The editor warns, but does not block, on saving a Fact without evidence.
+- **The crux is a claim.** The "where the disagreement sits" note names the pivot of the debate in prose; the pivot itself is also entered as a claim and connected, so it can be argued and rated.
+- **Context is written, never templated.** Background and disagreement prose is specific to the claim. Generated or copied context is worse than none.
+- **Connections carry a reason.** Every connection has a stated reason that says why this claim bears on that one at the stated strength. "Matches the community distribution" is not a reason.
+
+---
+
+## Seed content policy **(build status: new seed shipped in `backend/prisma/seed.ts`)**
+
+The seed is the product's first impression and the only content new users see. It is held to the authoring standard above, plus:
+
+- **No invented public opinion on real issues.** Vote data in the seed is demo data: generated under an obviously synthetic voter id, present only so the plot and score bars render in development, and skipped entirely when `SEED_DEMO_VOTES=false` or `NODE_ENV=production`. Production launches with zero votes. The platform's purpose is to supplement polling; fabricated poll results would undermine it before it starts.
+- **Fewer debates, deeper.** The seed has six debates clustered around energy and housing so that cross-debate reuse is natural. Each has at least one claim with its own arguments beneath it, and several claims appear in more than one debate.
+- **The plot teaches itself.** Demo votes deliberately place claims in all four quadrants, including a well-made claim few agree with (Steelman), a popular poorly-made one (Partisan) and a weak one, so a developer or reviewer sees what the quadrants mean.
+- **Evidence is real and typed.** Every Fact claim has at least one evidence item from the evidence taxonomy. Strong evidence requires a checkable URL. The seed validates this and refuses to run if it is violated.
+- **One contested claim.** The seed includes one claim in contested status with a real reason, so the banner, the queue and the expiry have something to show.
+- **Attribution is honest.** Revisions are authored by "Argument Atlas editors", not "Seed data". Connection reasons are substantive.
+- **Nothing time-sensitive.** No debate depends on an event, a poll or a bill from the last twelve months. Content that dates within a year is created by users, not seeded.
+- **No children with templated context.** The previous seed generated each child's context from its parent's; the current schema makes context required, so each claim's context is written by hand. If that proves unsustainable as content grows, make the fields nullable and hide the section (Phase 2).
+
+`npm run seed:check` validates the content and prints graph statistics without touching the database. `npm run seed` replaces all claim data.
 
 ---
 
@@ -102,7 +143,7 @@ Never use colour alone to carry the supports/contradicts distinction — the rel
 ### UI Preferences
 
 - **Dark / light mode** — as above.
-- **Compact view** *(build status: not yet implemented)* — a layout density preference that reduces card padding, inter-card gaps, and line height by one step, for users who want to see more content without scrolling. Intended as a `data-view="compact"` attribute on the root element — no separate component variants needed.
+- **Compact view** *(build status: not yet implemented — Phase 3)* — a layout density preference that reduces card padding, inter-card gaps, and line height by one step, for users who want to see more content without scrolling. Intended as a `data-view="compact"` attribute on the root element — no separate component variants needed.
 
 ---
 
@@ -125,6 +166,8 @@ Definitions (used verbatim in tooltips):
 
 Community votes are a signal, not the setting — an editor sets each connection's **stated strength** separately (see Editing, below), with the vote distribution shown as reference above the control.
 
+Connection strength measures **logical dependency**: how much the parent relies on the child. It does not measure whether the child persuaded anyone. That is a separate signal (see Voting → Persuasion).
+
 ---
 
 ## The hover card **(build status: shipped)**
@@ -136,7 +179,7 @@ Two labelled bands, answering two different questions:
 **Band 1 — "The claim itself"**
 - The claim's body text
 - Type and evidence-strength badges
-- Two score bars: *People agree* and *Well made*, plus the rater count (see Voting, below, for the scale actually used)
+- Two score bars: *People agree* and *Well made*, plus the rater count (see Voting, below, for the scale actually used), subject to the score-visibility rule under Voting
 - A miniature two-axis plot (x = agree, y = well made) showing the rating distribution
 - Labels are dotted-underlined and explain themselves on hover — no explanatory body copy in the card
 
@@ -158,16 +201,49 @@ The two bands must remain visually distinct. Their job is to keep apart "is this
 
 ## Voting
 
-Each vote captures two independent signals on a claim, kept deliberately separate from connection-strength voting (which is cast only from the hover card or the claim's own page):
+Each vote captures independent signals on a claim, kept deliberately separate from connection-strength voting (which is cast only from the hover card or the claim's own page).
+
+### The two core signals **(build status: shipped as binary)**
 
 - **Signal 1 — "Do you agree?"** Captures the personal effect of the claim — whether it moved the user — independent of how well it is constructed. This is the core opinion-polling signal.
 - **Signal 2 — "Is this well constructed?"** Captures perceived quality, independent of personal agreement. A user who was not persuaded can still rate a claim as well-constructed (the "steelman" signal — valuable for policy analysis).
 
-**Scale — (build status: shipped as binary, deviates from original 5-point design).** The original spec called for a 5-point scale per signal with a thumbs-based quick-vote plus an optional refinement modal. The shipped implementation uses a plain **yes/no vote per signal, displayed as a percentage** of respondents — a deliberate simplification agreed with the project owner, trading distributional nuance for a much lower-friction voting UI. The two-axis scatterplot (below) still reads as a distribution because it plots the *aggregate* percentages across many binary votes, not a single respondent's 5-point position.
+**Scale.** The original spec called for a 5-point scale per signal with a thumbs-based quick-vote plus an optional refinement modal. The shipped implementation uses a plain **yes/no vote per signal, displayed as a percentage** of respondents — a deliberate simplification agreed with the project owner, trading distributional nuance for a much lower-friction voting UI. The two-axis scatterplot (below) still reads as a distribution because it plots the *aggregate* percentages across many binary votes, not a single respondent's 5-point position.
 
-One interaction per user per claim (both signals captured together); users can update their vote at any time.
+**Signal wording by claim type** *(Phase 1)*. "Do you agree?" reads oddly against a Fact. The label adapts to type while the stored field stays `agree`: Fact → "Is this accurate?"; Opinion and Value → "Do you agree?"; Proposal → "Should this happen?". Signal 2 reads "Is this well made?" for every type.
 
-**Scatterplot (results view)**
+### Unsure **(Phase 1)**
+
+Each signal gains a third option, **Unsure**, stored as `null` on the vote. A respondent who is forced to pick a side is a respondent whose persuadability has been thrown away, and persuadability is what a polling supplement most wants to see. Unsure votes count in the rater total, are reported as their own percentage, and are excluded from the agree/well-made percentages used for the plot. The vote control presents all three options with equal weight; Unsure is never styled as the default or the dismissal.
+
+### Vote history **(Phase 1)**
+
+A changed vote is the platform's most valuable event and the current schema overwrites it. From Phase 1:
+
+- `ClaimVote` keeps the current position, as now. A new `ClaimVoteEvent` row is appended on every create or change, holding the new values, the previous values, the claim revision id current at the time, and a timestamp.
+- The event log is **aggregate-only**: it is never exposed per voter in any API response, and is subject to the same small-cell suppression as demographics.
+- It feeds two things: a "changed their mind" count on the claim stats row (Phase 1, display) and the persuasion analysis below (Phase 3).
+
+### Persuasion **(Phase 3)**
+
+The mission is "surfacing what people find persuasive". Agree measures opinion, well-made measures craft, and connection strength measures logical dependency. None of them records what moved a voter.
+
+When a user votes on a debate root (a claim with no upward connections, or any claim with children), they are offered one optional follow-up: **"Which of these did the most work for you?"**, listing the claim's direct supports and contradicts. The answer is stored as a `PersuasionVote(claimId, connectionId, voterId)`, one per voter per root, updatable. It is displayed on the root as a per-connection count, and in the hover card for the connection. Combined with vote history it answers the question the platform exists to answer: not just what people think, but which argument changed it.
+
+### Ordering within a column **(Phase 1)**
+
+Nothing in the shipped build specifies how supports and contradicts are ordered within their columns. The rule: **stated strength first (decisive, relevant, tangential), then rater count descending, then creation date ascending.** Agreement percentage is never used for ordering, because sorting by popularity entrenches popular claims and buries steelmen. The rule is stated in a tooltip on the column heading.
+
+### Score visibility before voting **(Phase 1)**
+
+"Rating comes after reading" is a core principle, and the hover card currently shows agreement percentages on every child claim before the reader has opened it. Seeing 70% agreement before reading anchors the vote. From Phase 1:
+
+- On a claim's own page, the score bars and plot beside the vote control are shown **after** the viewer has voted on that claim, or on request via a "Show results first" link that is remembered per viewer.
+- In hover cards and rows, the miniature plot and score bars are shown as now **but without the numeric percentages** until the viewer has voted on that claim. The rater count is always shown.
+- Unauthenticated viewers, who cannot vote, see everything. The anchoring concern applies to votes, not to reading.
+
+### Scatterplot (results view) **(build status: shipped)**
+
 - X-axis: agreement · Y-axis: quality — **both axes must be labelled**
 - Quadrant overlay: **Compelling** (high/high, consensus pick), **Steelman** (low agreement/high quality — well-argued but didn't move people, uniquely valuable for policy analysis), **Partisan** (high agreement/low quality), **Weak** (low/low — broadly dismissed, no special label or moderation action; the score is the signal)
 - Rater count appears exactly once per page, in the stats row beneath the plot
@@ -175,7 +251,7 @@ One interaction per user per claim (both signals captured together); users can u
 
 ---
 
-## Classification tooltips **(build status: shipped)**
+## Classification **(build status: tooltips shipped; derived evidence strength and type challenge are Phase 0/1)**
 
 Every classification badge explains itself on hover, focus, or tap. Same copy wherever the badge appears — claim header, hover card, editor.
 
@@ -189,6 +265,10 @@ Every classification badge explains itself on hover, focus, or tap. Same copy wh
 | Moderate evidence | Supported, but indirectly or partially: reporting, secondary analysis, or evidence covering part of the claim. |
 | Weak evidence | Sources are thin, contested, or only loosely connected to what the claim actually asserts. |
 | No evidence | Nothing attached yet. Not a verdict on the claim — an invitation to supply what is missing. |
+
+**Evidence strength is derived, not declared** *(Phase 0)*. The badge copy already assumes this ("Nothing attached yet"), and the shipped build lets an editor set Strong on a claim with no evidence. From Phase 0: a claim with no evidence items is **No evidence**, regardless of the stored field. Phase 1 moves the rating onto the evidence item: each item carries a strength (strong / moderate / weak) set by the editor with a one-line reason, and the claim badge shows the strongest item. The claim-level field is then removed.
+
+**Type is contestable** *(Phase 1)*. Whether something is a Fact or an Opinion is often the actual argument. Type is an ordinary editable field already; Phase 1 adds a one-click "Challenge this classification" affordance on the badge that opens the editor with the type field focused and a prefilled reason, so the challenge lands in revision history like any other edit and can be reverted.
 
 ---
 
@@ -207,6 +287,32 @@ Per-connection strength editing: the distribution (decisive/relevant/tangential 
 
 Debate titles, descriptions, and claim content are all community-editable, per the original Wikipedia-model principle. Any registered user can create new claims and submit new connections/evidence; new content goes live immediately, subject to the contested-status safety valve below.
 
+### Revision semantics and vote validity **(Phase 1)**
+
+A hundred people voted on the old wording. If the title changes meaning, their votes no longer mean what the page says they mean. From Phase 1 every revision is one of two kinds, chosen by the editor and visible in history:
+
+- **Copyedit** — wording, typos, formatting, body prose, context, evidence, tags. The claim's meaning is unchanged. Votes carry over.
+- **Substantive** — the title or the type changes in a way that alters what is being asserted. Votes cast before the revision are **archived**: they remain in the vote history (and in the aggregate record) tagged with the revision they were cast against, but the claim's live counts restart from zero and the stats row says so: "Reworded on 3 March; 84 earlier votes archived."
+
+The editor defaults to Copyedit and asks the editor to confirm Substantive. A Substantive revision on a claim with more than 20 live votes also requires the "why this change" to be at least a sentence. Anyone can revert either kind; reverting a Substantive revision restores the archived votes. Abuse of the Copyedit label to change meaning without resetting votes is a flaggable act and counts toward contested status.
+
+### Duplicates, merge and redirects **(Phase 2)**
+
+Every argument-mapping platform drowns in near-identical claims. The Wikipedia model works because of merge and redirect, and this product has neither.
+
+- **At creation**, as the user types a title, the editor searches existing claims and shows the closest matches with their type and rater count: "This may already exist." The user can connect to the existing claim instead of creating a new one. This is the single highest-leverage quality feature after search.
+- **Merge** is an edit available to any registered user: it points every connection, vote and evidence item on claim B at claim A, records a Substantive revision on A with the merge reason, and leaves B as a **redirect** to A. Votes from B are archived (as above) rather than added to A, because they were cast on different wording. Merge is revertible from History for 30 days.
+- **Redirects** keep every old slug resolving. A merged or re-slugged claim's old URL returns the new claim with a one-line note.
+- Merge of a claim with more than 50 live votes, or in contested status, queues for moderator review rather than publishing immediately.
+
+---
+
+## Discussion **(Phase 2)**
+
+The shipped contested-status copy says "reading, rating and commenting stay open", but no commenting feature exists anywhere. Wikipedia's talk page is where the argument about the article happens, and the editor's "why this change" field is not a substitute.
+
+Phase 2 adds a **Discussion** tab to the side panel beside Write / Evidence / History. It is a flat, chronological thread per claim, for coordination about the claim: proposed rewordings, disputes about type or evidence, merge proposals. It is not a place to argue the claim itself; the claim's children are. Discussion posts carry the author's display name, are editable by their author for 15 minutes, and are moderator-deletable. They are not votes and do not affect any score. Until Phase 2 ships, the contested-status copy reads "reading and rating stay open".
+
 ---
 
 ## Contested status **(build status: entry logic shipped; no review/exit UI — see Open Items)**
@@ -214,10 +320,12 @@ Debate titles, descriptions, and claim content are all community-editable, per t
 A claim enters **contested** status when:
 
 1. Three or more reverts by different users inside 24 hours
-2. Flags from more than a handful of distinct accounts
+2. Flags from **five or more** distinct accounts inside seven days *(the shipped code uses these numbers; the earlier spec said "a handful")*
 3. A moderator applies it directly, with a public reason
 
-While contested, edits by non-moderators queue for review before publishing. Reading, rating and commenting stay open — only publishing waits. The status and its reason are shown publicly on the claim. It expires automatically after a quiet period; there are no permanent locks.
+While contested, edits by non-moderators queue for review before publishing. Reading and rating stay open — only publishing waits. The status and its reason are shown publicly on the claim. It expires automatically **seven days** after entry; there are no permanent locks.
+
+**Thresholds scale with participation** *(Phase 1)*. Five accounts can freeze any claim under the fixed rule, which is a brigading vector once registration is open. From Phase 1 the flag threshold is the greater of five and 5% of the claim's live rater count, capped at fifty, and the revert threshold is unchanged. Flags and reverts from accounts younger than 48 hours count at half weight toward the threshold.
 
 Data model: `contestedAt`, `contestedReason`, `contestedUntil` on the claim; pending edits held as `ClaimRevision`/`ConnectionRevision` rows with a `pending` flag.
 
@@ -245,6 +353,9 @@ Real accounts via **Better Auth** (Prisma-adapted, self-hosted) replace the orig
 - Individual votes are never joined to a person's demographic profile in any API response
 - Demographic breakdowns are served only as per-value aggregates (`GET /claims/:id/demographics/:dimension`), and any group smaller than a minimum size (20 raters) is dropped from the response entirely rather than shown with a small, potentially re-identifying count — the same small-cell suppression pollsters use
 - This is enforced at the query layer (`claimVoteDemographicBreakdown`), not just as a UI convention
+- The same suppression applies to the vote-history and persuasion aggregates introduced above
+
+**What the numbers are and are not** *(Phase 0, copy)*. Respondents are self-selected, unweighted and unverified. The aggregates describe the people who chose to rate a claim here; they are not a poll of the population and the product never calls them one. A short, permanent note beneath every demographic breakdown says so, and the "supplement polling" ambition is expressed in the project's own description, not on claim pages. With roughly a hundred raters per claim and five demographic dimensions, suppression means most breakdowns will not display at all for a long time; that is correct behaviour, not a bug.
 
 A published privacy policy covering this (what's collected, aggregate-only use, retention, right to deletion) is still required before any real user signs up — see Open Items.
 
@@ -252,57 +363,76 @@ A published privacy policy covering this (what's collected, aggregate-only use, 
 
 ## Access model and roles
 
-*(build status: not yet implemented — every account today has identical access; this whole section is forward-looking)*
+*(build status: not yet implemented — every account today has identical access; roles are Phase 2)*
 
 | Role | Access |
 | --- | --- |
 | **Public (unauthenticated)** | Read claims and their connections, results — no voting, editing, or flagging |
-| **Registered user** | Vote (both signals, updatable), create claims/connections, edit content, flag content, attach evidence, use tags and search |
+| **Registered user** | Vote (both signals, updatable), create claims/connections, edit content, flag content, attach evidence, use tags and search, merge |
 | **Contributor** *(Phase 3)* | All of the above + lightweight moderation |
-| **Moderator/Admin** | Full moderation: delete, ban, revert, manage invites and tag taxonomy, apply/lift contested status, review the pending-edit queue |
+| **Moderator/Admin** | Full moderation: delete, ban, revert, manage invites and tag taxonomy, apply/lift contested status, review the pending-edit and merge queues, delete discussion posts |
 
-**Launch access model (undecided against current build):** the original spec called for invite-only registration at MVP, widening to open registration in Phase 3. The shipped sign-up flow is currently open registration with no invite gate — this needs an explicit decision before wider release: either build the invite gate, or consciously drop it and update this section.
+**Launch access model** *(decision: Phase 0)*. The original spec called for invite-only registration at MVP, widening to open registration in Phase 3. The shipped sign-up flow is open registration with no invite gate. **Decision: launch invite-only.** The content-quality features that make open registration safe (duplicate detection, merge, discussion, moderator queue) are Phase 2, and the first cohort of users will shape the authoring norms for everyone after them. Phase 0 adds an invite-code table and a gate on sign-up; open registration is re-evaluated at the end of Phase 2.
 
 ---
 
 ## Data Models
 
-Current schema (`backend/prisma/schema.prisma`), renamed from the original Contention/Argument language to match the shipped one-object-type model:
+Current schema (`backend/prisma/schema.prisma`), renamed from the original Contention/Argument language to match the shipped one-object-type model. Phase-tagged items are additions.
 
 ### Claim (formerly Contention + Argument, now unified)
 - Slug, title, one-liner, body
 - Type: fact / opinion / value / proposal
-- Evidence strength: none / weak / moderate / strong
-- Tags (string array; original spec's separate `Tag` model with admin-managed taxonomy is not yet built — see Open Items)
+- Evidence strength: none / weak / moderate / strong *(derived from evidence items from Phase 0; field removed in Phase 1)*
+- Tags (string array; original spec's separate `Tag` model with admin-managed taxonomy is not yet built — Phase 2)
 - Context block: background prose + dated timeline
 - Contested fields: `contestedAt`, `contestedReason`, `contestedUntil`
 - Revision history, votes, reverts, flags
 - Connections in both directions (`usedIn` / `arguedBy`)
+- *(Phase 2)* `redirectToId` — set when a claim has been merged into another; the slug resolves to the target
+- *(Phase 3)* `questionId` — optional link to a shared question for sibling proposals
 
 ### Connection (formerly ArgumentSupport)
 - `fromClaimId`, `toClaimId`, `relation` (supports/contradicts), `statedStrength` (tangential/relevant/decisive), `statedReason`
 - Community strength votes, revision history
 
 ### ClaimVote
-- `agree` (boolean), `wellConstructed` (boolean) — see Voting scale note above
+- `agree` (boolean, *nullable from Phase 1 for Unsure*), `wellConstructed` (boolean, *nullable from Phase 1*)
 - One per (claim, voter)
+- *(Phase 1)* `revisionId` — the claim revision the vote was cast against; votes whose revision predates the latest Substantive revision are archived
+
+### ClaimVoteEvent *(Phase 1)*
+- `claimId`, `voterId`, `revisionId`, previous and new values for both signals, `createdAt`
+- Append-only; aggregate-only in every API
+
+### PersuasionVote *(Phase 3)*
+- `claimId`, `connectionId`, `voterId`; one per (claim, voter), updatable
 
 ### EvidenceItem
-- Type, citation, URL, linked claim. Evidence-type taxonomy (academic research, official data, official report, legal text, think tank/NGO, journalism, fact-check, poll or survey, video, primary source, personal/blog) carries over unchanged from the original spec.
+- Type, citation, URL, linked claim. Evidence-type taxonomy (academic research, official data, official report, legal text, think tank/NGO, journalism, fact-check, poll or survey, video, primary source, personal/blog) carries over unchanged from the original spec and is used verbatim by the seed.
+- *(Phase 1)* `strength` (strong / moderate / weak) and `strengthReason`
 
 ### ClaimRevision / ConnectionRevision (formerly EditHistory)
 - Author, summary, snapshot, `pending` flag, timestamp
+- *(Phase 1)* `kind` (copyedit / substantive) on `ClaimRevision`
 
 ### ClaimRevert / ClaimFlag
 - Feed the contested-status auto-trigger logic
 
+### DiscussionPost *(Phase 2)*
+- `claimId`, `authorId`, body, `createdAt`, `editedAt`, `deletedAt`
+
 ### User / Session / Account / Verification / TwoFactor / Passkey
 - Better Auth's standard tables plus the demographic fields listed under Accounts, above
+- *(Phase 2)* `role` (user / moderator / admin)
+
+### Invite *(Phase 0)*
+- Code, `createdBy`, `usedBy`, `expiresAt`
 
 ### Postcode
 - Reference table for the postcode → state/electorate lookup
 
-**Not yet modelled:** a `Tag` entity with admin-managed taxonomy (tags are currently a free string array on `Claim`); a `role` field on `User` for moderator/admin distinction; an invite/invite-code model.
+**Not yet modelled:** a `Tag` entity with admin-managed taxonomy (Phase 2); a `Question` entity for sibling proposals (Phase 3).
 
 ---
 
@@ -317,7 +447,7 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 | Auth | NextAuth.js, credentials only | Better Auth — email/password, OAuth, TOTP, passkeys |
 | Realtime | Pusher | Not implemented (not currently required) |
 | Styling | Tailwind CSS | CSS Modules + design-token CSS custom properties |
-| i18n | `next-intl`, all strings externalised from day one | Not implemented — see Open Items |
+| i18n | `next-intl`, all strings externalised from day one | Not implemented — Phase 3 |
 | Deployment | Vercel | Not yet decided (split frontend/backend changes the deployment shape Vercel alone assumed) |
 
 ---
@@ -326,10 +456,11 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 
 - **Performance:** Fast page loads; scatterplot data precomputed and cached on claim/connection records, not fetched live.
 - **Accessibility:** WCAG compliant, keyboard navigable; colour coding always supplemented with text labels (not colour-only encoding). Hover-card interactions must also work on keyboard focus and touch.
-- **Mobile:** Reading, voting, creating claims, submitting evidence, and tagging all supported on mobile. Complex editing (version comparison, revert, structural moves) is designed for desktop but not blocked on mobile.
-- **Internationalisation:** All UI strings externalised into translation files via `next-intl` from day one — **not yet done**. English only at launch either way.
-- **Security:** Input sanitisation, rate limiting, secure auth, no individual-level demographic exposure. **Currently a gap**: mutating API endpoints trust client-supplied identity (`x-voter-id` header, freeform `authorName`) rather than the authenticated session; there is no rate limiting or moderator-only gating on any endpoint yet. See Open Items.
-- **Privacy:** GDPR/Australian-Privacy-Act-aware data handling; privacy policy published before real users are onboarded — **not yet drafted**.
+- **Mobile:** Reading, voting, creating claims, submitting evidence, and tagging all supported on mobile. Complex editing (version comparison, revert, structural moves, merge) is designed for desktop but not blocked on mobile.
+- **Internationalisation:** All UI strings externalised into translation files via `next-intl` — **not yet done** (Phase 3). English only at launch either way.
+- **Security:** Input sanitisation, rate limiting, secure auth, no individual-level demographic exposure. **Currently a gap**: mutating API endpoints trust client-supplied identity (`x-voter-id` header, freeform `authorName`) rather than the authenticated session; there is no rate limiting or moderator-only gating on any endpoint yet. All Phase 0.
+- **Privacy:** GDPR/Australian-Privacy-Act-aware data handling; privacy policy published before real users are onboarded — **not yet drafted** (Phase 0).
+- **Homepage ordering** *(Phase 1)*: the homepage currently lists claims newest-first, which is a feed and contradicts "structure over time". From Phase 1 the homepage lists debate roots (claims with no upward connections) ordered by rater count, with a tag filter; search (Phase 2) replaces it as the primary way in.
 
 ---
 
@@ -339,36 +470,105 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 - Mobile native apps
 - Individual-level demographic data presentation (always anonymised and aggregate)
 - "Debunked" designation — claim quality is determined by community votes, not moderator labels
+- Any per-voter exposure of vote history or persuasion data
 
 ### Deferred to a later phase
 - Contributor role (lightweight moderation tier below full moderator/admin)
 - User contribution history pages
 - Social network integrations, showing what a user's network thinks vs. general public
 - Ingesting external polling data for comparison
-- Argument-vs-sibling comparison view
+- Argument-vs-sibling comparison view (Phase 3, with question roots)
 - Third-party API
+- Watchlists and notifications (the maintenance loop that keeps improvable objects improved; revisit after Phase 2 once there are enough editors to need it)
+
+---
+
+## Roadmap
+
+The phases are ordered by a single rule: **get the data model right before it holds real data, then make contribution safe, then extract insight.** Anything that changes what a stored vote or revision *means* is in Phase 1, because retrofitting meaning onto existing rows is far more expensive than adding a column now. Growth features wait until the model can bear them. Analytics wait until there is something to analyse.
+
+### Phase 0 — Safe to invite anyone *(before any real user signs up)*
+
+Prerequisites. None of these is optional and none depends on another.
+
+- Server-side identity: votes, edits, flags and reverts attributed to the authenticated session, never to a client-supplied id or name.
+- Request validation at the API boundary (zod or equivalent); malformed input returns 400, not 500.
+- Rate limiting on vote, flag, revert, create and sign-up endpoints.
+- Invite-only registration: `Invite` table and sign-up gate (decision recorded under Access model).
+- Privacy policy drafted and published; the "what the numbers are and are not" note beneath every breakdown.
+- Evidence strength derived: no evidence items means No evidence, enforced at the API.
+- New seed in place, old seed removed; `seed:check` runs in CI.
+- Contested-status copy corrected to "reading and rating stay open".
+
+### Phase 1 — The model means what it says *(first cohort, invite-only)*
+
+Changes to what votes and revisions mean. Each is small; together they are the difference between a dataset and a pile of booleans.
+
+- Unsure as a third option on both signals.
+- Signal wording by claim type.
+- `ClaimVoteEvent` log and the "changed their mind" count.
+- Revision kinds (copyedit / substantive) and vote archiving on substantive change.
+- Evidence strength on the item, with reason; claim-level field retired.
+- "Challenge this classification" affordance on the type badge.
+- Column ordering rule and homepage ordering rule.
+- Score visibility: numbers hidden until the viewer has voted.
+- Contested thresholds scaled to rater count; half-weight for new accounts.
+- Moderator `role` on `User` and a minimal pending-edit review page (needed to exit contested status at all).
+
+### Phase 2 — Contribution at scale *(open the gate, or decide not to)*
+
+The features that make it safe for many people to add content, in the order they compound.
+
+- Search over titles, body and tags.
+- Duplicate detection at creation ("This may already exist").
+- Merge and redirects.
+- Discussion tab.
+- Tag taxonomy with admin management.
+- Full moderator tooling: queues for pending edits and large merges, apply/lift contested, delete and ban.
+- Nullable context fields and a hidden empty context section, if hand-written context is not keeping up.
+- Re-evaluate open registration.
+
+### Phase 3 — Insight *(enough data to learn from)*
+
+- Persuasion signal: "Which of these did the most work for you?"
+- Mind-change analytics by claim and by connection, aggregate-only.
+- Question roots and the sibling comparison view.
+- Demographic breakdown presentation beyond the raw endpoint.
+- Compact view, i18n scaffolding, Contributor role.
+- Argument Lock design, if contested status has proven insufficient.
+
+### Deliberately not scheduled
+
+- Watchlists and notifications: wait for evidence that editors need them.
+- External polling ingestion, social integrations, third-party API: wait for the data to be worth comparing.
 
 ---
 
 ## Open Items
 
-Carried over from `requirements-delta.md`'s "Open / not yet designed" plus gaps identified in a subsequent requirements/security/architecture review:
+Each item names its phase; the Roadmap above is the sequence.
 
-- **Server-side identity enforcement.** Voting (`x-voter-id`) and editing (`authorName`) both trust client-supplied values instead of the authenticated session. This needs fixing before the account system is actually meaningful for attribution or abuse prevention — currently anyone can vote or edit as any identity.
-- **Moderator role.** Contested status assumes "a moderator applies it directly," but there is no `role` field or moderator concept anywhere yet, and no UI to review the `pending` edit queue a contested claim accumulates.
-- **Rate limiting.** None exists on vote/flag/revert/sign-up endpoints.
-- **Request validation.** No schema validation (e.g. zod) at the API boundary; malformed enum values currently 500 instead of 400.
-- **Access model decision.** Invite-only (original spec) vs. open registration (shipped) needs an explicit call.
-- **Tag taxonomy.** Admin-managed `Tag` model with search, vs. the current free-string tags array.
-- **Search.** Claim titles/content/tags — specified in the original MVP scope, not yet built (homepage is currently an unfiltered list).
-- **Argument Lock** *(distinct from contested status)* — a moderator-only persistent lock on a single claim, design still open: scope (edits/votes/both), duration, public visibility of reason, escalation path from a flag.
-- **Privacy policy** — must be drafted and published before real users sign up, given demographic + political-opinion data collection.
-- **Compact view** UI density preference — specified, not built.
-- **i18n scaffolding** (`next-intl`) — specified, not built.
-- **v7 hover-card changes agreed but not yet drawn**: move the claim's own supporting/contradicting list and the CTA into band 1 of the hover card; rewrite relationship headings so the referenced claim is named inline rather than implied by column position.
+- **Server-side identity enforcement** *(Phase 0)*. Voting (`x-voter-id`) and editing (`authorName`) both trust client-supplied values instead of the authenticated session. Currently anyone can vote or edit as any identity.
+- **Request validation** *(Phase 0)*. No schema validation at the API boundary; malformed enum values currently 500 instead of 400.
+- **Rate limiting** *(Phase 0)*. None exists on vote/flag/revert/sign-up endpoints.
+- **Invite gate** *(Phase 0)*. Decision recorded: invite-only at launch.
+- **Privacy policy** *(Phase 0)*. Must be drafted and published before real users sign up, given demographic + political-opinion data collection.
+- **Derived evidence strength** *(Phase 0 at claim level, Phase 1 at item level)*.
+- **Moderator role and pending-edit review** *(Phase 1 minimal, Phase 2 full)*. Contested status assumes "a moderator applies it directly," but there is no `role` field or moderator concept yet, and no UI to review the `pending` queue a contested claim accumulates.
+- **Unsure, vote history, revision kinds, ordering, score visibility, scaled thresholds** *(Phase 1)*. Specified above.
+- **Search** *(Phase 2)*. Claim titles/content/tags — in the original MVP scope, not yet built.
+- **Duplicates, merge, redirects** *(Phase 2)*. Specified above.
+- **Discussion** *(Phase 2)*. Specified above.
+- **Tag taxonomy** *(Phase 2)*. Admin-managed `Tag` model with search, vs. the current free-string tags array.
+- **Persuasion signal, question roots** *(Phase 3)*. Specified above.
+- **Argument Lock** *(Phase 3, design only)* — a moderator-only persistent lock on a single claim: scope (edits/votes/both), duration, public visibility of reason, escalation path from a flag.
+- **Compact view** *(Phase 3)* — specified, not built.
+- **i18n scaffolding** (`next-intl`) *(Phase 3)* — specified, not built.
+- **v7 hover-card changes agreed but not yet drawn** *(Phase 1, design)*: move the claim's own supporting/contradicting list and the CTA into band 1 of the hover card; rewrite relationship headings so the referenced claim is named inline rather than implied by column position.
 - **Plain-language mechanism** (glossary terms, or a required plain-English summary per claim) — deferred, not dropped.
 - **Sentiment fields** — legacy `sentimentScore`/`sentimentLabel` from the pre-unification schema; confirmed removed in the current schema, no action needed.
+- **README** still refers to a `code/` directory and the original tech stack; update to `backend/` and `frontend/` *(Phase 0, trivial)*.
 
 ---
 
-Last updated: 2 August 2026.
+Last updated: 14 November 2026.

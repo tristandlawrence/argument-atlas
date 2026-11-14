@@ -7,6 +7,7 @@
     "dev": "tsx watch src/index.ts",
     "start": "tsx src/index.ts",
     "seed": "tsx prisma/seed.ts",
+    "seed:check": "SEED_DRY_RUN=true tsx prisma/seed.ts",
     "seed:postcodes": "tsx prisma/seed-postcodes.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

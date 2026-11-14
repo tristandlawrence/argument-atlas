@@ -149,6 +149,10 @@ type VoiceLike = {
   votes: ClaimVoteLike[];
 };
 
+function clampPct(n: number) {
+  return Math.min(95, Math.max(5, n));
+}
+
 export function voiceSummary(v: VoiceLike) {
   const stats = voteStats(v.votes);
   return {
@@ -162,9 +166,10 @@ export function voiceSummary(v: VoiceLike) {
     raterCount: stats.raterCount,
     agreePct: stats.agreePct,
     wellConstructedPct: stats.wellConstructedPct,
+    // Clamped a few percent inside the edges so a 0% or 100% ring is not clipped.
     plot:
       stats.raterCount > 0 && stats.agreePct !== null && stats.wellConstructedPct !== null
-        ? { left: stats.agreePct, top: 100 - stats.wellConstructedPct }
+        ? { left: clampPct(stats.agreePct), top: clampPct(100 - stats.wellConstructedPct) }
         : null,
   };
 }

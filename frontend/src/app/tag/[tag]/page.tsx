@@ -36,8 +36,10 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
       </p>
       <div className={styles.list}>
         {claims.map((claim) => (
-          <Link href={`/claim/${claim.slug}`} className={styles.row} key={claim.id}>
-            <div className={styles.rowTitle}>{claim.title}</div>
+          <div className={styles.row} key={claim.id}>
+            <Link href={`/claim/${claim.slug}`} className={styles.rowTitle}>
+              {claim.title}
+            </Link>
             <div className={styles.rowMeta}>
               <TypeBadge type={claim.type} />
               {claim.tags
@@ -47,7 +49,7 @@ export default async function TagPage({ params }: { params: Promise<{ tag: strin
                 ))}
               {claim.contestedAt ? <span className={styles.contested}>CONTESTED</span> : null}
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </main>

@@ -10,8 +10,10 @@ export default async function Home() {
       <h1 className={styles.heading}>Claims</h1>
       <div className={styles.list}>
         {claims.map((claim) => (
-          <Link href={`/claim/${claim.slug}`} className={styles.row} key={claim.id}>
-            <div className={styles.rowTitle}>{claim.title}</div>
+          <div className={styles.row} key={claim.id}>
+            <Link href={`/claim/${claim.slug}`} className={styles.rowTitle}>
+              {claim.title}
+            </Link>
             <div className={styles.rowMeta}>
               <TypeBadge type={claim.type} />
               {claim.tags.map((tag) => (
@@ -19,7 +21,7 @@ export default async function Home() {
               ))}
               {claim.contestedAt ? <span className={styles.contested}>CONTESTED</span> : null}
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </main>

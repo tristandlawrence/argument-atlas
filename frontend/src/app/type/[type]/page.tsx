@@ -34,15 +34,17 @@ export default async function TypePage({ params }: { params: Promise<{ type: str
       </p>
       <div className={styles.list}>
         {claims.map((claim) => (
-          <Link href={`/claim/${claim.slug}`} className={styles.row} key={claim.id}>
-            <div className={styles.rowTitle}>{claim.title}</div>
+          <div className={styles.row} key={claim.id}>
+            <Link href={`/claim/${claim.slug}`} className={styles.rowTitle}>
+              {claim.title}
+            </Link>
             <div className={styles.rowMeta}>
               {claim.tags.map((tag) => (
                 <TagBadge tag={tag} key={tag} />
               ))}
               {claim.contestedAt ? <span className={styles.contested}>CONTESTED</span> : null}
             </div>
-          </Link>
+          </div>
         ))}
       </div>
     </main>

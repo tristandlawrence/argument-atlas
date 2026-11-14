@@ -100,7 +100,28 @@ Debates are not written once. The first prototype review showed the pattern: a d
 | Promoted | Became a parent for siblings that were really its sub-points | Re-parenting exists; **insert a parent** as a single structural edit is Phase 3 |
 | Absorbed | A duplicate merged into a canonical claim; slug redirects | Phase 3 |
 | Challenged | Enough raters say a connection is misplaced | Counts shipped; thresholds and edit prompt Phase 2 |
-| Stale | A time-bound claim whose "as of" has passed | Phase 4 |
+| Stale | A time-bound claim whose "as of" has passed | Phase 2 (moved up after the research pass) |
+
+### What the first research pass found (November 2026)
+
+The six seeded debates were checked against the public record. Three had moved under the seed within twelve months:
+
+| Debate | What happened | What the crux is now |
+| --- | --- | --- |
+| Nuclear ban | Coalition's September 2026 plan pledges repeal and cites AI data centres | Timing, confirmed. A new sub-fight over data centres added, with its rebuttal |
+| Gas reservation | Adopted May 2026 (20% of exports from July 2027, pre-Dec-2025 contracts exempt), softened September 2026 to ~110% of forecast demand | Whether the exemptions and the demand peg leave enough gas in the scheme to move prices. Root reframed from "should we" to "will it" |
+| Negative gearing | Budget 12 May 2026: new builds only from July 2027, grandfathered; bill before the Senate | Rents, confirmed, now with numbers: Treasury under $2 a week against industry modelling of about $9 |
+| Migration cap | Budget forecasts 245,000 then 225,000 a year; 2026 student planning level 295,000; Coalition proposes 240,000 | Students, confirmed. The gap a 200,000 cap would close has narrowed to 25,000–45,000 a year |
+| Approval deadlines | Reforms passed 28 November 2025; EPA from July 2026; streamlined pathway by December 2026 | Shifted entirely: the national-interest exemption and the EPA's independence. Root reframed; the deadline-design claims retired |
+| Parking minimums | Victoria removed minimums near transport December 2025; Grattan's *Wasted space* May 2026 | Spillover versus who pays, confirmed. Grattan's street-occupancy data is new evidence; no organised opposition has made a public case |
+
+Lessons folded into the roadmap:
+
+- **Roots date faster than expected.** A claim framed as "should X happen" becomes stale the day X happens. The *Stale* state moves from Phase 4 to Phase 2: every claim gets an optional "as of" date and a prompt to revisit when it passes.
+- **Retire, do not delete.** Claims overtaken by events (the deemed-approval design question, the sovereign-risk objection to touching existing contracts) were removed from the seed because the seed has no history. In the product they would be retired with history intact, which is the Phase 3 *absorbed* and Phase 2 *stale* machinery.
+- **Voices are now specific.** Every root's voices are dated pieces with URLs returned by search: ABC, The Conversation, Grattan, EDO, Corrs, Mining Weekly (Reuters), The Nightly, departmental pages, Hansard via OpenAustralia. Low-authority aggregator sites were excluded. Some pages could not be fetched for verification behind paywalls or bot blocks and are cited from their search metadata; they are marked for the Phase 1 content pass.
+- **Opposing voices are not always findable.** For parking, no council or residents' group has made a public written case against removal that search could find. The claim stands with no voice attached, which is the honest state.
+- **Research is a lifecycle event.** Until stale marking ships, the editorial pass above is repeated each quarter on every root.
 
 Does this need solving for every debate now? The editorial pass, yes: it costs nothing but attention and the seed now follows it in all six debates. The product operations, no: a crux flag is enough for the prototype, and insert-a-parent, merge and stale marking are scheduled where they can be built once rather than twice.
 
@@ -119,7 +140,7 @@ The seed is the product's first impression and the only content new users see. I
 - **Every root has a crux and voices.** The crux connection is marked; voices are attached with stance and kind. Seeded voice URLs are organisation-level pages, chosen because they can be stood behind; the pass that replaces them with specific articles is Phase 1 content work, not something to invent.
 - **Context links out.** Root context links to legislation, the regulator's inquiry, or the Wikipedia overview as orientation. A full link pass across all claims is Phase 1.
 - **Attribution is honest.** Revisions are authored by "Argument Atlas editors", not "Seed data". Connection reasons are substantive.
-- **Nothing time-sensitive.** No debate depends on an event, a poll or a bill from the last twelve months. Content that dates within a year is created by users, not seeded.
+- **Time-bound by design, and dated.** The first version of this policy said "nothing time-sensitive". The research pass showed that is impossible for live public debates: three of six roots were overtaken within a year. Roots are instead framed around the live question, carry dated context and timelines, and are re-checked quarterly until stale marking ships (Phase 2).
 - **No children with templated context.** The previous seed generated each child's context from its parent's; the current schema makes context required, so each claim's context is written by hand. If that proves unsustainable as content grows, make the fields nullable and hide the section (Phase 3).
 
 `npm run seed:check` validates the content and prints graph statistics without touching the database. `npm run seed` replaces all claim data.
@@ -564,6 +585,7 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - Local hosting only. No public URL, no real users, no sign-ups beyond what is needed to exercise the UI.
 - The new seed loaded (done), with sparse demo votes so the plot, score bars and hover cards have something to show.
 - First review feedback applied (done): markdown prose, crux marker, nuclear and gas restructured around their cruxes, voices with plot rings, connection challenges, restated claim in the rating box, compact title bar, column hints and hover-card calls to action.
+- Research pass (done): every root checked against the public record; gas, negative gearing and approvals reframed around where the argument now sits; voices replaced with dated, linked pieces; context links added.
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -598,6 +620,7 @@ Changes to what votes and revisions mean. Each is small; together they are the d
 - Contested thresholds scaled to rater count; half-weight for new accounts.
 - Moderator `role` on `User` and a minimal pending-edit review page (needed to exit contested status at all).
 - Challenge thresholds: a connection whose challenges exceed a set share of its strength votes is flagged on the row, the edit panel prompts a re-parent or flip, and challenges count toward contested status.
+- Stale marking (moved up from Phase 4): an optional "as of" date on any claim, a visible "this may have been overtaken" note once it passes, and a retired state that keeps history but leaves the live columns.
 - Unsure and vote history applied to voice votes as well as claim votes.
 
 ### Phase 3 — Contribution at scale *(open the gate, or decide not to)*
@@ -624,7 +647,6 @@ The features that make it safe for many people to add content, in the order they
 - Demographic breakdown presentation beyond the raw endpoint.
 - Compact view, i18n scaffolding, Contributor role.
 - Argument Lock design, if contested status has proven insufficient.
-- Stale marking for time-bound claims: an "as of" date, a prompt to revisit, and a retired state that keeps history but leaves the live columns.
 
 ### Deliberately not scheduled
 
@@ -659,7 +681,8 @@ Each item names its phase; the Roadmap above is the sequence.
 - **Full markdown and sanitisation** *(Phase 1)*. The Phase 0 renderer is a safe subset; CommonMark with a sanitiser replaces it.
 - **Voice and link curation pass** *(Phase 1, content)*. Seeded voice URLs are organisation pages; replace with specific pieces. Add orientation links across all claims.
 - **Challenge thresholds** *(Phase 2)*. Specified under the hover card.
-- **Insert a parent, voice submission queue, stale marking** *(Phases 3–4)*. Specified under Debate lifecycle and Voices.
+- **Stale marking** *(Phase 2)*. Specified under Debate lifecycle.
+- **Insert a parent, voice submission queue** *(Phase 3)*. Specified under Debate lifecycle and Voices.
 - **README** still refers to a `code/` directory and the original tech stack; update to `backend/` and `frontend/` *(Phase 1, trivial)*.
 
 ---

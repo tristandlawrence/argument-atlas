@@ -143,9 +143,9 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: [...ENERGY, "CLIMATE"],
     context:
-      "Australia is the only G20 country with a legislated ban on nuclear power. The prohibition was inserted into [federal environment law](https://www.legislation.gov.au/C2004A00485/latest/text) and radiation-safety law in 1998 and 1999 as a condition of the Senate passing the bill that created the national radiation regulator. See also the [Wikipedia overview of nuclear power in Australia](https://en.wikipedia.org/wiki/Nuclear_power_in_Australia). It has never been seriously tested in Parliament since.\n\nThe question returned as coal plants in the National Electricity Market announced closure dates and the pace of renewable and transmission build-out came under strain. In 2024 the federal opposition adopted a policy of government-owned reactors on former coal sites, which put repeal on the agenda for the first time in a generation.",
+      "Australia is the only G20 country with a legislated ban on nuclear power. The prohibition was inserted into [federal environment law](https://www.legislation.gov.au/C2004A00485/latest/text) and radiation-safety law in 1998 and 1999 as a condition of the Senate passing the bill that created the national radiation regulator ([Wikipedia overview](https://en.wikipedia.org/wiki/Nuclear_power_in_Australia)).\n\nThe question returned in 2024 when the federal opposition proposed government-owned reactors on coal sites. A [House select committee](https://en.wikipedia.org/wiki/Select_Committee_on_Nuclear_Energy) reported in February 2025 that nuclear was too expensive and too slow; the Coalition dissented. After losing the May 2025 election the Coalition dropped public ownership but, in its [September 2026 energy plan](https://www.abc.net.au/news/2026-09-23/coalition-energy-plan-scrap-renewables-climate-laws/107184376), pledged to repeal every legislative prohibition on nuclear and let it compete for the same underwriting as coal, gas and renewables. The new argument for repeal is demand from AI data centres.",
     disagreement:
-      "Almost nobody argues the ban is a good piece of law on its own terms. The live dispute is whether repeal is harmless because it merely permits, or harmful because it diverts investment and attention from a transition that must happen before any reactor could run.",
+      "Almost nobody now argues about safety; the live dispute is timing and purpose. Opponents say nothing nuclear could run before 2040, so it answers none of this decade's price or reliability problems. Supporters say that is an argument to start now, and that data centres give nuclear a customer the grid debate ignores. The Senate would block repeal without Labor or the Greens, and state bans would remain either way.",
     evidence: [
       {
         type: "Legal text",
@@ -161,14 +161,20 @@ const claims: ClaimDef[] = [
       { label: "1998–99", text: "The ban is written into federal radiation-safety and environment law as a condition of creating the national regulator." },
       { label: "2006", text: "A government-commissioned review finds nuclear could be competitive only with a carbon price. No legislative change follows." },
       { label: "2019", text: "A House committee recommends a partial lift of the moratorium for newer reactor designs. The recommendation is not acted on." },
-      { label: "2022–24", text: "Coal plant closure dates across the National Electricity Market are brought forward." },
-      { label: "2024", text: "The federal opposition adopts a policy of government-owned reactors at seven former coal sites." },
+      { label: "Jun 2024", text: "The federal opposition adopts a policy of government-owned reactors at seven former coal sites." },
+      { label: "Feb 2025", text: "A House select committee's interim report finds nuclear too expensive and too slow; Coalition members dissent." },
+      { label: "May 2025", text: "The Coalition loses the federal election with the nuclear policy on its platform." },
+      { label: "Sep 2026", text: "The Coalition's energy plan pledges to repeal all nuclear prohibitions and to underwrite nuclear through the Capacity Investment Scheme, citing data-centre demand." },
     ],
     voices: [
-      { title: "Nuclear for Australia — the case for lifting the ban", outlet: "Nuclear for Australia", url: "https://www.nuclearforaustralia.com/", kind: "campaign", stance: "SUPPORTS", votes: { n: 4, agree: 2, well: 2 } },
-      { title: "Not without your approval: a way forward for nuclear technology in Australia", outlet: "House of Representatives Standing Committee on the Environment and Energy", url: "https://www.aph.gov.au/Parliamentary_Business/Committees/House/Environment_and_Energy/Nuclearenergy/Report", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
-      { title: "Climate Council on nuclear power in Australia", outlet: "Climate Council", url: "https://www.climatecouncil.org.au/", kind: "explainer", stance: "CONTRADICTS", votes: { n: 5, agree: 3, well: 3 } },
-      { title: "Australian Conservation Foundation on nuclear energy", outlet: "Australian Conservation Foundation", url: "https://www.acf.org.au/", kind: "campaign", stance: "CONTRADICTS" },
+      { title: "Coalition vows to 'take a chainsaw' to climate laws and offshore wind", outlet: "ABC News", author: "Jake Evans", url: "https://www.abc.net.au/news/2026-09-23/coalition-energy-plan-scrap-renewables-climate-laws/107184376", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
+      { title: "Why nuclear energy is not worth the risk for Australia", outlet: "Climate Council", url: "https://www.climatecouncil.org.au/nuclear-power-stations-are-not-appropriate-for-australia-and-probably-never-will-be/", kind: "explainer", stance: "CONTRADICTS", votes: { n: 5, agree: 3, well: 3 } },
+      { title: "Chris Bowen declares nuclear to power data centres a 'pipe dream'", outlet: "The Nightly", author: "Caitlyn Rintoul", url: "https://thenightly.com.au/politics/chris-bowen-declares-nuclear-to-power-data-centres-a-pipe-dream-ahead-of-national-cabinet-clash-over-energy-c-22772856", kind: "report", stance: "CONTRADICTS" },
+      { title: "BHP wants Australia to scrap nuclear power ban", outlet: "Mining.com (Reuters)", url: "https://www.mining.com/web/bhp-wants-australia-to-scrap-nuclear-power-ban/", kind: "report", stance: "SUPPORTS", votes: { n: 4, agree: 2, well: 2 } },
+      { title: "Submission to the NSW inquiry: lift the state nuclear prohibition", outlet: "Nuclear for Australia", url: "https://www.parliament.nsw.gov.au/lcdocs/submissions/95125/0126%20Nuclear%20for%20Australia.pdf", kind: "submission", stance: "SUPPORTS", votes: { n: 2, agree: 1, well: 1 } },
+      { title: "Select Committee on Nuclear Energy: majority findings and Coalition dissent", outlet: "House of Representatives (via Wikipedia)", url: "https://en.wikipedia.org/wiki/Select_Committee_on_Nuclear_Energy", kind: "report", stance: "MIXED" },
+      { title: "No economic case: global experts say nuclear makes no sense in Australia", outlet: "RenewEconomy", url: "https://reneweconomy.com.au/no-economic-case-global-experts-say-nuclear-has-role-in-some-countries-but-makes-no-sense-in-australia/", kind: "report", stance: "CONTRADICTS" },
+      { title: "House debate on energy, 17 August 2026", outlet: "Parliament of Australia (via OpenAustralia)", url: "https://www.openaustralia.org.au/debates/?id=2026-08-17.155.1&m=769", kind: "speech", stance: "MIXED" },
     ],
     votes: { n: 17, agree: 7, well: 11 },
   },
@@ -243,6 +249,69 @@ const claims: ClaimDef[] = [
       },
     ],
     votes: { n: 6, agree: 5, well: 6 },
+  },
+  {
+    key: "E-data-centres",
+    title: "AI data centres need large amounts of firm power that nuclear could supply",
+    oneLiner: "The newest argument for repeal: a customer that wants constant, emissions-free electricity and can pay for it.",
+    body: "Australia has more than 160 operating data centres and over 200 more proposed. The Coalition argues that lifting the ban would let private operators contract for nuclear power for these loads, without any public money, and that a legislated prohibition deters that investment before it is even assessed.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: [...ENERGY, "TECHNOLOGY"],
+    context:
+      "By 2026 the data-centre case had largely replaced coal replacement as the Coalition's stated reason for repeal. The energy minister called nuclear for data centres a 'pipe dream'; the shadow minister called refusing it a missed opportunity. The federal government is drafting national data-centre rules on power and water.",
+    disagreement:
+      "Whether data centres change the arithmetic: supporters say a willing private buyer removes the public-cost objection; opponents say the timeline objection is untouched, since data centres are being built now and nuclear is not.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "The Nightly, 'Chris Bowen declares nuclear to power data centres a pipe dream', 25 August 2026",
+        url: "https://thenightly.com.au/politics/chris-bowen-declares-nuclear-to-power-data-centres-a-pipe-dream-ahead-of-national-cabinet-clash-over-energy-c-22772856",
+      },
+    ],
+    votes: { n: 7, agree: 3, well: 4 },
+  },
+  {
+    key: "E-smr-data-centre-cost",
+    title: "Modelling commissioned by the Australian Conservation Foundation found powering data centres with small modular reactors would cost billions of dollars a year more than solar with storage",
+    oneLiner: "The 'Phantom Energy' report put the gap at between $6 billion and $11 billion a year.",
+    body: "The report compared the cost of meeting projected data-centre demand with small modular reactors against large-scale solar and storage, and found the nuclear option several billion dollars a year dearer. It also noted that no commercial reactor has yet been built with the modular factory methods meant to bring costs down.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: [...ENERGY, "TECHNOLOGY"],
+    context:
+      "This is the main factual reply to the data-centre argument. It was commissioned by an advocacy group opposed to nuclear, which is why it is rated moderate rather than strong; its inputs have not been independently audited.",
+    disagreement:
+      "Supporters of nuclear say the comparison assumes solar can meet a constant load and ignores the land and transmission costs of doing so; opponents say the gap is too large for those adjustments to close.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "Canberra Times (AAP), 'Artificial intelligence, nuclear power a costly combo', 2026 — reporting the ACF-commissioned Phantom Energy analysis",
+        url: "https://www.canberratimes.com.au/story/9390176/artificial-intelligence-nuclear-power-a-costly-combo/",
+      },
+    ],
+    votes: { n: 5, agree: 3, well: 4 },
+  },
+  {
+    key: "E-state-bans",
+    title: "Repealing the federal ban would leave state prohibitions in place in New South Wales, Victoria and Queensland",
+    oneLiner: "Three states have their own nuclear bans; federal repeal alone would not permit a plant in any of them.",
+    body: "New South Wales, Victoria and Queensland each prohibit nuclear power facilities under state law. A federal repeal would remove one barrier but a plant on the east coast would also need the relevant state to repeal its Act, which the Coalition's plan acknowledges it would have to urge states to do.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ENERGY,
+    context:
+      "The layered bans are often lost in the federal debate. They matter for what 'repeal' actually achieves: it opens the question in Western Australia, South Australia and the territories, and hands the east coast question to state parliaments.",
+    disagreement:
+      "Not contested as fact. Supporters of repeal say removing the federal ban is the necessary first step whatever the states do; opponents say it shows how little a federal repeal would change on its own.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "ABC News, 'Coalition vows to take a chainsaw to climate laws and offshore wind', 23 September 2026 — notes state bans would also need repeal",
+        url: "https://www.abc.net.au/news/2026-09-23/coalition-energy-plan-scrap-renewables-climate-laws/107184376",
+      },
+    ],
+    votes: { n: 4, agree: 4, well: 3 },
   },
   {
     key: "E-gencost",
@@ -432,57 +501,183 @@ const claims: ClaimDef[] = [
   // ---------------------------------------------------------------------------
   {
     key: "R-gas",
-    title: "East-coast gas producers should be required to reserve a share of production for domestic buyers",
-    oneLiner: "Whether a Western Australian-style domestic reservation should apply to Queensland's LNG export projects.",
-    body: "Queensland's three LNG export terminals connected the east-coast gas market to Asian prices in 2015. A reservation policy would require producers to set aside a fixed share of output for domestic use, as Western Australia has done since 2006. The question is whether that is the right tool for the price and supply problems that followed.",
-    type: "PROPOSAL",
+    title: "The east-coast gas reservation scheme starting in July 2027 will materially lower domestic gas prices",
+    oneLiner: "Australia has decided to reserve gas for domestic buyers. The question now is whether the scheme, as designed and then softened, will do what it was announced to do.",
+    body: "In May 2026 the federal government announced that Queensland's three LNG export ventures must reserve a share of export volumes for Australian users from July 2027, with contracts signed before 22 December 2025 exempt. In September 2026 the rule was recast around forecast domestic demand rather than a flat share of exports. The government says prices will fall; it will not say by how much.",
+    type: "OPINION",
     evidenceStrength: "MODERATE",
     tags: [...ENERGY, "ECONOMY"],
     context:
-      "Until 2015 the east-coast market was isolated: gas produced there could only be sold there. The Gladstone export terminals changed that, linking domestic prices to international ones just as the Bass Strait fields began to decline. The competition regulator has run a [standing inquiry into the market](https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30) since 2017, and successive governments have adopted a price cap, a code of conduct and an export control mechanism, but not reservation.",
+      "Until 2015 the east-coast market was isolated. The Gladstone export terminals linked domestic prices to Asian ones just as the Bass Strait fields began to decline, and east-coast prices roughly tripled. The competition regulator has run a [standing inquiry](https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30) since 2017; governments added an export-control mechanism, a price cap and a code of conduct, but not reservation.\n\nThat changed in 2026. A [Gas Market Review](https://industry.gov.au/news/australian-governments-gas-market-review-recommends-domestic-gas-reservation-policy) recommended reservation; on [7 May 2026](https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532) the government announced a 20 per cent reservation of export volumes from July 2027, with pre-December-2025 contracts preserved. Producers split: APLNG and Shell accepted it, Santos opposed it. In September 2026 the rule was softened to reserve about 110 per cent of forecast domestic demand. See the [Wikipedia summary](https://en.wikipedia.org/wiki/Domestic_Gas_Reservation_Scheme_Australia_2027).",
     disagreement:
-      "Both sides accept that east-coast prices rose sharply after exports began and that gas remains needed for firming. They divide on whether reservation would lower prices without deterring the new supply the market also needs, and on whether existing contracts could be touched.",
+      "Nobody now disputes that reservation is happening. The argument is whether exempting existing contracts and pegging the reserve to forecast demand leaves enough new gas in the scheme to move prices before the 2030s, and whether the Greens' alternative, an export tax, would have done more.",
     evidence: [
       {
+        type: "Journalism",
+        citation: "ABC News, 'Gas export restrictions and better domestic prices promised under new east coast reservation policy', 7 May 2026",
+        url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532",
+      },
+      {
         type: "Official report",
-        citation: "Australian Competition and Consumer Commission, Gas Inquiry 2017–2030 — interim reports",
-        url: "https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30",
+        citation: "Department of Industry, Science and Resources — Gas Market Review recommends a domestic gas reservation policy",
+        url: "https://industry.gov.au/news/australian-governments-gas-market-review-recommends-domestic-gas-reservation-policy",
       },
     ],
     timeline: [
       { label: "2006", text: "Western Australia adopts a domestic reservation policy for new LNG projects." },
       { label: "2015", text: "The first Queensland LNG export cargo leaves Gladstone, linking east-coast gas to Asian prices." },
-      { label: "2017", text: "The Australian Domestic Gas Security Mechanism is created, allowing export limits during a forecast shortfall. The ACCC's standing gas inquiry begins." },
-      { label: "2022", text: "A temporary wholesale price cap and a mandatory code of conduct follow the energy price spike." },
-      { label: "Now", text: "Reservation remains the main policy proposed but not adopted." },
+      { label: "2017", text: "The Australian Domestic Gas Security Mechanism is created. The ACCC's standing gas inquiry begins." },
+      { label: "22 Dec 2025", text: "Cut-off date: export contracts signed before this are later exempted from reservation." },
+      { label: "7 May 2026", text: "The government announces a 20 per cent reservation of Queensland LNG export volumes from July 2027." },
+      { label: "Sep 2026", text: "The rule is softened to reserve about 110 per cent of forecast domestic demand; industry welcomes the change and warns of oversupply." },
+      { label: "Jul 2027", text: "Scheme due to start." },
     ],
     voices: [
-      { title: "Australia Institute on a domestic gas reservation", outlet: "The Australia Institute", url: "https://australiainstitute.org.au/", kind: "report", stance: "SUPPORTS", votes: { n: 3, agree: 2, well: 2 } },
-      { title: "Australian Energy Producers on gas supply and market intervention", outlet: "Australian Energy Producers", url: "https://energyproducers.au/", kind: "submission", stance: "CONTRADICTS", votes: { n: 2, agree: 0, well: 1 } },
-      { title: "Grattan Institute on the east-coast gas market", outlet: "Grattan Institute", url: "https://grattan.edu.au/", kind: "report", stance: "MIXED" },
+      { title: "Gas export restrictions and better domestic prices promised under new east coast reservation policy", outlet: "ABC News", author: "Jane Norman", url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
+      { title: "Australian gas exporters will be forced to set aside local supply for domestic users", outlet: "The Conversation", author: "Kevin Morrison, UTS", url: "https://theconversation.com/australian-gas-exporters-will-be-forced-to-set-aside-local-supply-for-domestic-users-282366", kind: "explainer", stance: "SUPPORTS", votes: { n: 4, agree: 3, well: 4 } },
+      { title: "Gas Market Review recommends domestic gas reservation policy", outlet: "Department of Industry, Science and Resources", url: "https://industry.gov.au/news/australian-governments-gas-market-review-recommends-domestic-gas-reservation-policy", kind: "report", stance: "SUPPORTS" },
+      { title: "Australian Energy Producers say gas review falls short on supply goals", outlet: "Mining Weekly (Reuters)", url: "https://www.miningweekly.com/article/australian-energy-producers-say-gas-review-falls-short-on-supply-goals-2026-05-19", kind: "report", stance: "CONTRADICTS", votes: { n: 2, agree: 0, well: 1 } },
+      { title: "Australia softens gas reserve rule for LNG exporters", outlet: "Mining Weekly (Reuters)", url: "https://www.miningweekly.com/article/australia-softens-gas-reserve-rule-for-lng-exporters-2026-09-10", kind: "report", stance: "MIXED" },
+      { title: "Santos boss Kevin Gallagher will take Feds 'at their word' on future of contracts under gas reservation policy", outlet: "The Nightly", url: "https://thenightly.com.au/business/santos-boss-kevin-gallagher-will-take-feds-at-their-word-on-future-of-contracts-under-gas-reservation-policy-c-22338808", kind: "interview", stance: "CONTRADICTS" },
+      { title: "Gas export project to stop dipping into domestic market", outlet: "Illawarra Mercury (AAP)", url: "https://www.illawarramercury.com.au/story/9347341/gas-export-project-to-stop-dipping-into-domestic-market/", kind: "report", stance: "SUPPORTS" },
     ],
-    votes: { n: 13, agree: 8, well: 7 },
+    votes: { n: 12, agree: 6, well: 7 },
   },
   {
-    key: "E-reservation-lowers-prices",
-    title: "A domestic reservation would lower east-coast gas prices for Australian buyers",
-    oneLiner: "The policy's whole purpose, stated as a claim so it can be tested.",
-    body: "If a share of production must be sold domestically, local buyers are no longer bidding against Asian LNG customers for the same gas, and the domestic price should settle below export parity. Western Australia is the precedent proponents cite.",
+    key: "E-grandfathered-contracts",
+    title: "Because export contracts signed before 22 December 2025 are exempt, the scheme reaches too little gas to move prices for years",
+    oneLiner: "Most current east-coast production is already contracted; the reserve bites only on new supply.",
+    body: "The announced scheme preserves foundation contracts and any signed before the December 2025 cut-off. Since the three Queensland ventures sold most of their output under long-term contracts years ago, the gas actually subject to reservation is a thin slice of new and uncontracted supply, which critics say is too small to shift the domestic price before the 2030s.",
     type: "OPINION",
     evidenceStrength: "MODERATE",
     tags: ENERGY,
     context:
-      "This is where the reservation debate actually turns. Most participants agree prices rose after exports began and that gas remains needed for firming. The dispute is whether reservation would bring prices down, by how much, and how soon, given that most current east-coast production is already under long-term export contract.",
+      "This is where the reservation debate now sits. Producers wanted only new gas included and largely got it; the Greens say the policy was written by the industry; the government says a 'modest' oversupply is enough. The September 2026 softening, which pegs the reserve to about 110 per cent of forecast demand, sharpened the question.",
     disagreement:
-      "Supporters point to Western Australia. Opponents say WA's prices reflect cheap, abundant offshore gas and a small market, and that a prospective east-coast policy would reach too little gas to move the price for years.",
+      "Supporters of the design say that at the margin even a modest oversupply sets the price, and point to modelling that extra Queensland supply lowers southern prices. Critics say that with Santos the only major venture not already supplying the domestic market, the scheme mostly formalises what two of three producers already do.",
     evidence: [
       {
-        type: "Official report",
-        citation: "Australian Competition and Consumer Commission, Gas Inquiry 2017–2030 — east-coast and western price comparisons",
-        url: "https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30",
+        type: "Journalism",
+        citation: "ABC News, 7 May 2026 — contracts entered before December 2025 preserved; minister will not say how far prices fall",
+        url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532",
+      },
+      {
+        type: "Journalism",
+        citation: "The Conversation, Kevin Morrison, 7 May 2026 — exemptions, consultation risk and WA compliance record",
+        url: "https://theconversation.com/australian-gas-exporters-will-be-forced-to-set-aside-local-supply-for-domestic-users-282366",
       },
     ],
-    votes: { n: 8, agree: 5, well: 5 },
+    votes: { n: 7, agree: 4, well: 5 },
+  },
+  {
+    key: "E-softened-110",
+    title: "In September 2026 the reservation was recast to about 110 per cent of forecast domestic demand, and Santos is the only major east-coast producer not already supplying the domestic market",
+    oneLiner: "The softened rule reserves little beyond what two of the three ventures already sell locally.",
+    body: "Reuters reported that the government revised the scheme from a flat 20 per cent of export volumes to a reserve of roughly 110 per cent of estimated domestic demand. Industry welcomed the change while warning that oversupply could depress prices and deter new development. Of the three Queensland ventures, only Santos's GLNG does not supply significant volumes domestically.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ENERGY,
+    context:
+      "The softening is the most recent move in the design fight and the clearest test of whether the scheme binds. Its details were still subject to regulation when this was written.",
+    disagreement:
+      "Agreed as a description of the change. Disputed is what it means: a sensible calibration to actual need, or a retreat that leaves the price problem where it was.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "Mining Weekly (Reuters), 'Australia softens gas reserve rule for LNG exporters', 10 September 2026",
+        url: "https://www.miningweekly.com/article/australia-softens-gas-reserve-rule-for-lng-exporters-2026-09-10",
+      },
+    ],
+    votes: { n: 5, agree: 4, well: 4 },
+  },
+  {
+    key: "E-southern-price-modelling",
+    title: "Modelling cited in support of the scheme found that additional Queensland supply would lower wholesale prices in New South Wales and Victoria",
+    oneLiner: "The government's 'modest oversupply' claim rests on this kind of result.",
+    body: "An Energy Edge study cited by The Conversation found that extra gas from Queensland flowing south would reduce prices in the southern states, where the Bass Strait decline is sharpest. The government expects the reservation to create a modest domestic oversupply with the same effect.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ENERGY,
+    context:
+      "This is the factual plank under the government's price claim. It is modelling of supply effects, not of the scheme as finally designed.",
+    disagreement:
+      "Critics accept the direction and dispute the magnitude once exemptions and the demand peg are applied.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "The Conversation, Kevin Morrison, 7 May 2026 — Energy Edge study on southern prices",
+        url: "https://theconversation.com/australian-gas-exporters-will-be-forced-to-set-aside-local-supply-for-domestic-users-282366",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
+  {
+    key: "E-investment-deterrent",
+    title: "Mandatory reservation will deter investment in new gas supply and worsen the shortfall it is meant to fix",
+    oneLiner: "The producers' central objection: forced local sales at any price make new fields harder to finance.",
+    body: "Australian Energy Producers argued the draft imposed complex and opaque compliance obligations, would undermine trust with Asian buyers, and would deter investment. Santos's chief executive said forcing sales at any price could 'kill companies'; a smaller producer called the scheme 'nationalisation by stealth'. If new supply does not come, the argument runs, prices rise regardless of reservation.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: [...ENERGY, "ECONOMY"],
+    context:
+      "This objection shaped the September softening. It is the industry's position rather than an independent finding, and the industry was itself split: two of the three Queensland ventures accepted reservation.",
+    disagreement:
+      "Supporters of the scheme answer that Western Australia reserved gas for twenty years without choking investment, and that producers who already supply the domestic market had no difficulty accepting the rule.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "Mining Weekly (Reuters), 'Australian Energy Producers say gas review falls short on supply goals', 19 May 2026",
+        url: "https://www.miningweekly.com/article/australian-energy-producers-say-gas-review-falls-short-on-supply-goals-2026-05-19",
+      },
+      {
+        type: "Journalism",
+        citation: "The Nightly, 'Santos boss Kevin Gallagher will take Feds at their word on future of contracts under gas reservation policy', 2026",
+        url: "https://thenightly.com.au/business/santos-boss-kevin-gallagher-will-take-feds-at-their-word-on-future-of-contracts-under-gas-reservation-policy-c-22338808",
+      },
+    ],
+    votes: { n: 6, agree: 2, well: 4 },
+  },
+  {
+    key: "E-industry-split",
+    title: "Two of the three Queensland LNG ventures accepted a reservation scheme; only Santos opposed it",
+    oneLiner: "The industry's own split weakens the claim that reservation is unworkable.",
+    body: "Reporting around the May 2026 announcement described the LNG industry as broadly supportive, chiefly to end ad hoc interventions by successive governments, with Australia Pacific LNG and Shell's QCLNG accepting the policy and Santos's GLNG preferring the status quo. GLNG is also the venture that has drawn most on domestic gas to meet export contracts.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ENERGY,
+    context:
+      "Which producers objected, and why, is a useful check on the investment-deterrence argument: the objector is the venture with the least domestic supply and the most to lose.",
+    disagreement:
+      "Agreed as fact. Producers say acceptance was pragmatic, not endorsement; critics say it shows the scheme asks little of two of the three.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "ABC News, 7 May 2026 — industry broadly supportive; Illawarra Mercury (AAP), 'Gas export project to stop dipping into domestic market'",
+        url: "https://www.illawarramercury.com.au/story/9347341/gas-export-project-to-stop-dipping-into-domestic-market/",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
+  {
+    key: "E-export-tax",
+    title: "A tax on gas exports would lower domestic prices and raise revenue, which reservation does not",
+    oneLiner: "The Greens and Senator Pocock argue the government chose the instrument the industry preferred.",
+    body: "A Senate committee considered gas taxation alongside reservation. The Greens said the reservation policy was written by the industry for the industry and that an export tax would both lower local prices and return revenue to the public; Senator David Pocock's dissenting report recommended a 25 per cent tax on all gas exports. The government ruled out gas tax increases in the 2026 budget.",
+    type: "PROPOSAL",
+    evidenceStrength: "MODERATE",
+    tags: [...ENERGY, "TAX"],
+    context:
+      "A competing answer to the same problem. It belongs in this debate because the case for reservation is partly the case against doing this instead.",
+    disagreement:
+      "Supporters of reservation say a tax raises prices for exporters without guaranteeing domestic volume; supporters of a tax say reservation guarantees volume for whoever the producers choose to sell to, at a price the government will not forecast.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "ABC News, 7 May 2026 — Greens and Pocock positions on export taxation",
+        url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532",
+      },
+    ],
+    votes: { n: 6, agree: 3, well: 4 },
   },
   {
     key: "E-wa-cheap-gas",
@@ -498,8 +693,9 @@ const claims: ClaimDef[] = [
       "Supporters of reservation answer that WA's domestic price has tracked well below what its export-linked price would have been, which is the policy's effect regardless of how cheap the gas is to produce.",
     evidence: [
       {
-        type: "Official report",
-        citation: "Australian Competition and Consumer Commission, Gas Inquiry — discussion of western market structure",
+        type: "Journalism",
+        citation: "The Conversation, Kevin Morrison, 7 May 2026 — notes compliance with WA's 15 per cent reservation has been poor",
+        url: "https://theconversation.com/australian-gas-exporters-will-be-forced-to-set-aside-local-supply-for-domestic-users-282366",
       },
     ],
     votes: { n: 5, agree: 2, well: 4 },
@@ -515,7 +711,7 @@ const claims: ClaimDef[] = [
     context:
       "Western Australia is a natural comparison because it is the only part of the country that has run the policy, and because its gas market is physically separate from the east coast's.",
     disagreement:
-      "The price gap is agreed. The dispute is causation: Western Australia also has abundant, cheap-to-produce offshore gas and a small domestic market, which would produce low prices with or without reservation.",
+      "The price gap is agreed. The dispute is causation: Western Australia also has abundant, cheap offshore gas and a small domestic market, and compliance with its reservation has been described as poor, so the policy may deserve less credit than it gets.",
     evidence: [
       {
         type: "Official report",
@@ -549,40 +745,6 @@ const claims: ClaimDef[] = [
       },
     ],
     votes: { n: 7, agree: 6, well: 6 },
-  },
-  {
-    key: "E-retrospective",
-    title: "Imposing reservation on gas already contracted for export would break existing contracts and deter future investment",
-    oneLiner: "Producers borrowed against long-term export contracts; forcing gas away from them is a sovereign-risk event.",
-    body: "The Queensland LNG projects were financed on the strength of twenty-year supply contracts with Asian buyers. A reservation that reached that gas would put Australian producers in breach and signal to future investors that approvals can be rewritten after the money is spent.",
-    type: "OPINION",
-    evidenceStrength: "NONE",
-    tags: ENERGY,
-    context:
-      "This is the producers' central objection and the reason governments have reached for export controls and price caps instead of reservation. It bears on how a policy is designed as much as on whether to have one.",
-    disagreement:
-      "Supporters of reservation generally accept the point about existing contracts and answer that a prospective policy avoids it. The disagreement then becomes whether a policy that touches only new gas would do anything useful soon enough.",
-    evidence: [],
-    votes: { n: 7, agree: 4, well: 5 },
-  },
-  {
-    key: "E-wa-prospective",
-    title: "Western Australia's reservation applied only to new projects, leaving existing export contracts untouched",
-    oneLiner: "The precedent the proposal draws on was prospective, not retrospective.",
-    body: "Western Australia's policy was negotiated project by project as each new LNG development sought approval. No existing contract was reopened. An east-coast policy could follow the same model, applying to new fields and expansions.",
-    type: "FACT",
-    evidenceStrength: "MODERATE",
-    tags: ENERGY,
-    context:
-      "The design of the Western Australian policy is often lost in the east-coast argument, where 'reservation' is heard as confiscation. How it actually worked matters for whether the sovereign-risk objection applies.",
-    disagreement:
-      "The history is agreed. The argument is whether a prospective policy on the east coast would reach enough gas to matter, given that most current production is already contracted.",
-    evidence: [
-      {
-        type: "Official report",
-        citation: "Government of Western Australia, Western Australian Domestic Gas Policy — application to new projects",
-      },
-    ],
   },
   {
     key: "E-adgsm",
@@ -626,21 +788,26 @@ const claims: ClaimDef[] = [
   // ---------------------------------------------------------------------------
   {
     key: "R-negative-gearing",
-    title: "Negative gearing should be limited to newly built dwellings for purchases made after a start date",
-    oneLiner: "Whether the deduction of rental losses against wage income should continue for established homes bought in future.",
-    body: "Negative gearing lets a landlord whose rental costs exceed rental income deduct the shortfall from other income, such as salary. The proposal keeps the concession for new construction, where it may add to supply, and ends it for future purchases of existing homes. Current arrangements would be grandfathered.",
+    title: "Parliament should pass the 2026 budget's restriction of negative gearing to newly built homes",
+    oneLiner: "The policy is now a bill before the Senate: negative gearing for new builds only from July 2027, existing investors grandfathered, and a reworked capital gains discount alongside it.",
+    body: "The 12 May 2026 budget restricted negative gearing to newly built residential property for investments made after budget night, with effect from 1 July 2027, and replaced the 50 per cent capital gains discount with an inflation-based discount and a 30 per cent floor. Anyone using the concessions before budget night keeps them. A Senate inquiry took evidence in June 2026.",
     type: "PROPOSAL",
-    evidenceStrength: "MODERATE",
+    evidenceStrength: "STRONG",
     tags: [...HOUSING, "TAX"],
     context:
-      "Australia is unusual in letting rental losses offset wage income without limit. Combined with the capital gains discount introduced in 1999, this makes a loss-making rental property a tax-effective way to hold an appreciating asset ([Wikipedia: negative gearing in Australia](https://en.wikipedia.org/wiki/Negative_gearing#Australia)). The policy was briefly quarantined in 1985 and restored in 1987, and a version of this proposal was taken to the 2016 and 2019 federal elections and lost both times.",
+      "Australia is unusual in letting rental losses offset wage income without limit. With the capital gains discount introduced in 1999, this made a loss-making rental a tax-effective way to hold an appreciating asset ([Wikipedia](https://en.wikipedia.org/wiki/Negative_gearing_in_Australia)). The concession was quarantined in 1985 and restored in 1987; a new-builds-only policy lost the 2016 and 2019 elections; the prime minister ruled out changes during the 2025 campaign.\n\nIn February 2026 Treasury was [reported to be modelling options](https://www.abc.net.au/news/2026-02-27/labor-not-ruling-out-negative-gearing-changes/106395074). The May budget adopted new-builds-only with grandfathering. Treasury's secretary told the Senate the measures mainly [change who owns housing](https://thenightly.com.au/politics/jenny-wilkinson-says-labor-tax-changes-will-reallocate-housing-as-investors-pull-back-c-22353594) rather than how much is built; the property industry's commissioned modelling forecasts higher rents and fewer homes.",
     disagreement:
-      "Economists broadly agree the concession pushes prices up at the margin. The disagreement is about magnitude, about whether rents would rise if investors withdrew, and about whether this is the right lever when supply constraints are so much larger.",
+      "Economists agree the concession pushes prices up at the margin and that the effect is modest. The live dispute is rents: Treasury puts the rise at under $2 a week, the industry's modelling at about $9. Behind that is a design fight over indefinite grandfathering, which keeps the concession alive for decades on existing stock.",
     evidence: [
       {
-        type: "Official data",
-        citation: "Australian Taxation Office, Taxation statistics — individuals, rental property schedules",
-        url: "https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/taxation-statistics",
+        type: "Primary source",
+        citation: "Treasury Laws Amendment (Tax Reform No. 1) Bill 2026 — second reading debate, House of Representatives, 3 June 2026",
+        url: "https://www.openaustralia.org.au/debates/?id=2026-06-03.112.2&m=567",
+      },
+      {
+        type: "Journalism",
+        citation: "The Nightly, 'Jenny Wilkinson says Labor tax changes will reallocate housing as investors pull back', 29 May 2026",
+        url: "https://thenightly.com.au/politics/jenny-wilkinson-says-labor-tax-changes-will-reallocate-housing-as-investors-pull-back-c-22353594",
       },
       {
         type: "Think tank / NGO",
@@ -653,14 +820,22 @@ const claims: ClaimDef[] = [
       { label: "1987", text: "Quarantining is reversed after rents rise in Sydney and Perth." },
       { label: "1999", text: "The capital gains tax discount is introduced, increasing the appeal of loss-making property investment." },
       { label: "2016 & 2019", text: "A federal opposition takes a new-builds-only policy to two elections and loses both." },
-      { label: "Now", text: "Price-to-income ratios in major cities sit near record highs, and the policy returns to debate in each budget cycle." },
+      { label: "2025", text: "During the election campaign the prime minister rules out changes to negative gearing." },
+      { label: "Feb 2026", text: "Treasury is reported to be modelling a two-property cap and a lower capital gains discount; the government does not rule out change." },
+      { label: "12 May 2026", text: "The budget restricts negative gearing to new builds from 1 July 2027 and replaces the 50 per cent CGT discount, grandfathering existing investors." },
+      { label: "Jun 2026", text: "The bill is debated in the House and examined by a Senate inquiry; industry modelling and Treasury disagree on rents." },
     ],
     voices: [
+      { title: "Labor not ruling out negative gearing changes", outlet: "ABC News", author: "Tom Crowley", url: "https://www.abc.net.au/news/2026-02-27/labor-not-ruling-out-negative-gearing-changes/106395074", kind: "report", stance: "MIXED" },
+      { title: "Jenny Wilkinson says Labor tax changes will reallocate housing as investors pull back", outlet: "The Nightly", author: "Katina Curtis", url: "https://thenightly.com.au/politics/jenny-wilkinson-says-labor-tax-changes-will-reallocate-housing-as-investors-pull-back-c-22353594", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
       { title: "Hot property: negative gearing and capital gains tax reform", outlet: "Grattan Institute", author: "John Daley and Danielle Wood", url: "https://grattan.edu.au/report/hot-property/", kind: "report", stance: "SUPPORTS", votes: { n: 5, agree: 4, well: 5 } },
-      { title: "Property Council of Australia on investor tax settings", outlet: "Property Council of Australia", url: "https://www.propertycouncil.com.au/", kind: "submission", stance: "CONTRADICTS", votes: { n: 3, agree: 1, well: 1 } },
-      { title: "The Australia Institute on housing tax concessions", outlet: "The Australia Institute", url: "https://australiainstitute.org.au/", kind: "report", stance: "SUPPORTS" },
+      { title: "Opening statement to the Senate inquiry: tax hikes will shrink investment, confidence and new project supply", outlet: "Property Council of Australia", author: "Mike Zorbas", url: "https://www.propertycouncil.com.au/media-releases/property-council-opening-statement-tax-hikes-will-shrink-investment-confidence-and-new-project-supply", kind: "submission", stance: "CONTRADICTS", votes: { n: 3, agree: 1, well: 2 } },
+      { title: "Changes to negative gearing bad news for new housing", outlet: "Property Council of Australia", url: "https://www.propertycouncil.com.au/uncategorized/changes-to-negative-gearing-bad-news-for-new-housing", kind: "op-ed", stance: "CONTRADICTS" },
+      { title: "Tax changes could cut 45,000 homes and push up rents, industry leaders warn", outlet: "Elite Agent", url: "https://eliteagent.com/tax-changes-could-cut-45000-homes-and-push-up-rents-industry-leaders-warn", kind: "report", stance: "CONTRADICTS" },
+      { title: "Treasury modelling of negative gearing and a cap at two properties", outlet: "Property Investment Professionals of Australia", url: "https://pipa.asn.au/negative-gearing-law-changes-effects/", kind: "blog", stance: "CONTRADICTS" },
+      { title: "Second reading debate, Treasury Laws Amendment (Tax Reform No. 1) Bill 2026", outlet: "Parliament of Australia (via OpenAustralia)", url: "https://www.openaustralia.org.au/debates/?id=2026-06-03.112.2&m=567", kind: "speech", stance: "MIXED" },
     ],
-    votes: { n: 16, agree: 9, well: 10 },
+    votes: { n: 14, agree: 8, well: 9 },
   },
   {
     key: "H-investor-loans-established",
@@ -766,6 +941,74 @@ const claims: ClaimDef[] = [
     votes: { n: 6, agree: 4, well: 5 },
   },
   {
+    key: "H-treasury-rent",
+    title: "Treasury estimates the 2026 changes would raise rents by less than $2 a week for a household on the median rent",
+    oneLiner: "The official estimate of the rent effect is small.",
+    body: "Treasury's budget modelling puts the rent effect of restricting negative gearing and reworking the capital gains discount at under $2 a week at the median, and estimates about 35,000 fewer homes over a decade, more than offset in its view by the budget's supply measures. Its secretary told the Senate the measures mainly shift ownership from investors to owner-occupiers.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: [...HOUSING, "TAX"],
+    context:
+      "Treasury's number is the government's answer to the rent objection. It is an estimate of a policy not yet in force, so it is a fact about the modelling rather than about rents.",
+    disagreement:
+      "The industry's modellers say Treasury understates investor withdrawal; Treasury says the industry's model assumes investors leave and nobody buys the homes they sell.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "The Nightly, 29 May 2026 — Treasury figures and secretary Jenny Wilkinson's evidence",
+        url: "https://thenightly.com.au/politics/jenny-wilkinson-says-labor-tax-changes-will-reallocate-housing-as-investors-pull-back-c-22353594",
+      },
+    ],
+    votes: { n: 6, agree: 4, well: 5 },
+  },
+  {
+    key: "H-industry-modelling",
+    title: "Modelling commissioned by the property industry forecasts rents about $9 a week higher and roughly 8,700 fewer homes by 2030 under the changes",
+    oneLiner: "The competing estimate, from the groups opposing the bill.",
+    body: "Qaive and Tulipwood Economics, commissioned by Master Builders Australia, the Property Council and the Real Estate Institute, forecast rents about $9 a week higher once the changes take effect, several times Treasury's figure, and about 8,700 fewer dwellings by 2029–30. The same modelling credits the budget's supply measures with far fewer homes than Treasury does.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: [...HOUSING, "TAX"],
+    context:
+      "Commissioned by the bill's opponents and rated moderate for that reason. It is the number behind the industry's Senate evidence.",
+    disagreement:
+      "Supporters of the bill say the model assumes sold rentals vanish rather than becoming owner-occupied homes; the industry says Treasury assumes frictionless substitution.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "The Nightly, 29 May 2026 — Qaive/Tulipwood modelling for MBA, Property Council and REIA",
+        url: "https://thenightly.com.au/politics/jenny-wilkinson-says-labor-tax-changes-will-reallocate-housing-as-investors-pull-back-c-22353594",
+      },
+      {
+        type: "Journalism",
+        citation: "Elite Agent, 'Tax changes could cut 45,000 homes and push up rents, industry leaders warn', 2026",
+        url: "https://eliteagent.com/tax-changes-could-cut-45000-homes-and-push-up-rents-industry-leaders-warn",
+      },
+    ],
+    votes: { n: 5, agree: 2, well: 3 },
+  },
+  {
+    key: "H-grandfathering-timid",
+    title: "Grandfathering existing investors indefinitely keeps the concession alive on most of the housing stock for decades",
+    oneLiner: "An argument that the bill is too timid, made from the reform side.",
+    body: "Because anyone negatively gearing before budget night keeps the concession for as long as they hold the property, the change bites only on future purchases of established homes. A government member in the House debate urged phasing out the deduction on existing properties over seven years instead.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: [...HOUSING, "TAX"],
+    context:
+      "Grandfathering is the price of the policy's politics: it protects every current investor. The cost is that the measured effects, on prices and on the budget, arrive slowly.",
+    disagreement:
+      "Supporters of grandfathering say retrospective change would be unfair and would trigger the forced sales the rent objection fears; critics say a dated phase-out is neither.",
+    evidence: [
+      {
+        type: "Primary source",
+        citation: "House of Representatives debate, 3 June 2026 — call for a seven-year phase-out on existing properties",
+        url: "https://www.openaustralia.org.au/debates/?id=2026-06-03.112.2&m=567",
+      },
+    ],
+    votes: { n: 5, agree: 3, well: 4 },
+  },
+  {
     key: "H-private-landlords",
     title: "Private landlords supply the large majority of Australia's rental housing",
     oneLiner: "Social and institutional housing is a small share; most renters rent from an individual.",
@@ -857,9 +1100,9 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: ["IMMIGRATION", ...HOUSING],
     context:
-      "Australia sets an annual permanent migration program but does not directly cap [net overseas migration](https://www.abs.gov.au/statistics/people/population/overseas-migration/latest-release), most of which is temporary: students, working-holiday makers and temporary skilled workers. The post-pandemic rebound pushed net migration to a record, and both major parties have since proposed reducing it, with different targets.\n\nThe debate is entangled with housing: migration adds to demand for homes in the cities where construction is most constrained, and most of the argument for a cap runs through that channel.",
+      "Australia sets an annual permanent migration program but does not directly cap [net overseas migration](https://www.abs.gov.au/statistics/people/population/overseas-migration/latest-release), most of which is temporary: students, working-holiday makers and temporary skilled workers. The post-pandemic rebound pushed net migration above 500,000 in 2022–23. At the 2025 election the Coalition pledged to cut it to 160,000; the [May 2026 budget](https://kpmg.com/xx/en/our-insights/gms-flash-alert/2026/flash-alert-2026-124.html) forecasts 295,000 for 2025–26, 245,000 for 2026–27 and 225,000 a year from 2027–28.\n\nThe lever both parties reach for is international students. A [2026 planning level of 295,000](https://theconversation.com/australias-student-caps-will-ease-up-in-2026-but-times-will-still-be-tough-for-international-education-262521) new students applies through visa-processing 'slow lanes' because the Senate rejected legislated caps in 2024; the Coalition proposes 240,000; and from [2 October 2026](https://www.ed.events/post/international-students-australias-intensifying-migration-debate) most student visa applicants may no longer bring partners or children.",
     disagreement:
-      "Both sides accept that 2022–23 was exceptional and that housing is the pressure point. They divide on whether the cap is the right tool for a housing problem, and on who pays for it: a cap of this size falls mainly on international education.",
+      "Both sides accept that 2022–23 was exceptional and that housing is the pressure point, and the forecast is already falling towards 225,000. The real dispute is whether the last 25,000 to 65,000 a year should come out of international education, which is the only component large enough to cut, and what that costs.",
     evidence: [
       {
         type: "Official data",
@@ -875,13 +1118,22 @@ const claims: ClaimDef[] = [
     timeline: [
       { label: "2010s", text: "Net overseas migration runs at roughly 200,000 to 250,000 a year, driven mainly by students and temporary workers." },
       { label: "2020–21", text: "Borders close. Net migration turns negative for the first time since the Second World War." },
-      { label: "2022–23", text: "Reopened borders produce a record intake as students and temporary workers return." },
-      { label: "2024", text: "Both major parties propose reducing net migration, with caps on international student numbers as the main lever." },
+      { label: "2022–23", text: "Reopened borders produce a record intake above 500,000 as students and temporary workers return." },
+      { label: "Nov 2024", text: "The Senate rejects legislated international student caps; the government moves to 'planning levels' enforced through visa processing." },
+      { label: "May 2025", text: "The Coalition takes a pledge to cut net migration to 160,000 to the election and loses." },
+      { label: "Aug 2025", text: "The 2026 planning level for new international students is set at 295,000, up from 270,000." },
+      { label: "May 2026", text: "The budget forecasts net overseas migration of 245,000 in 2026–27 and 225,000 a year from 2027–28." },
+      { label: "2 Oct 2026", text: "Student visa changes limit onshore applications and bar most applicants from bringing partners or children." },
     ],
     voices: [
-      { title: "Grattan Institute on migration and housing", outlet: "Grattan Institute", url: "https://grattan.edu.au/", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
-      { title: "Centre for Independent Studies on immigration levels", outlet: "Centre for Independent Studies", url: "https://www.cis.org.au/", kind: "report", stance: "SUPPORTS", votes: { n: 2, agree: 1, well: 1 } },
-      { title: "Universities Australia on international students and caps", outlet: "Universities Australia", url: "https://universitiesaustralia.edu.au/", kind: "submission", stance: "CONTRADICTS" },
+      { title: "Australia's student caps will ease up in 2026, but times will still be tough for international education", outlet: "The Conversation", author: "Andrew Norton, Monash University", url: "https://theconversation.com/australias-student-caps-will-ease-up-in-2026-but-times-will-still-be-tough-for-international-education-262521", kind: "explainer", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
+      { title: "Don't blame migrants for the housing crisis", outlet: "Grattan Institute", url: "https://grattan.edu.au/news/dont-blame-migrants-for-the-housing-crisis", kind: "op-ed", stance: "CONTRADICTS", votes: { n: 4, agree: 2, well: 3 } },
+      { title: "Cutting permanent migration may make housing cheaper, but it will definitely make us poorer", outlet: "Grattan Institute", url: "https://grattan.edu.au/news/cutting-permanent-migration-may-make-housing-cheaper-but-it-will-definitely-make-us-poorer/", kind: "op-ed", stance: "CONTRADICTS" },
+      { title: "Slow migration to help renters", outlet: "Grattan Institute", url: "https://grattan.edu.au/news/slow-migration-to-help-renters", kind: "op-ed", stance: "SUPPORTS", votes: { n: 3, agree: 2, well: 3 } },
+      { title: "Migration: the faulty forecast", outlet: "The New Daily", url: "https://www.thenewdaily.com.au/opinion/2026/01/25/migration-faulty-forecast", kind: "op-ed", stance: "SUPPORTS" },
+      { title: "The state of migration in Australia", outlet: "CEDA", url: "https://www.ceda.com.au/research-and-policy/research/population/the-state-of-migration-in-australia", kind: "report", stance: "MIXED" },
+      { title: "International students caught in Australia's intensifying migration debate", outlet: "EdEvents News", url: "https://www.ed.events/post/international-students-australias-intensifying-migration-debate", kind: "report", stance: "CONTRADICTS" },
+      { title: "Australia is expected to add another 1.4 million people over the next four years", outlet: "The Nightly", url: "https://thenightly.com.au/politics/australia/australia-is-expected-to-add-another-14-million-people-over-the-next-four-years-c-22273759", kind: "report", stance: "MIXED" },
     ],
     votes: { n: 18, agree: 9, well: 9 },
   },
@@ -1046,6 +1298,74 @@ const claims: ClaimDef[] = [
     evidence: [],
     votes: { n: 9, agree: 8, well: 5 },
   },
+  {
+    key: "M-budget-forecast",
+    title: "The May 2026 budget forecasts net overseas migration falling to 245,000 in 2026–27 and 225,000 a year from 2027–28",
+    oneLiner: "The number is already heading back to its pre-pandemic range without a cap.",
+    body: "Budget forecasts put net overseas migration at 295,000 in 2025–26, 245,000 in 2026–27 and 225,000 a year thereafter, roughly the level of the decade before the pandemic. Treasury's long-run assumption is about 235,000. A cap of 200,000 would therefore bind by 25,000 to 45,000 a year on current forecasts.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ["IMMIGRATION"],
+    context:
+      "Forecasts of net migration have been wrong before, in both directions, which is the main reason sceptics do not take the glide path at face value.",
+    disagreement:
+      "Agreed as the budget's figure. Disputed is whether it will be met: one line of commentary says the long-run forecast is too low, another that the decline is already visible in the data.",
+    evidence: [
+      {
+        type: "Official data",
+        citation: "KPMG, Flash Alert 2026-124 — Australia 2026–27 federal budget migration measures and net overseas migration forecasts, 12 May 2026",
+        url: "https://kpmg.com/xx/en/our-insights/gms-flash-alert/2026/flash-alert-2026-124.html",
+      },
+      {
+        type: "Journalism",
+        citation: "AAP, 'Migration plummets from post-pandemic record highs', 2026",
+        url: "https://aapnews.aap.com.au/news/migration-plummets-from-post-pandemic-record-highs",
+      },
+    ],
+    votes: { n: 6, agree: 5, well: 5 },
+  },
+  {
+    key: "M-grattan-rents",
+    title: "Grattan Institute estimates each unexpected extra 100,000 migrants lifts rents by about 1 per cent, and that cutting net migration to 160,000 would leave rents about 6 per cent lower after a decade",
+    oneLiner: "The best-known estimate of how much migration moves rents: real, and modest.",
+    body: "Grattan's analysis of the Coalition's 2025 pledge found that holding net overseas migration at 160,000 a year would leave rents about 6 per cent lower than otherwise after ten years, and that cutting permanent skilled visas alone would leave them about 2.5 per cent lower, at a significant cost to incomes. It also noted the federal government has little direct control over net migration, which is driven by uncapped temporary visas.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["IMMIGRATION", ...HOUSING],
+    context:
+      "This figure is cited by both sides: supporters of a cap as proof the effect is real, opponents as proof it is small relative to supply measures.",
+    disagreement:
+      "Agreed as Grattan's estimate. Disputed is whether a 6 per cent rent difference after a decade is worth the economic cost Grattan also estimates.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Grattan Institute, 'Cutting permanent migration may make housing cheaper, but it will definitely make us poorer'",
+        url: "https://grattan.edu.au/news/cutting-permanent-migration-may-make-housing-cheaper-but-it-will-definitely-make-us-poorer/",
+      },
+    ],
+    votes: { n: 5, agree: 4, well: 5 },
+  },
+  {
+    key: "M-soft-caps",
+    title: "The 2026 international student planning level of 295,000 is not legally enforceable; it works through visa-processing slow lanes because the Senate rejected formal caps in 2024",
+    oneLiner: "The lever a migration cap would pull is an administrative one, not a law.",
+    body: "After the Senate blocked legislated caps in November 2024, the government set 'national planning levels' for new international students and enforced them by slowing visa processing once a provider reaches 80 per cent of its allocation. The level rose from 270,000 in 2025 to 295,000 in 2026, with the Australian Tertiary Education Commission due to take over regulation of higher-education numbers from 2027.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ["IMMIGRATION", "EDUCATION"],
+    context:
+      "How student numbers are actually controlled bears on whether a hard net-migration cap could be delivered at all, and on who would bear it.",
+    disagreement:
+      "Agreed as a description. Disputed is whether soft caps are a workable substitute for a legislated number or an invitation to miss it.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "The Conversation, Andrew Norton, 5 August 2025 — planning levels, enforceability and the 2027 commission",
+        url: "https://theconversation.com/australias-student-caps-will-ease-up-in-2026-but-times-will-still-be-tough-for-international-education-262521",
+      },
+    ],
+    votes: { n: 4, agree: 4, well: 4 },
+  },
 
   // ---------------------------------------------------------------------------
   // Shared housing-supply claim (used in three debates)
@@ -1082,35 +1402,49 @@ const claims: ClaimDef[] = [
   // ---------------------------------------------------------------------------
   {
     key: "R-approvals",
-    title: "Federal environmental approvals should carry binding statutory decision deadlines",
-    oneLiner: "Whether the environment minister should be required by law to decide a referred project within a fixed period.",
-    body: "Projects likely to affect matters of national environmental significance must be referred to the federal environment minister for assessment and approval. The Act sets indicative timeframes that are routinely stopped and extended. The proposal makes the deadlines binding, with a defined consequence if they pass.",
-    type: "PROPOSAL",
-    evidenceStrength: "MODERATE",
+    title: "The 2025 overhaul of national environment law will deliver faster approvals without weakening protection",
+    oneLiner: "The reforms have passed. Whether they do both of the things promised is the question as they roll out through 2026.",
+    body: "The Environment Protection Reform Act passed on 28 November 2025 after a Labor–Greens deal, creating a National Environmental Protection Agency, national environmental standards, a streamlined assessment pathway and a ministerial national-interest exemption. Fossil fuel projects are excluded from the fast track and the exemption. The EPA began on 1 July 2026; the faster assessment provisions commence by 1 December 2026.",
+    type: "OPINION",
+    evidenceStrength: "STRONG",
     tags: ["ENVIRONMENT", "ECONOMY"],
     context:
-      "The [Environment Protection and Biodiversity Conservation Act](https://en.wikipedia.org/wiki/Environment_Protection_and_Biodiversity_Conservation_Act_1999) has been reviewed twice since it took effect in 2000, and both reviews found it slow and ineffective ([2020 review](https://epbcactreview.environment.gov.au/)). The 2020 independent review recommended national environmental standards and an independent regulator; the deadlines proposal comes from the business and renewable-energy side of the same debate, which argues that process delay is now the binding constraint on the energy transition and on housing.",
+      "The [Environment Protection and Biodiversity Conservation Act](https://en.wikipedia.org/wiki/Environment_Protection_and_Biodiversity_Conservation_Act_1999) was reviewed twice since 2000 and both reviews, most recently the [2020 Samuel Review](https://epbcactreview.environment.gov.au/), found it slow and failing the environment. A first reform attempt stalled in 2024.\n\nThe second passed in November 2025 with Greens support, in exchange for excluding coal and gas from the streamlined pathway and the national-interest exemption, keeping the water trigger federal, and ending the native-forest logging exemption from July 2027 ([EDO summary](https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/)). A [Senate committee](https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations) reporting in 2026 backed the package but asked for published limits on the national-interest power. Implementation is staged through 2026 ([department page](https://www.dcceew.gov.au/environment/epbc/epbc-act-reform)).",
     disagreement:
-      "Both sides accept the process is slow and that the Act is failing on its environmental objectives. They divide on whether a deadline fixes the delay or simply changes who bears it, and above all on what should happen when the clock runs out.",
+      "Industry and renewable developers broadly accept the speed gains and argue about detail. Environment groups accept the EPA and standards and dispute two things: whether a minister can use the national-interest exemption to approve projects that fail the standards, and whether an EPA with no independent board and ministerial direction over delegated powers is independent enough to hold the line.",
     evidence: [
       {
         type: "Official report",
-        citation: "Independent Review of the EPBC Act (Samuel Review), final report, 2020",
-        url: "https://epbcactreview.environment.gov.au/",
+        citation: "Department of Climate Change, Energy, the Environment and Water — Environment protection reforms: implementation timetable",
+        url: "https://www.dcceew.gov.au/environment/epbc/epbc-act-reform",
+      },
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 'Historic environment reforms: what happened in parliament and what comes next', 28 November 2025",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
       },
     ],
     timeline: [
       { label: "2000", text: "The EPBC Act takes effect, creating a federal approval layer for matters of national environmental significance." },
       { label: "2009", text: "The first statutory review finds the Act cumbersome and recommends reform. Little changes." },
-      { label: "2020", text: "The second independent review finds the Act 'ineffective and inefficient', failing both industry and the environment." },
-      { label: "2024", text: "Reform legislation is split and partly deferred; renewable-energy developers join miners in calling for faster decisions." },
+      { label: "2020", text: "The Samuel Review finds the Act 'ineffective and inefficient', failing both industry and the environment." },
+      { label: "28 Nov 2025", text: "The Environment Protection Reform Bills pass after a Labor–Greens deal excluding fossil fuels from fast-tracking and the national-interest exemption." },
+      { label: "20 Feb 2026", text: "First provisions commence, including the national-interest exemption powers." },
+      { label: "Apr 2026", text: "A Senate committee backs the package with 14 recommendations, chiefly for published limits on the national-interest power and clearer standards." },
+      { label: "1 Jul 2026", text: "The National Environmental Protection Agency and Environment Information Australia are established." },
+      { label: "1 Dec 2026", text: "Streamlined assessment and approval provisions due to commence." },
     ],
     voices: [
-      { title: "Business Council of Australia on approval reform", outlet: "Business Council of Australia", url: "https://www.bca.com.au/", kind: "submission", stance: "SUPPORTS", votes: { n: 2, agree: 1, well: 1 } },
-      { title: "Clean Energy Council on planning and approval timeframes", outlet: "Clean Energy Council", url: "https://www.cleanenergycouncil.org.au/", kind: "submission", stance: "MIXED" },
-      { title: "Australian Conservation Foundation on environment law reform", outlet: "Australian Conservation Foundation", url: "https://www.acf.org.au/", kind: "campaign", stance: "CONTRADICTS", votes: { n: 3, agree: 2, well: 2 } },
+      { title: "Historic environment reforms: what happened in parliament and what comes next", outlet: "Environmental Defenders Office", url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/", kind: "explainer", stance: "MIXED", votes: { n: 4, agree: 2, well: 4 } },
+      { title: "EPBC Act reforms: Senate committee recommendations", outlet: "Corrs Chambers Westgarth", url: "https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations", kind: "explainer", stance: "MIXED" },
+      { title: "Environment protection reforms", outlet: "Department of Climate Change, Energy, the Environment and Water", url: "https://www.dcceew.gov.au/environment/epbc/epbc-act-reform", kind: "report", stance: "SUPPORTS" },
+      { title: "Wind and solar developers hope for faster decisions after 11th-hour nature deal between Labor and Greens", outlet: "RenewEconomy", url: "https://reneweconomy.com.au/wind-and-solar-developers-hope-for-faster-decisions-after-11th-hour-nature-deal-between-labor-and-greens/", kind: "report", stance: "SUPPORTS", votes: { n: 3, agree: 2, well: 2 } },
+      { title: "Environment Protection Reform Bill 2025: community objections", outlet: "Pittwater Online News", url: "https://www.pittwateronlinenews.com/Environment-Protection-Reform-Bill-2025-Nov2025.php", kind: "blog", stance: "CONTRADICTS", votes: { n: 2, agree: 1, well: 1 } },
+      { title: "Environmental law overhaul sparks political storm in Canberra", outlet: "SBS News", url: "https://www.sbs.com.au/news/podcast-episode/environmental-law-overhaul-sparks-political-storm-in-canberra/9up0q8zqm", kind: "interview", stance: "MIXED" },
+      { title: "EPBC Act reforms passed", outlet: "Lander & Rogers", url: "https://www.landers.com.au/legal-insights-news/epbc-act-reforms-passed", kind: "explainer", stance: "MIXED" },
+      { title: "Australian Parliament passes key reforms to Australia's national environmental laws", outlet: "White & Case", url: "https://www.whitecase.com/insight-alert/australian-parliament-passes-key-reforms-australias-national-environmental-laws", kind: "explainer", stance: "SUPPORTS" },
     ],
-    votes: { n: 14, agree: 7, well: 7 },
+    votes: { n: 11, agree: 6, well: 7 },
   },
   {
     key: "A-samuel-slow",
@@ -1176,36 +1510,6 @@ const claims: ClaimDef[] = [
     votes: { n: 7, agree: 6, well: 6 },
   },
   {
-    key: "A-deemed-approval",
-    title: "A deadline that defaults to approval when time runs out rewards under-resourcing the regulator",
-    oneLiner: "If missing the clock means yes, the cheapest path to approval is to starve the assessors.",
-    body: "The practical question is what happens when a binding deadline passes. If the answer is deemed approval, then any government that wants projects approved need only fund the department thinly. The incentive runs the wrong way and the environmental assessment becomes a formality.",
-    type: "OPINION",
-    evidenceStrength: "NONE",
-    tags: ["ENVIRONMENT", "GOVERNANCE"],
-    context:
-      "This is the crux of the deadlines debate. Most people who support faster decisions and most who oppose deemed approval can agree on everything except this design question, which is why it is a claim of its own.",
-    disagreement:
-      "Supporters of deadlines mostly accept the incentive problem and argue it is a reason to design the default carefully, not to abandon deadlines. The disagreement is over whether any default short of approval would actually bind.",
-    evidence: [],
-    votes: { n: 8, agree: 6, well: 7 },
-  },
-  {
-    key: "A-default-refusal",
-    title: "Deadlines could default to refusal, or to an automatic extension with a public reason, rather than to approval",
-    oneLiner: "The incentive problem is a design choice, and other defaults exist.",
-    body: "A missed deadline could result in refusal, forcing the proponent to re-refer, which gives the regulator no incentive to stall but gives the minister a strong reason to decide. Or it could trigger a public statement of reasons and a short fixed extension, making delay visible without pre-deciding the outcome.",
-    type: "PROPOSAL",
-    evidenceStrength: "NONE",
-    tags: ["ENVIRONMENT", "GOVERNANCE"],
-    context:
-      "This is a proposal nested inside a proposal: it answers the strongest objection to deadlines by changing their design. If it is accepted, the parent objection loses most of its force.",
-    disagreement:
-      "Industry argues default refusal simply moves the delay to a re-referral loop. Environment groups argue that a published-reasons extension would in practice become routine. Both may be right about different regulators.",
-    evidence: [],
-    votes: { n: 5, agree: 4, well: 4 },
-  },
-  {
     key: "A-delay-pre-referral",
     title: "Much of the delay occurs before formal referral, in proponent studies a statutory clock would not cover",
     oneLiner: "The clock can only time the part of the process it can see.",
@@ -1224,6 +1528,146 @@ const claims: ClaimDef[] = [
       },
     ],
   },
+  {
+    key: "A-national-interest",
+    title: "The national-interest exemption lets a minister approve high-impact projects that fail the new standards, without defined limits on when it can be used",
+    oneLiner: "The power that environment groups and the Senate committee both singled out.",
+    body: "Sections commenced in February 2026 let the minister grant, vary or revoke exemptions from the Act's protections on national-interest grounds. Fossil fuel projects are barred from using the power, but the Senate committee's main concern was that it could still approve high-impact projects inconsistent with the national environmental standards without a genuine national-interest basis, and it recommended published principles and thresholds, which did not yet exist.",
+    type: "OPINION",
+    evidenceStrength: "STRONG",
+    tags: ["ENVIRONMENT", "GOVERNANCE"],
+    context:
+      "This is where the live debate on the reforms sits. The standards and the EPA are the protections; the exemption is the door around them. How wide the door is depends on guidance and regulations still being written.",
+    disagreement:
+      "The government points to precedent, a 2023 carve-out for AUKUS nuclear waste, and says the power is for genuine emergencies and defence. Critics say an undefined power is defined by whoever holds it next, and that vegetation clearing, critical minerals and badly sited renewables could all pass through it.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Corrs Chambers Westgarth, 'EPBC Act reforms: Senate committee recommendations', 29 April 2026",
+        url: "https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations",
+      },
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — national interest pathways lack adequate guardrails",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 7, agree: 5, well: 6 },
+  },
+  {
+    key: "A-exemption-guidance",
+    title: "The Senate committee recommended published principles and thresholds for using the national-interest power, and none had been published when the power commenced",
+    oneLiner: "The limits everyone agrees are needed do not yet exist.",
+    body: "The committee's report, while concluding the package struck an appropriate balance, recommended that the government publish the circumstances, factors and thresholds under which the national-interest power may be used. The power itself commenced on 20 February 2026 ahead of any such guidance.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ["ENVIRONMENT", "GOVERNANCE"],
+    context: "A gap between a power and its guardrails is temporary by design, but the order in which they arrived is part of why trust in the exemption is low.",
+    disagreement: "Not disputed. The government says guidance is coming; critics say it should have come first.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Corrs Chambers Westgarth, 29 April 2026 — committee recommendation on national-interest guidance; commencement dates",
+        url: "https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations",
+      },
+    ],
+    votes: { n: 4, agree: 4, well: 4 },
+  },
+  {
+    key: "A-aukus-precedent",
+    title: "The government points to a 2023 carve-out of AUKUS nuclear-waste facilities from environment law as precedent for a national-interest exemption",
+    oneLiner: "The exemption is not new in kind, the government argues, only in form.",
+    body: "Responding to concern about the exemption, the minister cited the 2023 legislation that exempted AUKUS submarine nuclear-waste management from parts of the environmental approval regime, passed with bipartisan support, as the kind of case the new power is for.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", "DEFENCE"],
+    context: "Precedent arguments cut both ways here: the AUKUS exemption was itself contested by environment groups.",
+    disagreement: "Agreed as what the government said. Critics answer that a one-off Act debated in Parliament is a different thing from a standing ministerial power.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — government response citing the 2023 AUKUS carve-out",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 3, agree: 2, well: 2 },
+  },
+  {
+    key: "A-epa-independence",
+    title: "The new Environmental Protection Agency has no independent board, and can be directed by the minister when exercising delegated approval powers",
+    oneLiner: "An EPA was the reform's centrepiece; how independent it is remains contested.",
+    body: "The agency gets assessment and approval powers only when the minister delegates them, and when acting under delegation it can be directed. Under its own enforcement powers it is free of direction but must answer a ministerial statement of expectations. Its chief executive is appointed by the Governor-General on the minister's advice; there is no board.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ["ENVIRONMENT", "GOVERNANCE"],
+    context: "Environment groups campaigned for an independent regulator for a decade; what they got is a regulator independent in enforcement and answerable in approvals.",
+    disagreement: "Not disputed as a description. Disputed is whether this is independence enough, and whether approval powers should ever have been left with the minister.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — structure and direction powers of the National EPA",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 5, agree: 4, well: 5 },
+  },
+  {
+    key: "A-fossil-excluded",
+    title: "Coal, gas and petroleum projects are excluded from the streamlined pathway and the national-interest exemption",
+    oneLiner: "The Greens' price for passage: the projects with the largest impacts keep the slow road.",
+    body: "Under the Labor–Greens deal, fossil fuel activities including exploration cannot use the streamlined assessment, the national-interest exemption or bioregional planning pathways, and the water trigger for large coal and unconventional gas projects stays with the Commonwealth.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ["ENVIRONMENT", ...ENERGY],
+    context: "This is the clearest sense in which the reforms do not trade protection for speed: the speed is denied to the projects environment groups worry about most.",
+    disagreement: "Agreed as fact. Industry argues it leaves gas supply projects, which the government's own energy plan relies on, in the slowest lane.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — terms of the Greens deal",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 5, agree: 5, well: 4 },
+  },
+  {
+    key: "A-unacceptable-bar",
+    title: "The reforms raised the bar for refusing a project on 'unacceptable impacts' from impacts that are likely to impacts that are certain",
+    oneLiner: "A drafting change environment groups regard as a weakening.",
+    body: "The final bills removed 'likely to have' from the unacceptable-impacts test, so that a refusal on that ground now requires the impact to be certain rather than probable. The Environmental Defenders Office lists it among the package's remaining shortcomings, alongside time-limited stop-work orders and the retained restoration fund.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT"],
+    context: "Small words in environmental law carry large consequences; this one determines how much uncertainty a proponent gets the benefit of.",
+    disagreement: "The change is agreed. Whether it matters in practice depends on how the standards define impacts, which is still being settled.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — 'what remains wrong'",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
+  {
+    key: "A-timeframes-cut",
+    title: "The streamlined pathway shortens the statutory assessment-and-approval period from 70 days to 50 or fewer",
+    oneLiner: "The speed gain, as quantified in the bills as introduced.",
+    body: "Law-firm analysis of the bills as introduced put the new streamlined pathway's statutory period at 50 days or less against the current 70, alongside removal of duplication with state processes. The provisions commence by 1 December 2026, so the figure is a design claim rather than an observed result.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", "ECONOMY"],
+    context: "Statutory clocks measure only the part of the process they cover, which is why the pre-referral claim below still matters.",
+    disagreement: "Agreed as the design. Disputed is how often the clock will be stopped, as it routinely was under the old Act.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Lander & Rogers, 'EPBC Act reforms passed' — streamlined pathway timeframes",
+        url: "https://www.landers.com.au/legal-insights-news/epbc-act-reforms-passed",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
 
   // ---------------------------------------------------------------------------
   // Debate 6 — parking minimums
@@ -1237,9 +1681,9 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: [...HOUSING, "TRANSPORT", "LOCAL"],
     context:
-      "Parking minimums date from the mid-twentieth century and were set to prevent new buildings from pushing cars onto the street. They have since been identified as a significant hidden cost of housing ([Wikipedia: parking mandates](https://en.wikipedia.org/wiki/Parking_mandates)), because structured parking is expensive and the requirement applies whether or not residents own cars. Several cities overseas and a small number of Australian councils have removed them in whole or in part.\n\nThis is a local-government question that most people never encounter directly but which shapes what gets built near them.",
+      "Parking minimums date from the mid-twentieth century and were set to keep new buildings from pushing cars onto the street ([Wikipedia: parking mandates](https://en.wikipedia.org/wiki/Parking_mandates)). They are now identified as a large hidden cost of housing: Grattan's May 2026 report [Wasted space](https://grattan.edu.au/report/wasted-space/) estimates they add roughly $70,000 to a two-bedroom apartment in Sydney, $62,000 in Melbourne and up to $137,000 in Perth, and that Australia builds more than a billion dollars of unused off-street parking a year.\n\nSome Australian governments have moved. [Victoria removed minimums](https://www.premier.vic.gov.au/yes-more-homes-and-yes-more-local-infrastructure) near high-frequency public transport in December 2025, and New South Wales' low- and mid-rise housing rules limit councils' ability to refuse projects on parking grounds. Grattan wants states to override council minimums everywhere.",
     disagreement:
-      "Both sides accept that parking is costly and that some residents will own cars regardless. They divide on who should bear the mismatch: the resident who parks on the street, the neighbour who loses a space, or the buyer who pays for a car space they do not use.",
+      "Both sides accept that parking is costly and that some residents will own cars regardless. They divide on who should bear the mismatch: the resident who parks on the street, the neighbour who loses a space, or the buyer who pays for a car space they do not use. Grattan's finding that up to 40 per cent of inner-Melbourne street spaces sit empty at night is the newest evidence in that fight, and no organised opposition to removal has yet made a public case.",
     evidence: [
       {
         type: "Academic research",
@@ -1250,34 +1694,45 @@ const claims: ClaimDef[] = [
       { label: "1950s–70s", text: "Australian councils adopt parking minimums as cars become universal." },
       { label: "2005", text: "Shoup's work popularises the argument that minimums are an unpriced subsidy to driving." },
       { label: "2016", text: "Auckland removes minimums citywide; several US cities follow over the next decade." },
-      { label: "Now", text: "Some Australian inner-city councils have removed minimums near transit; most retain them." },
+      { label: "Dec 2025", text: "Victoria removes parking minimums for new homes near high-frequency public transport, citing 40 per cent empty residential car parks in inner Melbourne." },
+      { label: "May 2026", text: "Grattan Institute's 'Wasted space' calls on states to override council minimums nationally: 86,000 unneeded spaces and $5.2 billion over five years." },
     ],
     voices: [
-      { title: "Strong Towns on ending parking minimums", outlet: "Strong Towns", url: "https://www.strongtowns.org/", kind: "blog", stance: "SUPPORTS", votes: { n: 4, agree: 3, well: 3 } },
-      { title: "Infrastructure Victoria on parking and land use", outlet: "Infrastructure Victoria", url: "https://www.infrastructurevictoria.com.au/", kind: "report", stance: "MIXED" },
-      { title: "YIMBY Melbourne on parking mandates", outlet: "YIMBY Melbourne", url: "https://www.yimby.melbourne/", kind: "campaign", stance: "SUPPORTS" },
+      { title: "Wasted space: Axe car-parking rules to ease the housing crisis", outlet: "Grattan Institute", author: "Aruna Sathanapally, Ashleigh Chang, Dominic Behrens and Matthew Bowes", url: "https://grattan.edu.au/report/wasted-space/", kind: "report", stance: "SUPPORTS", votes: { n: 5, agree: 4, well: 5 } },
+      { title: "Axe car-parking rules to cut the cost of housing", outlet: "Grattan Institute", url: "https://grattan.edu.au/axe-car-parking-rules-to-cut-the-cost-of-housing/", kind: "op-ed", stance: "SUPPORTS" },
+      { title: "Yes to more homes and yes to more local infrastructure", outlet: "Premier of Victoria", url: "https://www.premier.vic.gov.au/yes-more-homes-and-yes-more-local-infrastructure", kind: "speech", stance: "SUPPORTS", votes: { n: 2, agree: 1, well: 1 } },
+      { title: "Car parking rules for apartments are wasting space and billions of dollars", outlet: "WhichCar", url: "https://www.whichcar.com.au/news/car-parking-rules-apartments-wasting-space-money-grattan-institute", kind: "report", stance: "MIXED" },
+      { title: "Australia's $1 billion car park problem has an answer", outlet: "Drive", url: "https://www.drive.com.au/caradvice/australias-1-billion-car-park-problem-has-an-answer/", kind: "op-ed", stance: "SUPPORTS" },
+      { title: "'Separate the house from the car': proposal to scrap parking for apartments near public transport", outlet: "CarAdvice", url: "https://www.caradvice.com.au/caradvice/apartment-parking-rules-victoria/", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 2 } },
+      { title: "Unlocking Victorian development with modernised car parking requirements", outlet: "Urbis", url: "https://urbis.com.au/perspectives/unlocking-victorian-development-with-modernised-car-parking-requirements", kind: "explainer", stance: "SUPPORTS" },
+      { title: "How parking rules add $137,000 to a new home", outlet: "Australian Broker", url: "https://www.brokernews.com.au/news/breaking-news/how-parking-rules-add-137000-to-a-new-home-289380.aspx", kind: "report", stance: "SUPPORTS" },
     ],
     votes: { n: 12, agree: 6, well: 7 },
   },
   {
     key: "P-cost-per-space",
-    title: "Structured parking adds tens of thousands of dollars per space to the cost of a new apartment",
-    oneLiner: "Basement and podium parking is among the most expensive floor space in a building.",
-    body: "Industry cost guides and academic studies put the construction cost of a basement car space at well above the cost of an equivalent area of living space, and the requirement often forces an extra basement level. That cost is recovered in the sale price of every apartment, including those bought by people without cars.",
+    title: "Parking minimums add roughly $70,000 to the cost of a two-bedroom apartment in Sydney, $62,000 in Melbourne and up to $137,000 in Perth",
+    oneLiner: "Grattan's 2026 estimates of what the rules add to each new apartment.",
+    body: "Basement and podium parking is among the most expensive floor space in a building, and the requirement often forces an extra basement level. Grattan's May 2026 report put the cost of mandated parking at about $70,000 per two-bedroom apartment in Sydney, $62,000 in Melbourne, $113,000 in Brisbane, $95,000 in Adelaide and $137,000 in Perth, recovered in the price of every apartment including those bought by people without cars.",
     type: "FACT",
-    evidenceStrength: "MODERATE",
+    evidenceStrength: "STRONG",
     tags: HOUSING,
     context:
-      "The cost claim is the economic core of the case against minimums. It is well established in the planning literature and in developers' own feasibility models, but is rarely visible to buyers.",
+      "The cost claim is the economic core of the case against minimums. The 2026 figures gave it numbers that governments now quote: Victoria cited Grattan's $70,000 when it changed its rules.",
     disagreement:
-      "The magnitude is broadly agreed. Whether removing the requirement would lower prices or simply raise developer margins is the live question, and depends on local competition.",
+      "The magnitude is broadly agreed. Whether removing the requirement lowers prices or raises developer margins is the live question, and depends on local competition.",
     evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Grattan Institute, Wasted space: Axe car-parking rules to ease the housing crisis, May 2026",
+        url: "https://grattan.edu.au/report/wasted-space/",
+      },
       {
         type: "Academic research",
         citation: "Donald Shoup, The High Cost of Free Parking — construction cost of structured parking",
       },
     ],
-    votes: { n: 7, agree: 6, well: 5 },
+    votes: { n: 8, agree: 7, well: 7 },
   },
   {
     key: "P-auckland",
@@ -1365,6 +1820,98 @@ const claims: ClaimDef[] = [
       "Opponents argue developers under-provide because the spillover cost falls on neighbours, not on the building, so the market signal is incomplete. Whether that externality is large is the dispute.",
     evidence: [],
   },
+  {
+    key: "P-street-vacant",
+    title: "Up to 40 per cent of residential and on-street parking in inner Melbourne sits empty at night, and most street spaces are used by residents who already have off-street parking",
+    oneLiner: "The spillover fear meets the occupancy data.",
+    body: "Victoria's government cited up to 40 per cent of inner-Melbourne residential car parks sitting empty when it changed its rules, and Grattan's report found a similar share of on-street spaces vacant overnight, with most of the occupied ones used by residents who also have a garage or driveway. If the street is that underused, new residents' cars have somewhere to go.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: [...HOUSING, "TRANSPORT"],
+    context:
+      "This is the first systematic Australian evidence on the question the spillover objection turns on. It covers inner Melbourne; whether it generalises to middle suburbs is open.",
+    disagreement:
+      "Opponents say averages hide the streets that are full, and that it is those streets' residents who object. Supporters say that is an argument for permits on those streets, not for mandating basements everywhere.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Grattan Institute, Wasted space, May 2026 — on-street occupancy findings",
+        url: "https://grattan.edu.au/report/wasted-space/",
+      },
+      {
+        type: "Primary source",
+        citation: "Premier of Victoria, 'Yes to more homes and yes to more local infrastructure', 2 December 2025",
+        url: "https://www.premier.vic.gov.au/yes-more-homes-and-yes-more-local-infrastructure",
+      },
+    ],
+    votes: { n: 5, agree: 4, well: 4 },
+  },
+  {
+    key: "P-built-to-minimum",
+    title: "Seventy-three per cent of Melbourne apartments built since 2019 provided exactly the legal minimum number of car spaces",
+    oneLiner: "If most buildings sit at the floor, the floor is binding.",
+    body: "Grattan found that since 2019, 73 per cent of Melbourne apartments and 70 per cent of townhouses were built with precisely the minimum parking the rules required. A rule that most projects would exceed anyway would not show this pattern; one that most projects would undercut if allowed does.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: HOUSING,
+    context:
+      "This answers the claim that minimums rarely bind because developers build parking anyway: in Melbourne they build to the line and no further.",
+    disagreement:
+      "Developers say building to the minimum reflects the rule setting market expectations, not suppressed demand for less; Grattan reads it the other way.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Grattan Institute, Wasted space, May 2026 — share of dwellings built at the minimum",
+        url: "https://grattan.edu.au/report/wasted-space/",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 4 },
+  },
+  {
+    key: "P-victoria-removed",
+    title: "Victoria removed minimum parking requirements for new homes near high-frequency public transport in December 2025",
+    oneLiner: "The first Australian state to act, on an accessibility basis.",
+    body: "From December 2025 Victorian planning rules vary parking requirements by public-transport accessibility level, with no minimums in areas of high or medium accessibility. Accessible parking for people with disabilities is unchanged and developers may still build more spaces with a permit.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: [...HOUSING, "TRANSPORT"],
+    context:
+      "A live Australian trial of the proposal, roughly a year old. Its results, on provision, prices and street parking, are what the next round of this debate will be about.",
+    disagreement:
+      "Agreed as fact. Opponents note it is limited to well-served areas; Grattan argues that limitation is the next thing to remove.",
+    evidence: [
+      {
+        type: "Primary source",
+        citation: "Premier of Victoria, 'Yes to more homes and yes to more local infrastructure', 2 December 2025",
+        url: "https://www.premier.vic.gov.au/yes-more-homes-and-yes-more-local-infrastructure",
+      },
+      {
+        type: "Journalism",
+        citation: "Urbis, 'Unlocking Victorian development with modernised car parking requirements'",
+        url: "https://urbis.com.au/perspectives/unlocking-victorian-development-with-modernised-car-parking-requirements",
+      },
+    ],
+    votes: { n: 5, agree: 5, well: 4 },
+  },
+  {
+    key: "P-unbundle",
+    title: "Car spaces could be sold separately from apartments so that only buyers who want parking pay for it",
+    oneLiner: "Grattan's companion proposal: unbundle the space from the home.",
+    body: "Alongside removing minimums, Grattan recommends removing parking maximums and allowing car spaces to be titled and sold separately from dwellings, so a household without a car is not obliged to buy one and a household with two can buy two.",
+    type: "PROPOSAL",
+    evidenceStrength: "MODERATE",
+    tags: [...HOUSING, "TRANSPORT"],
+    context: "Unbundling turns parking from a planning quantity into a priced good, which is the logic of the whole proposal carried to the sale contract.",
+    disagreement: "Strata and lending rules complicate separate titling; opponents also note it does nothing for street parking.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Grattan Institute, Wasted space, May 2026 — recommendations",
+        url: "https://grattan.edu.au/report/wasted-space/",
+      },
+    ],
+    votes: { n: 3, agree: 2, well: 3 },
+  },
 ];
 
 // =============================================================================
@@ -1378,6 +1925,9 @@ const connections: ConnDef[] = [
   { from: "E-not-in-time", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "The case for repeal is made in terms of this decade's problems; if nuclear cannot touch them, the case has to be remade on other grounds.", votes: [6, 3, 1] },
   { from: "E-distraction", to: "R-nuclear", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Counts against pursuing repeal now even for those who accept it in principle.", votes: [1, 4, 2] },
   { from: "E-smr-ban", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "A positive reason for repeal that does not depend on building a large plant soon.", votes: [2, 4, 1] },
+  { from: "E-data-centres", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Supplies a private customer and removes the public-cost objection, without touching the timing objection.", votes: [2, 3, 2] },
+  { from: "E-state-bans", to: "R-nuclear", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Shows how little federal repeal changes on its own; it does not argue the ban is right.", votes: [0, 2, 4] },
+  { from: "E-smr-data-centre-cost", to: "E-data-centres", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the data-centre customer would pay billions more for nuclear than for solar, the customer is unlikely to appear.", votes: [2, 3, 0] },
   { from: "E-ban-separate", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Separates repeal from construction, which blunts most cost and timing objections without settling them.", votes: [2, 4, 2] },
   { from: "E-france-ontario", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the technology can run a low-emissions grid; it does not show it can be built here in time or at a competitive cost.", votes: [2, 5, 2] },
   { from: "E-unsafe", to: "R-nuclear", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Safety is a reason to regulate reactors, which repeal would permit; it does not by itself argue for a legislative ban.", votes: [1, 2, 5] },
@@ -1392,19 +1942,23 @@ const connections: ConnDef[] = [
   { from: "A-samuel-slow", to: "E-not-before-2040", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "A reactor would pass through the same slow approval process as every other major project, adding to the timeline.", votes: [0, 2, 3] },
 
   // --- gas reservation -------------------------------------------------------
-  { from: "E-reservation-lowers-prices", to: "R-gas", relation: "SUPPORTS", strength: "DECISIVE", crux: true, reason: "The proposal exists to lower prices; if it would not, little else about it matters.", votes: [5, 2, 0] },
-  { from: "E-wa-domgas", to: "E-reservation-lowers-prices", relation: "SUPPORTS", strength: "DECISIVE", reason: "The one Australian precedent for the policy coincides with the outcome the policy is meant to produce.", votes: [4, 3, 1] },
-  { from: "E-wa-cheap-gas", to: "E-reservation-lowers-prices", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If geology explains the precedent, the precedent proves less than it seems.", votes: [1, 3, 1] },
-  { from: "E-east-prices", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "Establishes the problem the proposal responds to; it does not by itself show reservation is the fix.", votes: [2, 4, 1] },
-  { from: "E-gas-firming", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "If gas remains necessary for firming, securing domestic supply has a system-reliability rationale beyond price.", votes: [2, 3, 1] },
-  { from: "E-coal-closures", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "Coal's exit increases reliance on gas for firming during the 2030s, when a shortfall would bite hardest.", votes: [2, 3, 2] },
-  { from: "E-retrospective", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Counts against any design that touches existing contracts; a prospective policy avoids most of it.", votes: [2, 4, 1] },
-  { from: "E-adgsm", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If a supply lever already exists, reservation must show what it adds beyond price suppression.", votes: [2, 3, 1] },
-  { from: "E-market-working", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Attacks the premise that lower domestic gas prices are desirable at all during a transition away from gas.", votes: [2, 3, 2] },
-  { from: "E-gencost", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Cheaper renewables reduce long-run gas demand, which weakens the case for securing supply, but only slowly.", votes: [0, 2, 4] },
+  { from: "E-grandfathered-contracts", to: "R-gas", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If the exemptions leave too little gas in the scheme, it cannot move the price whatever its headline share.", votes: [5, 2, 0] },
+  { from: "E-wa-domgas", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "The precedent the scheme is modelled on coincides with the outcome it promises.", votes: [3, 4, 1] },
+  { from: "E-east-prices", to: "R-gas", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes the problem the scheme answers; says nothing about whether this design solves it.", votes: [1, 2, 4] },
+  { from: "E-investment-deterrent", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If new supply dries up, prices rise regardless of how the existing gas is allocated.", votes: [2, 4, 1] },
+  { from: "E-export-tax", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Argues a different instrument would have done more for prices; a competing answer rather than a rebuttal.", votes: [1, 3, 2] },
+  { from: "E-market-working", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Questions whether lower gas prices are the right goal at all during a transition away from gas.", votes: [1, 2, 4] },
+  { from: "E-adgsm", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "A supply lever already existed and was never triggered; reservation must show what it adds.", votes: [0, 2, 3] },
+  { from: "E-gas-firming", to: "R-gas", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Gas demand for firming persists, so the domestic price keeps mattering.", votes: [0, 2, 3] },
+  { from: "E-coal-closures", to: "R-gas", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Coal's exit raises reliance on gas in exactly the years the scheme starts.", votes: [0, 2, 3] },
+  { from: "E-gencost", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Cheaper renewables erode long-run gas demand, which weakens the case slowly.", votes: [0, 1, 4] },
 
-  // --- the sovereign-risk objection has a rebuttal ---------------------------
-  { from: "E-wa-prospective", to: "E-retrospective", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The precedent the proposal relies on did not reopen contracts, so a prospective design is available.", votes: [2, 3, 1] },
+  // --- the gas crux has its own arguments -----------------------------------
+  { from: "E-softened-110", to: "E-grandfathered-contracts", relation: "SUPPORTS", strength: "RELEVANT", reason: "A reserve pegged to demand that two producers already meet reserves little new gas.", votes: [2, 3, 0] },
+  { from: "E-southern-price-modelling", to: "E-grandfathered-contracts", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Even modest extra southern supply lowers prices in the modelling the government relies on.", votes: [1, 3, 1] },
+  { from: "E-wa-cheap-gas", to: "E-wa-domgas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If geology explains the precedent, the precedent proves less than it seems.", votes: [1, 3, 1] },
+  { from: "E-industry-split", to: "E-investment-deterrent", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Producers who already supply the domestic market accepted the rule without threatening investment.", votes: [1, 3, 1] },
+
 
   // --- negative gearing ------------------------------------------------------
   { from: "H-investor-loans-established", to: "R-negative-gearing", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal's core premise is that the concession is not producing new supply; this is the evidence for it.", votes: [5, 3, 1] },
@@ -1414,11 +1968,15 @@ const connections: ConnDef[] = [
   { from: "H-supply-lagged", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If supply is the dominant driver, the concession is a second-order factor and the proposal aims at the wrong target.", votes: [4, 3, 2] },
   { from: "H-middle-income", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Who benefits bears on fairness, not on whether the concession adds supply or raises prices.", votes: [1, 3, 4] },
   { from: "H-foreign-buyers", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Argues the price problem lies elsewhere; even if true it does not bear on what the concession does.", votes: [3, 3, 3] },
+  { from: "H-grandfathering-timid", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Says the bill should go further, not that it should fail; counts against passing it as drafted.", votes: [0, 2, 3] },
+  { from: "H-treasury-rent", to: "H-ng-materially-affordable", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Treasury itself says the measures redistribute ownership rather than change supply or prices much.", votes: [1, 3, 1] },
 
   // --- the affordability claim has evidence against it -------------------------
   { from: "H-grattan-two-percent", to: "H-ng-materially-affordable", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A 2 per cent effect is real but hard to call material against a decade of double-digit growth.", votes: [2, 4, 1] },
 
   // --- the rent objection has arguments both ways ----------------------------
+  { from: "H-treasury-rent", to: "H-rents-rise", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The official estimate of the rent effect is small.", votes: [2, 3, 0] },
+  { from: "H-industry-modelling", to: "H-rents-rise", relation: "SUPPORTS", strength: "RELEVANT", reason: "The industry's estimate is several times Treasury's.", votes: [1, 3, 1] },
   { from: "H-quarantine-1985", to: "H-rents-rise", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The only natural experiment shows rent rises tracked local vacancy, not the tax change.", votes: [3, 3, 1] },
   { from: "H-private-landlords", to: "H-rents-rise", relation: "SUPPORTS", strength: "RELEVANT", reason: "If individuals supply most rentals, a change to their incentives acts on most of the stock.", votes: [2, 4, 1] },
 
@@ -1433,6 +1991,10 @@ const connections: ConnDef[] = [
   { from: "M-intl-ed-export", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Quantifies what a student-heavy cut would put at risk.", votes: [2, 4, 2] },
 
   // --- the migration crux has its own argument -------------------------------
+  { from: "M-budget-forecast", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the number is already falling to 225,000, a 200,000 cap buys little at considerable cost.", votes: [2, 3, 1] },
+  { from: "M-grattan-rents", to: "R-migration", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the rent effect of lower migration is real, while putting a modest number on it.", votes: [1, 4, 1] },
+  { from: "M-budget-forecast", to: "M-catch-up", relation: "SUPPORTS", strength: "RELEVANT", reason: "The forecast decline is what the catch-up explanation predicts.", votes: [1, 3, 0] },
+  { from: "M-soft-caps", to: "M-cap-needs-student-cuts", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Shows the student lever exists and is already in use, so a cap would pull it harder.", votes: [0, 2, 3] },
   { from: "M-intl-ed-export", to: "M-cap-needs-student-cuts", relation: "SUPPORTS", strength: "DECISIVE", reason: "Shows why cutting student numbers is a cost and not a rounding error.", votes: [4, 2, 1] },
   { from: "M-skilled-minority", to: "M-shortages", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A cap could be met without touching skilled visas, so shortages need not follow from a cap.", votes: [2, 3, 1] },
 
@@ -1441,14 +2003,20 @@ const connections: ConnDef[] = [
   { from: "M-nom-double", to: "H-supply-lagged", relation: "SUPPORTS", strength: "RELEVANT", reason: "The record intake increased the demand side of the shortfall in a single year.", votes: [2, 3, 2] },
 
   // --- approvals -------------------------------------------------------------
-  { from: "A-samuel-slow", to: "R-approvals", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal exists to fix exactly the problem the review documented.", votes: [5, 3, 1] },
-  { from: "A-delays-hit-renewables", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "Broadens who bears the cost of delay, which strengthens the case without changing its logic.", votes: [2, 4, 1] },
-  { from: "A-act-failed-species", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Suggests speed is not the Act's only failure, and that fixing speed alone may worsen the other.", votes: [2, 4, 2] },
-  { from: "A-deemed-approval", to: "R-approvals", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If the only workable default is approval, the proposal gutted the assessment it was meant to speed up.", votes: [4, 3, 1] },
-  { from: "A-delay-pre-referral", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If most delay is outside the clock, the proposal addresses a minority of the problem.", votes: [1, 3, 1] },
+  { from: "A-national-interest", to: "R-approvals", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If a minister can route around the standards, the protection half of the promise depends on who the minister is.", votes: [4, 2, 0] },
+  { from: "A-epa-independence", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "An EPA answerable to the minister on approvals cannot guarantee the standards are applied.", votes: [2, 3, 1] },
+  { from: "A-unacceptable-bar", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A higher refusal bar is a weakening of protection by design, however modest.", votes: [1, 3, 1] },
+  { from: "A-delay-pre-referral", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If most delay is outside the statutory clock, the speed gain is smaller than the headline.", votes: [1, 3, 1] },
+  { from: "A-timeframes-cut", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "The quantified speed gain the reforms promise.", votes: [2, 3, 0] },
+  { from: "A-fossil-excluded", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "Speed is withheld from the highest-impact projects, which is the strongest sense in which protection was not traded away.", votes: [2, 3, 0] },
+  { from: "A-delays-hit-renewables", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "The projects the energy transition depends on are the main beneficiaries of faster decisions.", votes: [1, 3, 1] },
+  { from: "A-samuel-slow", to: "R-approvals", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes the problem the reforms answer; does not show they answer it.", votes: [0, 2, 3] },
+  { from: "A-act-failed-species", to: "R-approvals", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "The old Act failed on protection too, so reform was needed on both counts.", votes: [0, 2, 3] },
 
-  // --- the approvals crux has a rebuttal -------------------------------------
-  { from: "A-default-refusal", to: "A-deemed-approval", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Shows the incentive problem attaches to one default, not to deadlines as such.", votes: [2, 3, 1] },
+  // --- the approvals crux has its own arguments -----------------------------
+  { from: "A-exemption-guidance", to: "A-national-interest", relation: "SUPPORTS", strength: "RELEVANT", reason: "An undefined power is as wide as the next minister wants it to be.", votes: [2, 2, 0] },
+  { from: "A-aukus-precedent", to: "A-national-interest", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Shows the kind of case the power is meant for; does not limit it to such cases.", votes: [0, 1, 3] },
+
 
   // --- parking ---------------------------------------------------------------
   { from: "P-cost-per-space", to: "R-parking", relation: "SUPPORTS", strength: "DECISIVE", reason: "The affordability case rests on parking being expensive; this is the evidence that it is.", votes: [4, 3, 1] },
@@ -1459,6 +2027,10 @@ const connections: ConnDef[] = [
   { from: "P-suburbs-lack-transit", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Limits where the proposal's premise holds; it argues for a narrower policy rather than none.", votes: [2, 4, 1] },
 
   // --- the spillover objection has a rebuttal --------------------------------
+  { from: "P-street-vacant", to: "P-spillover", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the street is largely empty at night, the cars have somewhere to go.", votes: [2, 3, 0] },
+  { from: "P-built-to-minimum", to: "P-market-provides", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Buildings clustered at the minimum suggest the rule binds, so the market is not providing what buyers want.", votes: [1, 3, 1] },
+  { from: "P-victoria-removed", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "An Australian state has already done it where transport is good; the precedent is local now.", votes: [1, 4, 1] },
+  { from: "P-unbundle", to: "R-parking", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "A companion design that answers 'who pays' without touching minimums directly.", votes: [0, 2, 3] },
   { from: "P-manage-street", to: "P-spillover", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Spillover is real only where the street is unmanaged, and managing it is within the same council's power.", votes: [2, 3, 1] },
 ];
 

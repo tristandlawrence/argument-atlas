@@ -119,9 +119,53 @@ claimsRouter.get("/claims", async (req, res) => {
       ...(tag ? { tags: { has: tag } } : {}),
     },
     orderBy: { createdAt: "desc" },
-    select: { id: true, slug: true, title: true, oneLiner: true, type: true, tags: true, contestedAt: true },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      oneLiner: true,
+      type: true,
+      tags: true,
+      evidenceStrength: true,
+      contestedAt: true,
+      createdAt: true,
+      votes: { select: { agree: true, wellConstructed: true } },
+      arguedBy: {
+        select: { relation: true, contentiousAsOf: true, fromClaim: { select: { slug: true, title: true } } },
+      },
+      _count: { select: { usedIn: true, voices: true } },
+    },
   });
-  res.json(claims);
+  // The browse list carries enough to filter by every classification the
+  // product uses, without a second request per claim.
+  res.json(
+    claims.map((c) => {
+      const raterCount = c.votes.length;
+      const agreePct = raterCount ? Math.round((c.votes.filter((v) => v.agree).length / raterCount) * 100) : null;
+      const wellPct = raterCount ? Math.round((c.votes.filter((v) => v.wellConstructed).length / raterCount) * 100) : null;
+      const contentious = c.arguedBy.find((a) => a.contentiousAsOf);
+      return {
+        id: c.id,
+        slug: c.slug,
+        title: c.title,
+        oneLiner: c.oneLiner,
+        type: c.type,
+        tags: c.tags,
+        evidenceStrength: c.evidenceStrength,
+        contestedAt: c.contestedAt,
+        createdAt: c.createdAt,
+        raterCount,
+        agreePct,
+        wellConstructedPct: wellPct,
+        supportsCount: c.arguedBy.filter((a) => a.relation === "SUPPORTS").length,
+        contradictsCount: c.arguedBy.filter((a) => a.relation === "CONTRADICTS").length,
+        usedInCount: c._count.usedIn,
+        voiceCount: c._count.voices,
+        isRoot: c._count.usedIn === 0 && c.arguedBy.length > 0,
+        turnsOn: contentious ? { slug: contentious.fromClaim.slug, title: contentious.fromClaim.title } : null,
+      };
+    })
+  );
 });
 
 // Counts per type and per tag, for the classification pages and tooltips.

@@ -238,6 +238,26 @@ Never use colour alone to carry the supports/contradicts distinction — the rel
 
 ---
 
+## Homepage **(build status: browser shipped; search proper is Phase 3)**
+
+The homepage is a browser, not a feed. It opens on **Debates**: claims with arguments beneath them and nothing above, ordered by rater count, each shown as a card with its badges, one-liner, the claim it currently **turns on** (the connection marked contentious), counts for and against, raters, the two percentages and the rating quadrant, voices, and a link to the graph focused on it. **All claims** switches to compact rows of every claim with the same filters.
+
+Every classification the product uses is a filter, and nothing is ever ordered by agreement:
+
+| Filter | Values | Why it is here |
+| --- | --- | --- |
+| Topic | the tags in use, with counts | the only filter most readers will touch |
+| Type | Fact, Opinion, Value, Proposal | lets a reader find what can be settled by evidence and what cannot |
+| Evidence | Strong, Moderate, Weak, None | surfaces claims that need sources |
+| How it rates | Compelling, Steelman, Partisan, Weak, Unrated | the quadrants from the plot; Steelman and Unrated are the useful ones |
+| Status | Contested, Has a live question, Used elsewhere, Not yet rated | editorial and structural state |
+| Search | title and one-liner, client-side | a stopgap until Phase 3 search over bodies and tags |
+| Sort | Most rated, Most argued, Newest, A to Z | never by agreement |
+
+Filter chips explain themselves on hover where the value is not self-evident (quadrants, status). The URL accepts `tag`, `type`, `q` and `scope` so a filtered view can be linked; the `/type/…` and `/tag/…` pages remain as the badge click-through destinations. The Phase 2 homepage-ordering item is therefore delivered early as a prototype; Phase 3 search replaces the client-side title match.
+
+---
+
 ## Graph view **(build status: prototype shipped)**
 
 `/graph` draws the whole atlas as a force-directed map: every claim a node, every connection an edge. It answers the question the page model cannot, which is what the shape of the argument is, and it is the fastest way to see how the six debates share claims.
@@ -600,7 +620,7 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 - **Internationalisation:** All UI strings externalised into translation files via `next-intl` — **not yet done** (Phase 4). English only at launch either way.
 - **Security:** Input sanitisation, rate limiting, secure auth, no individual-level demographic exposure. **Currently a gap**: mutating API endpoints trust client-supplied identity (`x-voter-id` header, freeform `authorName`) rather than the authenticated session; there is no rate limiting or moderator-only gating on any endpoint yet. All Phase 1.
 - **Privacy:** GDPR/Australian-Privacy-Act-aware data handling; privacy policy published before real users are onboarded — **not yet drafted** (Phase 1).
-- **Homepage ordering** *(Phase 2)*: the homepage currently lists claims newest-first, which is a feed and contradicts "structure over time". From Phase 2 the homepage lists debate roots (claims with no upward connections) ordered by rater count, with a tag filter; search (Phase 3) replaces it as the primary way in.
+- **Homepage ordering** *(delivered early, see Homepage)*: debates first, ordered by rater count, with filters on every classification; search proper is Phase 3.
 
 ---
 
@@ -637,6 +657,7 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - Research pass (done): every root checked against the public record; gas, negative gearing and approvals reframed around where the argument now sits; voices replaced with dated, linked pieces; context links added.
 - Second review applied (done): dated contentious mark, coverage rubric and environment-law restructure, differentiated and navigable badges with classification pages, click-through rows, export-tax split.
 - Graph view prototype and header controls moved to the top-right (done).
+- Homepage browser with topic, type, evidence, quadrant and status filters (done).
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -666,7 +687,7 @@ Changes to what votes and revisions mean. Each is small; together they are the d
 - Revision kinds (copyedit / substantive) and vote archiving on substantive change.
 - Evidence strength on the item, with reason; claim-level field retired.
 - "Challenge this classification" affordance on the type badge.
-- Column ordering rule and homepage ordering rule.
+- Column ordering rule (the homepage rule shipped early as a prototype).
 - Score visibility: numbers hidden until the viewer has voted.
 - Contested thresholds scaled to rater count; half-weight for new accounts.
 - Moderator `role` on `User` and a minimal pending-edit review page (needed to exit contested status at all).

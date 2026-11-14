@@ -127,8 +127,29 @@ export type ClaimListItem = {
   oneLiner: string;
   type: ClaimType;
   tags: string[];
+  evidenceStrength: EvidenceStrength;
   contestedAt: string | null;
+  createdAt: string;
+  raterCount: number;
+  agreePct: number | null;
+  wellConstructedPct: number | null;
+  supportsCount: number;
+  contradictsCount: number;
+  usedInCount: number;
+  voiceCount: number;
+  isRoot: boolean;
+  /** The child connection currently marked contentious, if any. */
+  turnsOn: { slug: string; title: string } | null;
 };
+
+export type Quadrant = "COMPELLING" | "STEELMAN" | "PARTISAN" | "WEAK" | "UNRATED";
+
+export function quadrantOf(c: { raterCount: number; agreePct: number | null; wellConstructedPct: number | null }): Quadrant {
+  if (!c.raterCount || c.agreePct === null || c.wellConstructedPct === null) return "UNRATED";
+  const a = c.agreePct >= 50;
+  const w = c.wellConstructedPct >= 50;
+  return a && w ? "COMPELLING" : !a && w ? "STEELMAN" : a && !w ? "PARTISAN" : "WEAK";
+}
 
 export type GraphNode = {
   id: string;

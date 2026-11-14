@@ -1,29 +1,21 @@
-import Link from "next/link";
-import { TypeBadge, TagBadge } from "@/components/ClassificationBadge";
 import { fetchClaims } from "@/lib/api";
-import styles from "./page.module.css";
+import { HomeBrowser } from "@/components/HomeBrowser";
 
-export default async function Home() {
-  const claims = await fetchClaims();
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ tag?: string; type?: string; q?: string; scope?: string }>;
+}) {
+  const [params, claims] = await Promise.all([searchParams, fetchClaims()]);
   return (
-    <main className={styles.main}>
-      <h1 className={styles.heading}>Claims</h1>
-      <div className={styles.list}>
-        {claims.map((claim) => (
-          <div className={styles.row} key={claim.id}>
-            <Link href={`/claim/${claim.slug}`} className={styles.rowTitle}>
-              {claim.title}
-            </Link>
-            <div className={styles.rowMeta}>
-              <TypeBadge type={claim.type} />
-              {claim.tags.map((tag) => (
-                <TagBadge tag={tag} key={tag} />
-              ))}
-              {claim.contestedAt ? <span className={styles.contested}>CONTESTED</span> : null}
-            </div>
-          </div>
-        ))}
-      </div>
-    </main>
+    <HomeBrowser
+      claims={claims}
+      initial={{
+        tag: params.tag?.toUpperCase() ?? null,
+        type: params.type?.toUpperCase() ?? null,
+        q: params.q ?? "",
+        scope: params.scope === "all" ? "all" : "debates",
+      }}
+    />
   );
 }

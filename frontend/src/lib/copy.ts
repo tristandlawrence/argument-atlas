@@ -68,3 +68,11 @@ export const CONTENTIOUS_TOOLTIP =
   "Editors marked this as where the debate currently turns. Nothing is permanently the crux: the mark carries the date it was last confirmed and is re-checked every 90 days.";
 export const CONTENTIOUS_REVIEW_TOOLTIP =
   "This was marked as where the debate turns more than 90 days ago and is due for review. It may no longer be the live question.";
+
+export const QUADRANT_COPY: Record<string, string> = {
+  COMPELLING: "Most raters agree and judge it well made: the consensus pick.",
+  STEELMAN: "Well made but did not move most raters. The quadrant most useful for understanding the other side.",
+  PARTISAN: "Most raters agree but judge it poorly made. Popular, weakly argued.",
+  WEAK: "Few agree and few think it well made. No label needed; the score is the signal.",
+  UNRATED: "Nobody has rated this claim yet.",
+};

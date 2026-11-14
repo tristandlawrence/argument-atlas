@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { StrengthBar } from "./StrengthBar";
+import { CONTENTIOUS_REVIEW_TOOLTIP, CONTENTIOUS_TOOLTIP } from "@/lib/copy";
 import { HoverCard } from "./HoverCard";
 import { useIsNarrow } from "@/lib/useIsNarrow";
 import type { ConnectionRow } from "@/lib/types";
@@ -22,6 +24,7 @@ export function ConnectionRowList({
   const [placement, setPlacement] = useState<"above" | "below">("below");
   const [maxHeight, setMaxHeight] = useState(520);
   const isNarrow = useIsNarrow();
+  const router = useRouter();
 
   // Open on the side with more room, and never taller than that room, so the
   // card is always fully reachable (the compact title bar takes the top 48px).
@@ -53,12 +56,15 @@ export function ConnectionRowList({
               className={styles.row}
               onFocus={isNarrow ? undefined : (e) => openRow(e.currentTarget, row.connectionId)}
               onClick={(e) => {
+                // Hover previews; click goes to the claim. On touch the first tap
+                // opens the inline card (which carries the link) instead.
                 if (isNarrow) {
                   isOpen ? setOpenId(null) : openRow(e.currentTarget, row.connectionId);
-                } else if (!isOpen) {
-                  openRow(e.currentTarget, row.connectionId);
+                } else {
+                  router.push(`/claim/${row.otherClaim.slug}`);
                 }
               }}
+              title={isNarrow ? undefined : "Open this claim"}
             >
               {direction === "upward" ? (
                 <>
@@ -111,12 +117,15 @@ export function ConnectionRowList({
 }
 
 function RowMarks({ row }: { row: ConnectionRow }) {
-  if (!row.crux && row.challenges.total === 0) return null;
+  if (!row.contentious && row.challenges.total === 0) return null;
   return (
     <>
-      {row.crux && (
-        <span className={styles.cruxTag} title="The debate currently turns on this connection">
-          CRUX
+      {row.contentious && (
+        <span
+          className={row.contentious.reviewDue ? styles.contentiousReview : styles.contentiousTag}
+          title={row.contentious.reviewDue ? CONTENTIOUS_REVIEW_TOOLTIP : CONTENTIOUS_TOOLTIP}
+        >
+          {row.contentious.reviewDue ? `CONTENTIOUS? · REVIEW` : `CONTENTIOUS · ${row.contentious.label}`}
         </span>
       )}
       {row.challenges.total > 0 && (

@@ -92,7 +92,11 @@ export function HoverCard({
             {row.relationSentence}
           </span>
           <span className={styles.howStrongly}>
-            {row.crux && <span className={styles.cruxTag}>CRUX</span>}
+            {row.contentious && (
+              <span className={styles.cruxTag} title={row.contentious.reviewDue ? "Marked as where the debate turns; due for review" : "Where the debate currently turns"}>
+                {row.contentious.reviewDue ? "CONTENTIOUS? · REVIEW" : `CONTENTIOUS · ${row.contentious.label}`}
+              </span>
+            )}
             RATE HOW IT RELATES
           </span>
         </div>

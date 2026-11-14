@@ -127,3 +127,24 @@ button {
   font-family: inherit;
   cursor: pointer;
 }
+
+/* Topic badge palette — six muted washes assigned deterministically per tag so
+   topics are tellable apart at a glance. Hue never carries meaning on its own:
+   the tag name is always printed. Documented in requirements.md → Colour. */
+:root {
+  --tag-wash-0: #efe6d6; --tag-ink-0: #7a5a1f;
+  --tag-wash-1: #e4ecef; --tag-ink-1: #2f5d6b;
+  --tag-wash-2: #e8ece2; --tag-ink-2: #4a6a3a;
+  --tag-wash-3: #efe3e6; --tag-ink-3: #7a3f52;
+  --tag-wash-4: #e9e6f0; --tag-ink-4: #4e4572;
+  --tag-wash-5: #ece9e0; --tag-ink-5: #5e5a4a;
+}
+
+:root[data-theme='dark'] {
+  --tag-wash-0: #2c2415; --tag-ink-0: #d9b26a;
+  --tag-wash-1: #16262b; --tag-ink-1: #8fc3cf;
+  --tag-wash-2: #1c261a; --tag-ink-2: #a3c48d;
+  --tag-wash-3: #2b1b20; --tag-ink-3: #d99aae;
+  --tag-wash-4: #211d2d; --tag-ink-4: #b3a8d9;
+  --tag-wash-5: #26241c; --tag-ink-5: #c4bea6;
+}

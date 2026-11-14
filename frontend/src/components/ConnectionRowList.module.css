@@ -85,7 +85,8 @@
   margin-top: 2px;
 }
 
-.cruxTag,
+.contentiousTag,
+.contentiousReview,
 .challengeTag {
   font-family: var(--font-mono);
   font-size: 8.5px;
@@ -97,12 +98,21 @@
   white-space: nowrap;
 }
 
-.cruxTag {
+.contentiousTag {
   color: var(--accent);
   border: 1px solid var(--accent);
+}
+
+.contentiousReview {
+  color: var(--text-3);
+  border: 1px dashed var(--text-3);
 }
 
 .challengeTag {
   color: var(--text-2);
   border: 1px solid var(--rule);
+}
+
+.row {
+  cursor: pointer;
 }

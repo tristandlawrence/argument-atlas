@@ -89,9 +89,11 @@ model Connection {
   relation       ConnectionRelation
   statedStrength ConnectionStrength
   statedReason   String?
-  // Marks the connection the debate currently turns on. Set by editors; at
-  // most a few per parent. See requirements.md → Debate lifecycle.
-  crux           Boolean            @default(false)
+  // Editors mark the connection the debate currently turns on, with the date
+  // they last confirmed it. Nothing is permanently "the crux": the mark is
+  // re-checked every 90 days and shows as review-due after that. See
+  // requirements.md → Debate lifecycle → Currently contentious.
+  contentiousAsOf DateTime?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

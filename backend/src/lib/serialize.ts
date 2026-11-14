@@ -181,3 +181,20 @@ export function challengeCounts(challenges: { kind: string }[]) {
   const wrongDirection = challenges.filter((c) => c.kind === "WRONG_DIRECTION").length;
   return { notRelevant, wrongDirection, total: notRelevant + wrongDirection };
 }
+
+// --- currently contentious ----------------------------------------------------
+// A dated editorial mark, not a permanent flag. After REVIEW_AFTER_DAYS it is
+// shown as due for review rather than as current.
+
+const REVIEW_AFTER_DAYS = 90;
+const MONTHS = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+
+export function contentiousStatus(asOf: Date | null) {
+  if (!asOf) return null;
+  const ageDays = (Date.now() - asOf.getTime()) / 86400000;
+  return {
+    asOf,
+    label: `${MONTHS[asOf.getMonth()]} ${asOf.getFullYear()}`,
+    reviewDue: ageDays > REVIEW_AFTER_DAYS,
+  };
+}

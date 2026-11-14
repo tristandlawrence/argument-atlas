@@ -8,6 +8,7 @@ import {
   ageLabel,
   challengeCounts,
   claimSummary,
+  contentiousStatus,
   voiceSummary,
   strengthDefinition,
   strengthDistribution,
@@ -52,7 +53,7 @@ function buildUpwardRow(
     id: string;
     relation: string;
     statedStrength: string;
-    crux: boolean;
+    contentiousAsOf: Date | null;
     strengthVotes: { value: string }[];
     challenges: { kind: string }[];
     toClaim: Parameters<typeof claimSummary>[0] & { tags: string[]; votes: { id: string; agree: boolean; wellConstructed: boolean }[] };
@@ -66,7 +67,7 @@ function buildUpwardRow(
     connectionId: conn.id,
     relation: conn.relation,
     statedStrength: conn.statedStrength,
-    crux: conn.crux,
+    contentious: contentiousStatus(conn.contentiousAsOf),
     challenges: challengeCounts(conn.challenges),
     ...strengthMark(conn.statedStrength),
     otherClaim: { id: parent.id, slug: parent.slug, title: parent.title },
@@ -84,7 +85,7 @@ function buildDownwardRow(conn: {
   id: string;
   relation: string;
   statedStrength: string;
-  crux: boolean;
+  contentiousAsOf: Date | null;
   strengthVotes: { value: string }[];
   challenges: { kind: string }[];
   fromClaim: Parameters<typeof claimSummary>[0];
@@ -95,7 +96,7 @@ function buildDownwardRow(conn: {
     connectionId: conn.id,
     relation: conn.relation,
     statedStrength: conn.statedStrength,
-    crux: conn.crux,
+    contentious: contentiousStatus(conn.contentiousAsOf),
     challenges: challengeCounts(conn.challenges),
     ...strengthMark(conn.statedStrength),
     otherClaim: { id: child.id, slug: child.slug, title: child.title },
@@ -106,12 +107,33 @@ function buildDownwardRow(conn: {
   };
 }
 
+const CLAIM_TYPES = ["FACT", "OPINION", "VALUE", "PROPOSAL"];
+
 claimsRouter.get("/claims", async (req, res) => {
+  const type = typeof req.query.type === "string" ? req.query.type.toUpperCase() : undefined;
+  const tag = typeof req.query.tag === "string" ? req.query.tag.toUpperCase() : undefined;
+  if (type && !CLAIM_TYPES.includes(type)) return res.status(400).json({ error: "Unknown claim type" });
   const claims = await prisma.claim.findMany({
+    where: {
+      ...(type ? { type: type as "FACT" | "OPINION" | "VALUE" | "PROPOSAL" } : {}),
+      ...(tag ? { tags: { has: tag } } : {}),
+    },
     orderBy: { createdAt: "desc" },
     select: { id: true, slug: true, title: true, oneLiner: true, type: true, tags: true, contestedAt: true },
   });
   res.json(claims);
+});
+
+// Counts per type and per tag, for the classification pages and tooltips.
+claimsRouter.get("/claims/facets", async (_req, res) => {
+  const claims = await prisma.claim.findMany({ select: { type: true, tags: true } });
+  const byType: Record<string, number> = {};
+  const byTag: Record<string, number> = {};
+  for (const c of claims) {
+    byType[c.type] = (byType[c.type] ?? 0) + 1;
+    for (const t of c.tags) byTag[t] = (byTag[t] ?? 0) + 1;
+  }
+  res.json({ byType, byTag });
 });
 
 claimsRouter.get("/claims/:idOrSlug", async (req, res) => {

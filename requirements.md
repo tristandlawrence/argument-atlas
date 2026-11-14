@@ -8,6 +8,8 @@ This is the single source of truth for the product. Sections are marked **(build
 
 **Revision note, 14 November 2026 (third pass, after first prototype review).** Adds: markdown for every prose field; a debate lifecycle and the editorial process that produced the nuclear and gas restructure; a crux marker on connections; voices (public pieces that make an argument), rated like claims and plotted on the claim's chart; connection challenges ("doesn't belong here", "points the other way") kept separate from the strength scale; the rating box restating the claim; a compact sticky title bar with the edit control; column hints and clearer hover-card calls to action; sparser demo votes. Remaining feedback is scheduled in the Roadmap.
 
+**Revision note, 15 November 2026 (second prototype review).** The permanent crux flag becomes a dated **currently contentious** mark, re-checked every 90 days. An argument coverage rubric is added so related arguments are generated across lenses rather than clustering on one mechanism; the environment-law debate is restructured by it. Type and topic badges are differentiated, explain themselves on hover, and open classification pages on click. Rows click through to their claim. The gas export-tax claim is split into proposal and effect.
+
 ---
 
 ## Project Overview
@@ -84,19 +86,46 @@ Debates are not written once. The first prototype review showed the pattern: a d
 ### The process
 
 1. **Find the active debate.** Ask what participants are actually arguing about this season, not what the topic's history contains. For nuclear it is timing, not safety. For gas reservation it is whether prices would fall, not whether they rose. The answer is usually one or two sentences.
-2. **Write the active debate as a claim.** The crux becomes an ordinary claim with its own page, context, evidence, supports and contradicts. Its connection to the root is marked **crux**. A root has one or two crux connections, never more.
+2. **Write the active debate as a claim.** The crux becomes an ordinary claim with its own page, context, evidence, supports and contradicts. Its connection to the root is marked **currently contentious**, with the date an editor last confirmed it (see below). A root has one or two such marks, never more.
 3. **Promote and regroup.** Children of the root that are really sub-points of the crux move under it. The atomic facts stay atomic; they are never merged into the opinion they support. Merging is for duplicates, promotion is for structure.
 4. **Add the missing positive case.** After regrouping, check that the root has at least one argument for it that is not merely a rebuttal of an objection. Debates seeded from the critics' side are common and read as rigged.
 5. **Add the argument about the argument.** Many live debates include a claim about the debate itself ("this fight is a distraction"). It is a legitimate contradicting claim and belongs in the graph.
 6. **Attach voices.** For the root and the crux, list who makes the case well in public, for and against.
 7. **Record why.** The connection reason for the crux says in one sentence why the debate turns there. The disagreement note links to it.
 
+### Currently contentious, not "the crux"
+
+Nothing is permanently the crux: the live question moves, as the first research pass showed within a year. So the mark on a connection is **dated**, not boolean. `contentiousAsOf` records when an editor last confirmed that this is where the debate turns. The row and the hover card show **CONTENTIOUS · NOV 2026**. After 90 days without re-confirmation the mark reads **CONTENTIOUS? · REVIEW** and the claim appears in an editors' review list. Re-confirming is a one-click edit recorded in history; moving the mark to a different connection is an ordinary structural edit.
+
+What the mark must never become is a verdict. It says "argue here", not "this wins". Phase 2 adds a derived signal beside the editorial one: a connection whose strength votes are split, whose challenges are rising, or whose claim has a high rate of changed votes is surfaced to editors as a candidate, so confidence that the live question is captured rests on data as well as attention.
+
+### Argument coverage rubric
+
+Related arguments should cover a debate, not pile onto one mechanism. The second review found the environment-law debate had four root-level claims about ministerial discretion and none about what the law would actually let through. The rubric below is applied when a debate is seeded or restructured, and will drive an optional *lens* tag on connections in Phase 3 so readers can filter by it.
+
+| Lens | The question it answers | Example from the environment-law debate |
+| --- | --- | --- |
+| Mechanism | How does the proposal work? | Statutory timeframe cut from 70 to 50 days |
+| Effects | What happens, to which projects, places or people? | Which kinds of project the fast routes could pass |
+| Magnitude | How big is it? What do the numbers say? | 35,000 fewer homes over a decade (negative gearing) |
+| Governance | Who decides, and who can override whom? | Minister as final decision-maker |
+| Alternatives | What else could be done instead? | Export tax instead of reservation |
+| Values | What should matter here regardless of the facts? | A country is entitled to decide its intake |
+
+Rules of thumb:
+
+- A root should have three to seven arguments on each side at the top level. More than that, roll up: write the claim they are sub-points of and move them under it.
+- No more than two root-level arguments on a side should share a lens. If a third appears, it belongs under one of the first two.
+- Every debate needs at least one *Effects* claim with children by affected group or project type, because that is what most readers come to find out.
+- *Governance* claims attract editors and lawyers and crowd out everything else; cap them hardest.
+- Rolled-up claims are opinions by nature ("the minister remains the final decision-maker"); their children are the facts. Never merge facts into the opinion.
+
 ### Lifecycle states of a claim
 
 | State | Meaning | Product support |
 | --- | --- | --- |
 | Live | Ordinary claim, connected, rateable | Shipped |
-| Crux | Marked on a connection as where the parent debate turns | Shipped (editor-set flag) |
+| Contentious | Marked on a connection as where the parent debate currently turns, with the date last confirmed; review-due after 90 days | Shipped (dated mark); derived candidate signal Phase 2 |
 | Promoted | Became a parent for siblings that were really its sub-points | Re-parenting exists; **insert a parent** as a single structural edit is Phase 3 |
 | Absorbed | A duplicate merged into a canonical claim; slug redirects | Phase 3 |
 | Challenged | Enough raters say a connection is misplaced | Counts shipped; thresholds and edit prompt Phase 2 |
@@ -171,6 +200,8 @@ Structure is broadsheet — ink typography, hairline rules, no decorative colour
 | `--track` | empty bar track | `#EFEAE0` |
 
 Quadrant washes: steelman `#F3EFE7`, compelling `#E8EFE6`, weak `#FBFAF7`, partisan `#F7E7E1`.
+
+Topic washes (six slots, assigned per tag; the tag name is always printed so hue never carries meaning alone): `--tag-wash-0…5` / `--tag-ink-0…5`, light `#EFE6D6/#7A5A1F`, `#E4ECEF/#2F5D6B`, `#E8ECE2/#4A6A3A`, `#EFE3E6/#7A3F52`, `#E9E6F0/#4E4572`, `#ECE9E0/#5E5A4A`, with dark-theme counterparts in `globals.css`.
 
 ### Dark — "Ink night" (D1)
 
@@ -251,9 +282,11 @@ Two labelled bands, answering two different questions:
 
 **Footer of band 1** — a single call to action, **"Read and rate this claim on its own page →"**.
 
-**Band 2 header** reads **"Rate how it relates"** and carries a **CRUX** mark when the connection is the one the parent debate turns on.
+**Band 2 header** reads **"Rate how it relates"** and carries the **CONTENTIOUS · <month year>** mark (or **CONTENTIOUS? · REVIEW** once it is 90 days old) when the connection is where the parent debate currently turns.
 
-**Challenges (band 2, below the scale)** — two buttons, **"Doesn't belong here"** and **"Points the other way"**, each showing its count. They are not strength values. The strength scale answers "how much work does this do?"; a challenge says the connection is misplaced or reversed. Keeping them apart keeps the decisive/relevant/tangential bars a true distribution. One challenge per voter per connection, replaceable. Rows with challenges show a small **N CHALLENGED** mark. Phase 2 adds thresholds: when challenges exceed a share of strength votes the row is flagged and the edit panel prompts a re-parent or flip; challenges then count toward contested status.
+**Challenges (band 2, below the scale)** — two buttons, **"Doesn't belong here"** and **"Points the other way"**, each showing its count. They are not strength values. The strength scale answers "how much work does this do?"; a challenge says the connection is misplaced or reversed. Keeping them apart keeps the decisive/relevant/tangential bars a true distribution. One challenge per voter per connection, replaceable. Rows with challenges show a small **N CHALLENGED** mark.
+
+**Rows click through.** Hovering a row previews the claim in the card; clicking the row opens the claim's page. On touch, the first tap expands the inline card, which carries the link. Nobody should have to open the card to reach the claim. Phase 2 adds thresholds: when challenges exceed a share of strength votes the row is flagged and the edit panel prompts a re-parent or flip; challenges then count toward contested status.
 
 **Column hints** — one line under each column heading: "Hover or tap a row to rate how much it does for this claim. Open it to rate the claim itself." Rows themselves stay clean.
 
@@ -345,6 +378,8 @@ Every classification badge explains itself on hover, focus, or tap. Same copy wh
 | Moderate evidence | Supported, but indirectly or partially: reporting, secondary analysis, or evidence covering part of the claim. |
 | Weak evidence | Sources are thin, contested, or only loosely connected to what the claim actually asserts. |
 | No evidence | Nothing attached yet. Not a verdict on the claim — an invitation to supply what is missing. |
+
+**Badges are tellable apart, self-explaining and navigable** *(shipped)*. The four claim types have four visual treatments, always with the word printed: Fact solid, Opinion dashed, Value double-ruled, Proposal filled. Topics draw from six muted palette slots assigned deterministically per tag, so a topic is always the same colour and two topics side by side differ. Hovering or focusing any type or topic badge shows its definition and the hint "Click to see every claim with this label"; clicking opens `/type/<type>` or `/tag/<topic>`, a page with the definition, the count and every claim carrying it, with links to the other types or topics. Topic definitions are a copy table until the Phase 3 taxonomy makes them data.
 
 **Evidence strength is derived, not declared** *(Phase 1)*. The badge copy already assumes this ("Nothing attached yet"), and the shipped build lets an editor set Strong on a claim with no evidence. From Phase 1: a claim with no evidence items is **No evidence**, regardless of the stored field. Phase 2 moves the rating onto the evidence item: each item carries a strength (strong / moderate / weak) set by the editor with a one-line reason, and the claim badge shows the strongest item. The claim-level field is then removed.
 
@@ -474,7 +509,7 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 
 ### Connection (formerly ArgumentSupport)
 - `fromClaimId`, `toClaimId`, `relation` (supports/contradicts), `statedStrength` (tangential/relevant/decisive), `statedReason`
-- `crux` (boolean, editor-set; one or two per parent)
+- `contentiousAsOf` (date, editor-set; one or two per parent; review-due after 90 days)
 - Community strength votes, challenges, revision history
 
 ### ConnectionChallenge
@@ -586,6 +621,7 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - The new seed loaded (done), with sparse demo votes so the plot, score bars and hover cards have something to show.
 - First review feedback applied (done): markdown prose, crux marker, nuclear and gas restructured around their cruxes, voices with plot rings, connection challenges, restated claim in the rating box, compact title bar, column hints and hover-card calls to action.
 - Research pass (done): every root checked against the public record; gas, negative gearing and approvals reframed around where the argument now sits; voices replaced with dated, linked pieces; context links added.
+- Second review applied (done): dated contentious mark, coverage rubric and environment-law restructure, differentiated and navigable badges with classification pages, click-through rows, export-tax split.
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -621,6 +657,7 @@ Changes to what votes and revisions mean. Each is small; together they are the d
 - Moderator `role` on `User` and a minimal pending-edit review page (needed to exit contested status at all).
 - Challenge thresholds: a connection whose challenges exceed a set share of its strength votes is flagged on the row, the edit panel prompts a re-parent or flip, and challenges count toward contested status.
 - Stale marking (moved up from Phase 4): an optional "as of" date on any claim, a visible "this may have been overtaken" note once it passes, and a retired state that keeps history but leaves the live columns.
+- Contentious candidates: connections with split strength votes, rising challenges or high vote-change rates surfaced to editors beside the dated mark; an editors' review list of marks older than 90 days.
 - Unsure and vote history applied to voice votes as well as claim votes.
 
 ### Phase 3 — Contribution at scale *(open the gate, or decide not to)*
@@ -636,7 +673,8 @@ The features that make it safe for many people to add content, in the order they
 - Nullable context fields and a hidden empty context section, if hand-written context is not keeping up.
 - **Insert a parent** as a single structural edit: pick siblings, write the claim they are sub-points of, and move them under it in one revision.
 - Voice submission form, duplicate-URL detection and a moderator queue for voices.
-- Challenge counts and crux status as inputs to column ordering.
+- Challenge counts and contentious status as inputs to column ordering.
+- Lens tag on connections (mechanism, effects, magnitude, governance, alternatives, values) with a reader-side filter, driven by the coverage rubric.
 - Re-evaluate open registration.
 
 ### Phase 4 — Insight *(enough data to learn from)*

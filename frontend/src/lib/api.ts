@@ -28,8 +28,16 @@ async function json<T>(res: Response): Promise<T> {
   return res.json();
 }
 
-export async function fetchClaims(): Promise<ClaimListItem[]> {
-  return json(await fetch(`${API_URL}/claims`, { cache: "no-store" }));
+export async function fetchClaims(filter: { type?: string; tag?: string } = {}): Promise<ClaimListItem[]> {
+  const qs = new URLSearchParams();
+  if (filter.type) qs.set("type", filter.type);
+  if (filter.tag) qs.set("tag", filter.tag);
+  const suffix = qs.toString() ? `?${qs}` : "";
+  return json(await fetch(`${API_URL}/claims${suffix}`, { cache: "no-store" }));
+}
+
+export async function fetchFacets(): Promise<{ byType: Record<string, number>; byTag: Record<string, number> }> {
+  return json(await fetch(`${API_URL}/claims/facets`, { cache: "no-store" }));
 }
 
 export async function fetchClaim(idOrSlug: string): Promise<ClaimDetail | null> {

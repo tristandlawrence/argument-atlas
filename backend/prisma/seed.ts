@@ -11,8 +11,9 @@ import type { ClaimType, EvidenceStrength, ConnectionRelation, ConnectionStrengt
  *     hold together, it is two claims.
  *  2. Claims are a graph, not a tree. A claim is written once and connected to
  *     every debate it bears on, so "Where this claim is used" has real rows.
- *  3. The crux of each debate is itself a claim, with its own supports and
- *     contradicts, not a sentence of prose.
+ *  3. Where each debate currently turns is itself a claim, with its own
+ *     supports and contradicts, and its connection carries a dated
+ *     "contentious" mark that is re-checked every 90 days.
  *  4. Every Fact claim carries at least one evidence item. The evidence badge
  *     is derived: no items → NONE, and STRONG requires a checkable source.
  *  5. Votes are demo data. They exist only so the plot and score bars render
@@ -117,8 +118,8 @@ type ConnDef = {
   relation: ConnectionRelation;
   strength: ConnectionStrength;
   reason: string;
-  /** The connection the parent debate currently turns on. One or two per root. */
-  crux?: boolean;
+  /** Where the parent debate currently turns, with the date editors last confirmed it. One or two per root. */
+  contentiousAsOf?: string;
   /** Demo-only distribution [decisive, relevant, tangential]. */
   votes?: [number, number, number];
 };
@@ -659,25 +660,67 @@ const claims: ClaimDef[] = [
     votes: { n: 4, agree: 3, well: 3 },
   },
   {
-    key: "E-export-tax",
-    title: "A tax on gas exports would lower domestic prices and raise revenue, which reservation does not",
-    oneLiner: "The Greens and Senator Pocock argue the government chose the instrument the industry preferred.",
-    body: "A Senate committee considered gas taxation alongside reservation. The Greens said the reservation policy was written by the industry for the industry and that an export tax would both lower local prices and return revenue to the public; Senator David Pocock's dissenting report recommended a 25 per cent tax on all gas exports. The government ruled out gas tax increases in the 2026 budget.",
+    key: "E-export-tax-instead",
+    title: "Australia should tax gas exports rather than reserve gas for domestic buyers",
+    oneLiner: "The competing proposal from the Greens and Senator Pocock: price the exports, do not ration them.",
+    body: "Instead of requiring producers to set gas aside, an export levy would make overseas sales less attractive relative to domestic ones and return revenue to the public. The Greens argued the reservation policy was written by the industry for the industry; Senator David Pocock's dissenting report to a Senate committee recommended a 25 per cent tax on all gas exports. The government ruled out gas tax increases in the May 2026 budget, citing fuel security during the Middle East conflict.",
     type: "PROPOSAL",
     evidenceStrength: "MODERATE",
     tags: [...ENERGY, "TAX"],
     context:
-      "A competing answer to the same problem. It belongs in this debate because the case for reservation is partly the case against doing this instead.",
+      "A competing answer to the same problem, argued at the same Senate committee that considered reservation. It belongs in this debate because the case for reservation is partly the case against doing this instead. Its two factual legs, that a tax would lower prices and that it would raise revenue, are argued separately below.",
     disagreement:
-      "Supporters of reservation say a tax raises prices for exporters without guaranteeing domestic volume; supporters of a tax say reservation guarantees volume for whoever the producers choose to sell to, at a price the government will not forecast.",
+      "Supporters of reservation say a tax raises exporters' costs without guaranteeing any domestic volume; supporters of a tax say reservation guarantees volume for whoever producers choose to sell to, at a price the government will not forecast, and forgoes the revenue.",
     evidence: [
       {
         type: "Journalism",
-        citation: "ABC News, 7 May 2026 — Greens and Pocock positions on export taxation",
+        citation: "ABC News, 7 May 2026 — Greens and Pocock positions on export taxation; government rules out budget gas tax changes",
         url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532",
       },
     ],
     votes: { n: 6, agree: 3, well: 4 },
+  },
+  {
+    key: "E-export-tax-lowers-prices",
+    title: "A tax on gas exports would lower domestic gas prices",
+    oneLiner: "The effect claim underneath the tax proposal.",
+    body: "If exporting attracts a levy and domestic sales do not, producers have a reason to sell locally at a price below export parity, and the domestic price settles lower. Proponents argue this works through price rather than volume, so it does not depend on how much gas a reservation scheme captures or on which contracts are exempt.",
+    type: "OPINION",
+    evidenceStrength: "WEAK",
+    tags: [...ENERGY, "TAX"],
+    context:
+      "Separated from the proposal because one can accept that a tax would lower prices and still prefer reservation, or doubt the price effect and still want the revenue.",
+    disagreement:
+      "Critics say producers with long-term export contracts would absorb or pass through the levy rather than divert gas, so the domestic price effect could be small, and that a levy set high enough to work would deter new supply.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "ABC News, 7 May 2026 — Greens' argument that an export tax would lower domestic prices",
+        url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532",
+      },
+    ],
+    votes: { n: 4, agree: 2, well: 2 },
+  },
+  {
+    key: "E-export-tax-revenue",
+    title: "An export tax would raise public revenue that a reservation scheme forgoes",
+    oneLiner: "Reservation moves gas; a tax also moves money.",
+    body: "A levy on exports accrues to the budget; a reservation obligation does not. Senator Pocock's dissent paired a 25 per cent export tax with a cap on decommissioning-cost deductions as a revenue package. A cross-party Senate committee agreed the government should revisit gas taxation once the Middle East conflict ends, without reaching consensus on the design.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: [...ENERGY, "TAX"],
+    context:
+      "The revenue argument is the part of the tax case that does not depend on the price effect at all.",
+    disagreement:
+      "Agreed in principle. Opponents say the revenue comes at the cost of investment in new supply, which is the same objection made to reservation.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "ABC News, 7 May 2026 — Pocock dissenting report and Senate committee on gas taxation",
+        url: "https://www.abc.net.au/news/2026-05-07/east-coast-gas-reservation-policy-announced-to-avert-shortages/106651532",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
   },
   {
     key: "E-wa-cheap-gas",
@@ -1411,7 +1454,7 @@ const claims: ClaimDef[] = [
     context:
       "The [Environment Protection and Biodiversity Conservation Act](https://en.wikipedia.org/wiki/Environment_Protection_and_Biodiversity_Conservation_Act_1999) was reviewed twice since 2000 and both reviews, most recently the [2020 Samuel Review](https://epbcactreview.environment.gov.au/), found it slow and failing the environment. A first reform attempt stalled in 2024.\n\nThe second passed in November 2025 with Greens support, in exchange for excluding coal and gas from the streamlined pathway and the national-interest exemption, keeping the water trigger federal, and ending the native-forest logging exemption from July 2027 ([EDO summary](https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/)). A [Senate committee](https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations) reporting in 2026 backed the package but asked for published limits on the national-interest power. Implementation is staged through 2026 ([department page](https://www.dcceew.gov.au/environment/epbc/epbc-act-reform)).",
     disagreement:
-      "Industry and renewable developers broadly accept the speed gains and argue about detail. Environment groups accept the EPA and standards and dispute two things: whether a minister can use the national-interest exemption to approve projects that fail the standards, and whether an EPA with no independent board and ministerial direction over delegated powers is independent enough to hold the line.",
+      "Industry and renewable developers broadly accept the speed gains and argue about detail. Environment groups accept the agency and the standards and dispute one thing above all: that final discretion for high-impact projects still rests with the minister, through the national-interest exemption and direction over the agency. Beneath that sits the practical question readers most want answered, which kinds of projects the faster routes could pass.",
     evidence: [
       {
         type: "Official report",
@@ -1529,17 +1572,17 @@ const claims: ClaimDef[] = [
     ],
   },
   {
-    key: "A-national-interest",
-    title: "The national-interest exemption lets a minister approve high-impact projects that fail the new standards, without defined limits on when it can be used",
-    oneLiner: "The power that environment groups and the Senate committee both singled out.",
-    body: "Sections commenced in February 2026 let the minister grant, vary or revoke exemptions from the Act's protections on national-interest grounds. Fossil fuel projects are barred from using the power, but the Senate committee's main concern was that it could still approve high-impact projects inconsistent with the national environmental standards without a genuine national-interest basis, and it recommended published principles and thresholds, which did not yet exist.",
+    key: "A-minister-final",
+    title: "The reforms leave the minister, not the national environmental standards, as the final decision-maker for high-impact projects",
+    oneLiner: "Where the environment-law debate now sits: a standards-based system with a ministerial door around it.",
+    body: "The reforms create national environmental standards and an agency to enforce them, but three design choices keep final discretion with the minister. A national-interest exemption, in force since February 2026, lets the minister exempt an action from the Act's protections. The agency has assessment and approval powers only when the minister delegates them, and can be directed when it does. And the published principles the Senate committee asked for, setting out when the exemption may be used, did not exist when the power commenced. Fossil fuel projects are barred from the exemption; everything else is not.",
     type: "OPINION",
     evidenceStrength: "STRONG",
     tags: ["ENVIRONMENT", "GOVERNANCE"],
     context:
-      "This is where the live debate on the reforms sits. The standards and the EPA are the protections; the exemption is the door around them. How wide the door is depends on guidance and regulations still being written.",
+      "This rolls up what were several separate objections into the one judgement they add up to. The facts beneath it, each argued on its own page, are the exemption power, the agency's structure, the missing guidance and the government's precedent argument. Whether discretion of this kind is a safeguard or a loophole is the question that divides the reform's supporters from its critics.",
     disagreement:
-      "The government points to precedent, a 2023 carve-out for AUKUS nuclear waste, and says the power is for genuine emergencies and defence. Critics say an undefined power is defined by whoever holds it next, and that vegetation clearing, critical minerals and badly sited renewables could all pass through it.",
+      "The government says the exemption is for genuine emergencies and defence, points to a 2023 carve-out for AUKUS nuclear waste as precedent, and says the agency is independent where it matters, in enforcement. Critics say a power defined by guidance not yet written is defined by whoever holds it next.",
     evidence: [
       {
         type: "Think tank / NGO",
@@ -1548,30 +1591,196 @@ const claims: ClaimDef[] = [
       },
       {
         type: "Think tank / NGO",
-        citation: "Environmental Defenders Office, 28 November 2025 — national interest pathways lack adequate guardrails",
+        citation: "Environmental Defenders Office, 'Historic environment reforms: what happened in parliament and what comes next', 28 November 2025",
         url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
       },
     ],
-    votes: { n: 7, agree: 5, well: 6 },
+    votes: { n: 8, agree: 5, well: 7 },
   },
   {
-    key: "A-exemption-guidance",
-    title: "The Senate committee recommended published principles and thresholds for using the national-interest power, and none had been published when the power commenced",
-    oneLiner: "The limits everyone agrees are needed do not yet exist.",
-    body: "The committee's report, while concluding the package struck an appropriate balance, recommended that the government publish the circumstances, factors and thresholds under which the national-interest power may be used. The power itself commenced on 20 February 2026 ahead of any such guidance.",
+    key: "A-exemption-power",
+    title: "Since February 2026 the minister can exempt an action from the Act's protections on national-interest grounds, with no published principles for when the power applies",
+    oneLiner: "The exemption commenced before the guardrails the Senate committee asked for.",
+    body: "Sections 157H to 157V, commenced on 20 February 2026, let the minister grant, vary or revoke national-interest exemptions from Part 3 of the Act. The Senate committee's main concern was that the power could approve high-impact projects inconsistent with the standards without a genuine national-interest basis; it recommended published principles, factors and thresholds, which had not been issued when the power began.",
     type: "FACT",
     evidenceStrength: "STRONG",
     tags: ["ENVIRONMENT", "GOVERNANCE"],
-    context: "A gap between a power and its guardrails is temporary by design, but the order in which they arrived is part of why trust in the exemption is low.",
-    disagreement: "Not disputed. The government says guidance is coming; critics say it should have come first.",
+    context: "The order in which the power and its limits arrived is a large part of why trust in it is low.",
+    disagreement: "Not disputed as fact. The government says guidance is coming; critics say it should have come first.",
     evidence: [
       {
         type: "Think tank / NGO",
-        citation: "Corrs Chambers Westgarth, 29 April 2026 — committee recommendation on national-interest guidance; commencement dates",
+        citation: "Corrs Chambers Westgarth, 29 April 2026 — commencement dates and committee recommendation on national-interest guidance",
         url: "https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations",
       },
     ],
-    votes: { n: 4, agree: 4, well: 4 },
+    votes: { n: 5, agree: 5, well: 5 },
+  },
+  {
+    key: "A-fossil-exclusion",
+    title: "Coal, gas and petroleum projects should be excluded from the streamlined approval pathway and the national-interest exemption",
+    oneLiner: "The Greens' condition for passing the reforms, now law: the projects with the largest impacts keep the full assessment.",
+    body: "Under this proposal, adopted as part of the Labor–Greens deal on 28 November 2025, coal, gas and petroleum activities, including exploration, cannot use the streamlined assessment pathway, the national-interest exemption or bioregional planning approvals. The water trigger for large coal and unconventional gas projects stays with the Commonwealth rather than being devolved to states. The case for it is that these projects carry the largest and least reversible impacts, on land, water and climate, so speed should be denied to them first. The case against is that it puts gas supply projects, which the government's own energy plan and its reservation scheme rely on, into the slowest lane in the system.",
+    type: "PROPOSAL",
+    evidenceStrength: "STRONG",
+    tags: ["ENVIRONMENT", ...ENERGY],
+    context:
+      "This began as a Greens demand and became the price of passage. It is written here as a proposal rather than as a bare fact because it is still argued: industry wants it narrowed to exclude gas, and environment groups want it extended to large-scale land clearing. Its status, enacted and in force, is part of the context, not the argument.",
+    disagreement:
+      "Supporters say the exclusion is the strongest sense in which the reforms do not trade protection for speed. Opponents in industry say it treats a gas peaker the same as a coal mine and will slow the firming capacity the transition needs. Some environment groups say it does not go far enough.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — terms of the Greens deal on fossil fuels and the water trigger",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+      {
+        type: "Journalism",
+        citation: "RenewEconomy, 'Wind and solar developers hope for faster decisions after 11th-hour nature deal between Labor and Greens'",
+        url: "https://reneweconomy.com.au/wind-and-solar-developers-hope-for-faster-decisions-after-11th-hour-nature-deal-between-labor-and-greens/",
+      },
+    ],
+    votes: { n: 7, agree: 4, well: 5 },
+  },
+  {
+    key: "A-fossil-largest-impacts",
+    title: "Coal and gas projects account for the largest and least reversible impacts the Act assesses, on water, land and climate",
+    oneLiner: "The reason the exclusion targets these projects first.",
+    body: "Large coal mines and unconventional gas fields are the projects for which the Act's water trigger was created, and the only class of project whose scope 1 and 2 emissions must now be disclosed. Their footprints, groundwater effects and operating lives are the largest in the assessment system.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", ...ENERGY],
+    context: "The factual basis for treating fossil fuel projects as a class rather than case by case.",
+    disagreement: "Industry says impact depends on the project, not the fuel, and that a gas peaker on an industrial site is not a coal mine.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — water trigger and emissions disclosure provisions",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
+  {
+    key: "A-gas-slow-lane",
+    title: "Keeping gas supply projects in the slowest approval lane conflicts with the government's reliance on new gas for firming and for the reservation scheme",
+    oneLiner: "The industry's objection to the exclusion, and the point where the energy and environment debates meet.",
+    body: "The market operator's plan keeps gas-fired generation as firming through the 2030s, and the east-coast reservation scheme depends on new supply coming on. Excluding gas projects from streamlined assessment means the supply the government is counting on faces the longest process in the system.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", ...ENERGY],
+    context: "Both halves of this claim are government policy; the tension between them is the argument.",
+    disagreement: "Environment groups answer that the streamlined pathway was never meant for the highest-impact projects and that gas supply shortfalls are a reason to build storage faster, not to assess gas fields less.",
+    evidence: [
+      {
+        type: "Official report",
+        citation: "Australian Energy Market Operator, Integrated System Plan — role of gas-powered generation",
+        url: "https://aemo.com.au/energy-systems/major-publications/integrated-system-plan-isp",
+      },
+    ],
+    votes: { n: 5, agree: 3, well: 4 },
+  },
+  {
+    key: "A-effects",
+    title: "The streamlined pathway, bioregional plans and the national-interest exemption could let large-scale land clearing, critical-minerals mines and badly sited renewable projects through with less scrutiny than before",
+    oneLiner: "What kinds of projects the new system could pass: the question most readers actually want answered.",
+    body: "The reforms create three faster routes: a streamlined assessment for projects that meet the standards, bioregional plans under which actions consistent with the plan need no project-level federal assessment, and the national-interest exemption. Fossil fuel projects are barred from all three. The Environmental Defenders Office warns the remaining routes lack guardrails for large-scale vegetation clearing, critical-mineral mining and renewable energy in unsuitable locations. The claims beneath this one take each project type in turn.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT"],
+    context:
+      "This claim exists to make the law's effects explorable by project type rather than by legal mechanism. Each child is one kind of project and what the new routes mean for it; the counter-claim is that the standards, which did not exist before, bind every route except the exemption.",
+    disagreement:
+      "The government and renewable developers say the standards are the protection and the fast routes merely remove duplication. Environment groups say the standards are still in draft, the bar for refusal was raised, and plans can approve in bulk what no one would approve in detail.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — national interest pathways and what they could fast-track",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 6, agree: 4, well: 4 },
+  },
+  {
+    key: "A-effect-clearing",
+    title: "Under a bioregional plan, land clearing consistent with the plan could proceed without project-level federal assessment",
+    oneLiner: "Bulk approval by plan is the route environment groups fear most for agriculture and development clearing.",
+    body: "Bioregional planning lets the Commonwealth and a state agree in advance which classes of action in a region are acceptable. Once a plan is made, actions consistent with it do not need their own federal referral. Large-scale vegetation clearing is the activity the Environmental Defenders Office names first as needing limits set through regulation and the standards.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", "AGRICULTURE"],
+    context: "Clearing is the largest single driver of habitat loss the old Act failed to control; whether plans control it better or worse is open.",
+    disagreement: "Supporters of planning say regional assessment is more rigorous than project-by-project review and catches cumulative impacts the old Act ignored.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — bioregional planning pathway and vegetation clearing",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
+  {
+    key: "A-effect-critical-minerals",
+    title: "Critical-minerals mines are eligible for the streamlined pathway and the national-interest exemption, unlike coal and gas",
+    oneLiner: "The mining the government most wants to speed up is also the mining the fast routes are open to.",
+    body: "The fossil fuel exclusion does not reach lithium, rare earths, copper or other critical-minerals projects. They can use streamlined assessment where they meet the standards and are within scope of the national-interest exemption, which the Environmental Defenders Office lists among the activities the exemption could fast-track.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", "ECONOMY"],
+    context: "Critical minerals sit at the intersection of the government's industrial strategy and the environment reforms; this is where the national-interest power is most likely to be tested first.",
+    disagreement: "Supporters say critical minerals are the transition's supply chain and deserve priority; critics say a mine's impact on a threatened species does not depend on what it digs up.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "Environmental Defenders Office, 28 November 2025 — activities within reach of the national-interest pathways",
+        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
+      },
+    ],
+    votes: { n: 4, agree: 3, well: 3 },
+  },
+  {
+    key: "A-effect-renewables",
+    title: "Wind, solar and transmission projects get the streamlined pathway, including where they affect threatened species habitat",
+    oneLiner: "The intended beneficiaries of faster decisions, and the test of whether speed and protection can coexist.",
+    body: "Renewable developers welcomed the reforms as the end of two-to-four-year assessments. Transmission corridors and large wind farms routinely intersect threatened species habitat, and the Environmental Defenders Office names renewables in unsuitable locations among the projects the fast routes could pass with less scrutiny.",
+    type: "FACT",
+    evidenceStrength: "MODERATE",
+    tags: ["ENVIRONMENT", ...ENERGY],
+    context: "This is the case that splits the environment movement: the projects that decarbonise the grid are also projects with footprints.",
+    disagreement: "Developers say siting standards and offsets handle this; some conservation groups want transmission excluded from streamlining in the same way as fossil fuels.",
+    evidence: [
+      {
+        type: "Journalism",
+        citation: "RenewEconomy, 'Wind and solar developers hope for faster decisions after 11th-hour nature deal between Labor and Greens'",
+        url: "https://reneweconomy.com.au/wind-and-solar-developers-hope-for-faster-decisions-after-11th-hour-nature-deal-between-labor-and-greens/",
+      },
+    ],
+    votes: { n: 5, agree: 4, well: 4 },
+  },
+  {
+    key: "A-standards-bind",
+    title: "Projects on the streamlined pathway must still meet national environmental standards, which did not exist under the old Act",
+    oneLiner: "The counter to the effects claim: the fast route has a floor the slow one never had.",
+    body: "The old Act had no binding standards; decisions rested on ministerial judgement against broad objects. The reforms create National Environmental Standards, with the first four commencing from August 2026, and a project can use the streamlined pathway only where it is consistent with them. The national-interest exemption is the one route that can bypass them.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ["ENVIRONMENT"],
+    context: "Whether the standards are strong enough is argued separately; that they exist and bind the streamlined route is not.",
+    disagreement: "Critics note the standards were still in draft when the pathway was legislated and that the Senate committee asked for revised drafts and clearer benchmarks.",
+    evidence: [
+      {
+        type: "Official report",
+        citation: "Department of Climate Change, Energy, the Environment and Water — Environment protection reforms: standards and implementation timetable",
+        url: "https://www.dcceew.gov.au/environment/epbc/epbc-act-reform",
+      },
+      {
+        type: "Think tank / NGO",
+        citation: "Corrs Chambers Westgarth, 29 April 2026 — committee recommendations on the standards",
+        url: "https://corrs.com.au/insights/epbc-act-reforms-senate-committee-recommendations",
+      },
+    ],
+    votes: { n: 5, agree: 4, well: 5 },
   },
   {
     key: "A-aukus-precedent",
@@ -1610,25 +1819,6 @@ const claims: ClaimDef[] = [
       },
     ],
     votes: { n: 5, agree: 4, well: 5 },
-  },
-  {
-    key: "A-fossil-excluded",
-    title: "Coal, gas and petroleum projects are excluded from the streamlined pathway and the national-interest exemption",
-    oneLiner: "The Greens' price for passage: the projects with the largest impacts keep the slow road.",
-    body: "Under the Labor–Greens deal, fossil fuel activities including exploration cannot use the streamlined assessment, the national-interest exemption or bioregional planning pathways, and the water trigger for large coal and unconventional gas projects stays with the Commonwealth.",
-    type: "FACT",
-    evidenceStrength: "STRONG",
-    tags: ["ENVIRONMENT", ...ENERGY],
-    context: "This is the clearest sense in which the reforms do not trade protection for speed: the speed is denied to the projects environment groups worry about most.",
-    disagreement: "Agreed as fact. Industry argues it leaves gas supply projects, which the government's own energy plan relies on, in the slowest lane.",
-    evidence: [
-      {
-        type: "Think tank / NGO",
-        citation: "Environmental Defenders Office, 28 November 2025 — terms of the Greens deal",
-        url: "https://www.edo.org.au/2025/11/28/historic-environment-reforms-what-happened-in-parliament-and-what-comes-next/",
-      },
-    ],
-    votes: { n: 5, agree: 5, well: 4 },
   },
   {
     key: "A-unacceptable-bar",
@@ -1922,7 +2112,7 @@ const claims: ClaimDef[] = [
 const connections: ConnDef[] = [
   // --- nuclear ---------------------------------------------------------------
   { from: "E-gencost", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", reason: "If nuclear is the most expensive option, the main argument for lifting the ban loses its footing.", votes: [7, 3, 2] },
-  { from: "E-not-in-time", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "The case for repeal is made in terms of this decade's problems; if nuclear cannot touch them, the case has to be remade on other grounds.", votes: [6, 3, 1] },
+  { from: "E-not-in-time", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", contentiousAsOf: "2026-11-14", reason: "The case for repeal is made in terms of this decade's problems; if nuclear cannot touch them, the case has to be remade on other grounds.", votes: [6, 3, 1] },
   { from: "E-distraction", to: "R-nuclear", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Counts against pursuing repeal now even for those who accept it in principle.", votes: [1, 4, 2] },
   { from: "E-smr-ban", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "A positive reason for repeal that does not depend on building a large plant soon.", votes: [2, 4, 1] },
   { from: "E-data-centres", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Supplies a private customer and removes the public-cost objection, without touching the timing objection.", votes: [2, 3, 2] },
@@ -1932,7 +2122,7 @@ const connections: ConnDef[] = [
   { from: "E-france-ontario", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the technology can run a low-emissions grid; it does not show it can be built here in time or at a competitive cost.", votes: [2, 5, 2] },
   { from: "E-unsafe", to: "R-nuclear", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Safety is a reason to regulate reactors, which repeal would permit; it does not by itself argue for a legislative ban.", votes: [1, 2, 5] },
 
-  // --- the nuclear crux has its own arguments --------------------------------
+  // --- the contentious nuclear claim has its own arguments --------------------------------
   { from: "E-not-before-2040", to: "E-not-in-time", relation: "SUPPORTS", strength: "DECISIVE", reason: "The timing claim rests on this estimate.", votes: [5, 2, 0] },
   { from: "E-coal-closures", to: "E-not-in-time", relation: "SUPPORTS", strength: "RELEVANT", reason: "Sets the deadline nuclear would miss.", votes: [2, 4, 1] },
   { from: "E-gas-firming", to: "E-not-in-time", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the firming problem is being solved by other means in the meantime.", votes: [1, 3, 2] },
@@ -1942,18 +2132,20 @@ const connections: ConnDef[] = [
   { from: "A-samuel-slow", to: "E-not-before-2040", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "A reactor would pass through the same slow approval process as every other major project, adding to the timeline.", votes: [0, 2, 3] },
 
   // --- gas reservation -------------------------------------------------------
-  { from: "E-grandfathered-contracts", to: "R-gas", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If the exemptions leave too little gas in the scheme, it cannot move the price whatever its headline share.", votes: [5, 2, 0] },
+  { from: "E-grandfathered-contracts", to: "R-gas", relation: "CONTRADICTS", strength: "DECISIVE", contentiousAsOf: "2026-11-14", reason: "If the exemptions leave too little gas in the scheme, it cannot move the price whatever its headline share.", votes: [5, 2, 0] },
   { from: "E-wa-domgas", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "The precedent the scheme is modelled on coincides with the outcome it promises.", votes: [3, 4, 1] },
   { from: "E-east-prices", to: "R-gas", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes the problem the scheme answers; says nothing about whether this design solves it.", votes: [1, 2, 4] },
   { from: "E-investment-deterrent", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If new supply dries up, prices rise regardless of how the existing gas is allocated.", votes: [2, 4, 1] },
-  { from: "E-export-tax", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Argues a different instrument would have done more for prices; a competing answer rather than a rebuttal.", votes: [1, 3, 2] },
   { from: "E-market-working", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Questions whether lower gas prices are the right goal at all during a transition away from gas.", votes: [1, 2, 4] },
   { from: "E-adgsm", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "A supply lever already existed and was never triggered; reservation must show what it adds.", votes: [0, 2, 3] },
   { from: "E-gas-firming", to: "R-gas", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Gas demand for firming persists, so the domestic price keeps mattering.", votes: [0, 2, 3] },
   { from: "E-coal-closures", to: "R-gas", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Coal's exit raises reliance on gas in exactly the years the scheme starts.", votes: [0, 2, 3] },
   { from: "E-gencost", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Cheaper renewables erode long-run gas demand, which weakens the case slowly.", votes: [0, 1, 4] },
 
-  // --- the gas crux has its own arguments -----------------------------------
+  // --- the contentious gas claim has its own arguments -----------------------------------
+  { from: "E-export-tax-instead", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A competing instrument for the same goal; counts against reservation as the choice, not against lower prices.", votes: [1, 3, 2] },
+  { from: "E-export-tax-lowers-prices", to: "E-export-tax-instead", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal is about prices; if a tax would not lower them, it fails on its own terms.", votes: [3, 1, 0] },
+  { from: "E-export-tax-revenue", to: "E-export-tax-instead", relation: "SUPPORTS", strength: "RELEVANT", reason: "Adds a benefit reservation cannot offer, without settling the price question.", votes: [1, 3, 0] },
   { from: "E-softened-110", to: "E-grandfathered-contracts", relation: "SUPPORTS", strength: "RELEVANT", reason: "A reserve pegged to demand that two producers already meet reserves little new gas.", votes: [2, 3, 0] },
   { from: "E-southern-price-modelling", to: "E-grandfathered-contracts", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Even modest extra southern supply lowers prices in the modelling the government relies on.", votes: [1, 3, 1] },
   { from: "E-wa-cheap-gas", to: "E-wa-domgas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If geology explains the precedent, the precedent proves less than it seems.", votes: [1, 3, 1] },
@@ -1964,7 +2156,7 @@ const connections: ConnDef[] = [
   { from: "H-investor-loans-established", to: "R-negative-gearing", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal's core premise is that the concession is not producing new supply; this is the evidence for it.", votes: [5, 3, 1] },
   { from: "H-ng-materially-affordable", to: "R-negative-gearing", relation: "SUPPORTS", strength: "RELEVANT", reason: "The outcome most proponents want from the proposal; it is argued separately because it may be false while the proposal is still justified.", votes: [3, 4, 2] },
   { from: "H-second-home-value", to: "R-negative-gearing", relation: "SUPPORTS", strength: "RELEVANT", reason: "A fairness ground that survives even if the price effect is negligible.", votes: [2, 4, 2] },
-  { from: "H-rents-rise", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If true, the proposal harms the renters it is meant to help, which would defeat it.", votes: [4, 3, 2] },
+  { from: "H-rents-rise", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "DECISIVE", contentiousAsOf: "2026-11-14", reason: "If true, the proposal harms the renters it is meant to help, which would defeat it.", votes: [4, 3, 2] },
   { from: "H-supply-lagged", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If supply is the dominant driver, the concession is a second-order factor and the proposal aims at the wrong target.", votes: [4, 3, 2] },
   { from: "H-middle-income", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Who benefits bears on fairness, not on whether the concession adds supply or raises prices.", votes: [1, 3, 4] },
   { from: "H-foreign-buyers", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Argues the price problem lies elsewhere; even if true it does not bear on what the concession does.", votes: [3, 3, 3] },
@@ -1986,11 +2178,11 @@ const connections: ConnDef[] = [
   { from: "M-entitled-to-decide", to: "R-migration", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes that a cap is legitimate, not that this cap is right; it does little work for the specific number.", votes: [2, 2, 5] },
   { from: "M-take-jobs", to: "R-migration", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Widely made, but it does not engage with how labour markets actually absorb migrants.", votes: [1, 2, 4] },
   { from: "M-catch-up", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the record year corrects itself, a permanent cap is a response to a temporary condition.", votes: [3, 4, 2] },
-  { from: "M-cap-needs-student-cuts", to: "R-migration", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "Names the cost of the proposal; whether it is acceptable is what the debate actually turns on.", votes: [4, 3, 1] },
+  { from: "M-cap-needs-student-cuts", to: "R-migration", relation: "CONTRADICTS", strength: "DECISIVE", contentiousAsOf: "2026-11-14", reason: "Names the cost of the proposal; whether it is acceptable is what the debate actually turns on.", votes: [4, 3, 1] },
   { from: "M-shortages", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A cap that reached skilled migration would worsen shortages; whether it need reach them is argued below.", votes: [2, 4, 2] },
   { from: "M-intl-ed-export", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Quantifies what a student-heavy cut would put at risk.", votes: [2, 4, 2] },
 
-  // --- the migration crux has its own argument -------------------------------
+  // --- the contentious migration claim has its own argument -------------------------------
   { from: "M-budget-forecast", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the number is already falling to 225,000, a 200,000 cap buys little at considerable cost.", votes: [2, 3, 1] },
   { from: "M-grattan-rents", to: "R-migration", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the rent effect of lower migration is real, while putting a modest number on it.", votes: [1, 4, 1] },
   { from: "M-budget-forecast", to: "M-catch-up", relation: "SUPPORTS", strength: "RELEVANT", reason: "The forecast decline is what the catch-up explanation predicts.", votes: [1, 3, 0] },
@@ -2003,19 +2195,31 @@ const connections: ConnDef[] = [
   { from: "M-nom-double", to: "H-supply-lagged", relation: "SUPPORTS", strength: "RELEVANT", reason: "The record intake increased the demand side of the shortfall in a single year.", votes: [2, 3, 2] },
 
   // --- approvals -------------------------------------------------------------
-  { from: "A-national-interest", to: "R-approvals", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If a minister can route around the standards, the protection half of the promise depends on who the minister is.", votes: [4, 2, 0] },
-  { from: "A-epa-independence", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "An EPA answerable to the minister on approvals cannot guarantee the standards are applied.", votes: [2, 3, 1] },
-  { from: "A-unacceptable-bar", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A higher refusal bar is a weakening of protection by design, however modest.", votes: [1, 3, 1] },
+  { from: "A-minister-final", to: "R-approvals", relation: "CONTRADICTS", strength: "DECISIVE", contentiousAsOf: "2026-11-14", reason: "If final discretion stays with the minister, the protection half of the promise depends on who the minister is.", votes: [4, 2, 0] },
+  { from: "A-effects", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Names the projects that could get through with less scrutiny; the test of 'without weakening protection'.", votes: [2, 3, 1] },
+  { from: "A-fossil-exclusion", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "Speed is withheld from the highest-impact projects, which is the strongest sense in which protection was not traded away.", votes: [2, 3, 0] },
   { from: "A-delay-pre-referral", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If most delay is outside the statutory clock, the speed gain is smaller than the headline.", votes: [1, 3, 1] },
   { from: "A-timeframes-cut", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "The quantified speed gain the reforms promise.", votes: [2, 3, 0] },
-  { from: "A-fossil-excluded", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "Speed is withheld from the highest-impact projects, which is the strongest sense in which protection was not traded away.", votes: [2, 3, 0] },
   { from: "A-delays-hit-renewables", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "The projects the energy transition depends on are the main beneficiaries of faster decisions.", votes: [1, 3, 1] },
   { from: "A-samuel-slow", to: "R-approvals", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes the problem the reforms answer; does not show they answer it.", votes: [0, 2, 3] },
   { from: "A-act-failed-species", to: "R-approvals", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "The old Act failed on protection too, so reform was needed on both counts.", votes: [0, 2, 3] },
 
-  // --- the approvals crux has its own arguments -----------------------------
-  { from: "A-exemption-guidance", to: "A-national-interest", relation: "SUPPORTS", strength: "RELEVANT", reason: "An undefined power is as wide as the next minister wants it to be.", votes: [2, 2, 0] },
-  { from: "A-aukus-precedent", to: "A-national-interest", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Shows the kind of case the power is meant for; does not limit it to such cases.", votes: [0, 1, 3] },
+  // --- the contentious approvals claim rolls up the discretion facts ---------
+  { from: "A-exemption-power", to: "A-minister-final", relation: "SUPPORTS", strength: "DECISIVE", reason: "The exemption is the mechanism by which the minister can route around the standards.", votes: [3, 2, 0] },
+  { from: "A-epa-independence", to: "A-minister-final", relation: "SUPPORTS", strength: "RELEVANT", reason: "An agency directable on approvals cannot be the final decision-maker.", votes: [2, 3, 0] },
+  { from: "A-aukus-precedent", to: "A-minister-final", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Shows the kind of case the power is meant for; does not limit it to such cases.", votes: [0, 1, 3] },
+
+  // --- the fossil-fuel exclusion is argued as a proposal ---------------------
+  { from: "A-fossil-largest-impacts", to: "A-fossil-exclusion", relation: "SUPPORTS", strength: "DECISIVE", reason: "If these are the largest impacts, denying them the fast route protects most of what the Act exists for.", votes: [2, 2, 0] },
+  { from: "A-gas-slow-lane", to: "A-fossil-exclusion", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The exclusion collides with two other government policies that need gas supply.", votes: [1, 3, 0] },
+  { from: "E-gas-firming", to: "A-gas-slow-lane", relation: "SUPPORTS", strength: "RELEVANT", reason: "The market operator's own plan is the evidence that gas is still relied on.", votes: [1, 2, 1] },
+
+  // --- what could get through: one child per project type -------------------
+  { from: "A-effect-clearing", to: "A-effects", relation: "SUPPORTS", strength: "RELEVANT", reason: "Bulk approval by plan is the clearest case of reduced project-level scrutiny.", votes: [2, 2, 0] },
+  { from: "A-effect-critical-minerals", to: "A-effects", relation: "SUPPORTS", strength: "RELEVANT", reason: "Mines with real footprints are inside the fast routes.", votes: [1, 3, 0] },
+  { from: "A-effect-renewables", to: "A-effects", relation: "SUPPORTS", strength: "RELEVANT", reason: "Habitat impacts do not disappear because the project is low-carbon.", votes: [1, 2, 1] },
+  { from: "A-unacceptable-bar", to: "A-effects", relation: "SUPPORTS", strength: "RELEVANT", reason: "A higher bar for refusal means more of each kind gets through.", votes: [1, 2, 1] },
+  { from: "A-standards-bind", to: "A-effects", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Every fast route except the exemption now has a floor the old Act lacked.", votes: [2, 3, 0] },
 
 
   // --- parking ---------------------------------------------------------------
@@ -2023,7 +2227,7 @@ const connections: ConnDef[] = [
   { from: "P-auckland", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the policy produces the intended change in provision in a comparable city.", votes: [2, 4, 1] },
   { from: "H-supply-lagged", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Anything that lowers the cost of building homes bears on the shortfall, though parking is one factor among many.", votes: [2, 4, 2] },
   { from: "P-market-provides", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Answers the fear that removal means no parking anywhere.", votes: [2, 4, 2] },
-  { from: "P-spillover", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", crux: true, reason: "A genuine cost of the proposal, borne by people who did not choose it.", votes: [2, 4, 2] },
+  { from: "P-spillover", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", contentiousAsOf: "2026-11-14", reason: "A genuine cost of the proposal, borne by people who did not choose it.", votes: [2, 4, 2] },
   { from: "P-suburbs-lack-transit", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Limits where the proposal's premise holds; it argues for a narrower policy rather than none.", votes: [2, 4, 1] },
 
   // --- the spillover objection has a rebuttal --------------------------------
@@ -2069,8 +2273,8 @@ function validate() {
     }
   }
   for (const root of claims.filter((c) => c.key.startsWith("R-"))) {
-    const cruxes = connections.filter((c) => c.to === root.key && c.crux).length;
-    if (cruxes < 1 || cruxes > 2) problems.push(`${root.key}: expected 1–2 crux connections, found ${cruxes}`);
+    const marked = connections.filter((c) => c.to === root.key && c.contentiousAsOf).length;
+    if (marked < 1 || marked > 2) problems.push(`${root.key}: expected 1–2 connections marked contentious, found ${marked}`);
   }
 
   const pairs = new Set<string>();
@@ -2221,7 +2425,7 @@ async function main() {
         relation: conn.relation,
         statedStrength: conn.strength,
         statedReason: conn.reason,
-        crux: conn.crux ?? false,
+        contentiousAsOf: conn.contentiousAsOf ? new Date(conn.contentiousAsOf) : null,
         strengthVotes: { create: demoStrengthVotes(`${conn.from}-${conn.to}`, conn.votes) },
         revisions: { create: { ...AUTHOR, summary: "Initial connection", snapshot: {}, pending: false } },
       },

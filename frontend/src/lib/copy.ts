@@ -35,3 +35,36 @@ export const STRENGTH_DEFINITIONS: Record<string, { supports: string; contradict
     contradicts: "True perhaps, but it does not land against this claim.",
   },
 };
+
+export const TYPE_LABEL: Record<string, string> = {
+  FACT: "Fact",
+  OPINION: "Opinion",
+  VALUE: "Value",
+  PROPOSAL: "Proposal",
+};
+
+/** One-line scope for each topic. Free-string tags until the Phase 3 taxonomy; unknown tags get a generic line. */
+export const TAG_COPY: Record<string, string> = {
+  ENERGY: "Electricity and gas: generation, firming, prices, the grid and the transition.",
+  CLIMATE: "Emissions, targets and the policies meant to reach them.",
+  HOUSING: "Supply, prices, rents, planning and the tax settings that shape them.",
+  TAX: "What is taxed, who pays, and the concessions that change behaviour.",
+  ECONOMY: "Growth, investment, productivity and the public finances.",
+  IMMIGRATION: "Permanent and temporary migration, its size, composition and effects.",
+  EDUCATION: "Schools, universities and the international education sector.",
+  LABOUR: "Jobs, wages, skills and the rules of work.",
+  GOVERNANCE: "How decisions are made, by whom, and with what accountability.",
+  ENVIRONMENT: "Nature, species, land and the laws that protect them.",
+  TRANSPORT: "Roads, public transport, parking and how people move.",
+  LOCAL: "Decisions made by councils and felt street by street.",
+  TECHNOLOGY: "Digital infrastructure, platforms, data centres and their regulation.",
+  DEFENCE: "Security, alliances and defence spending.",
+  LAW: "Legislation, courts and legal process.",
+  HEALTH: "Health services, public health and medical regulation.",
+  AGRICULTURE: "Farming, land use and the industries that depend on them.",
+};
+
+export const CONTENTIOUS_TOOLTIP =
+  "Editors marked this as where the debate currently turns. Nothing is permanently the crux: the mark carries the date it was last confirmed and is re-checked every 90 days.";
+export const CONTENTIOUS_REVIEW_TOOLTIP =
+  "This was marked as where the debate turns more than 90 days ago and is due for review. It may no longer be the live question.";

@@ -34,3 +34,60 @@
   background: var(--accent-wash);
   border-color: var(--accent-wash);
 }
+
+/* Badges that link: keep the badge look, drop the underline. */
+a.badge {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.badge:hover,
+a.badge:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
+}
+
+.tooltipHint {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+/* Claim types: four distinct treatments, always with the word printed.
+   Fact solid, Opinion dashed, Value double-ruled, Proposal filled. */
+.typeFact {
+  border: 1px solid var(--text);
+  background: var(--surface-alt);
+  color: var(--text);
+}
+
+.typeOpinion {
+  border: 1px dashed var(--text-2);
+  background: transparent;
+  color: var(--text-2);
+}
+
+.typeValue {
+  border: 3px double var(--accent);
+  background: transparent;
+  color: var(--accent);
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.typeProposal {
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: var(--surface);
+}
+
+/* Topics: six palette slots from globals.css, chosen per tag. */
+.tag0 { color: var(--tag-ink-0); background: var(--tag-wash-0); border-color: var(--tag-wash-0); }
+.tag1 { color: var(--tag-ink-1); background: var(--tag-wash-1); border-color: var(--tag-wash-1); }
+.tag2 { color: var(--tag-ink-2); background: var(--tag-wash-2); border-color: var(--tag-wash-2); }
+.tag3 { color: var(--tag-ink-3); background: var(--tag-wash-3); border-color: var(--tag-wash-3); }
+.tag4 { color: var(--tag-ink-4); background: var(--tag-wash-4); border-color: var(--tag-wash-4); }
+.tag5 { color: var(--tag-ink-5); background: var(--tag-wash-5); border-color: var(--tag-wash-5); }

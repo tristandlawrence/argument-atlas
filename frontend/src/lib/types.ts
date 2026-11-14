@@ -66,7 +66,8 @@ export type ConnectionRow = {
   connectionId: string;
   relation: ConnectionRelation;
   statedStrength: ConnectionStrength;
-  crux: boolean;
+  /** Dated editorial mark: where the parent debate currently turns. Null when not marked. */
+  contentious: { asOf: string; label: string; reviewDue: boolean } | null;
   challenges: ChallengeCounts;
   weight: number;
   opacity: number;

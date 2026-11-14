@@ -20,11 +20,18 @@ export function ConnectionRowList({
 }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [placement, setPlacement] = useState<"above" | "below">("below");
+  const [maxHeight, setMaxHeight] = useState(520);
   const isNarrow = useIsNarrow();
 
+  // Open on the side with more room, and never taller than that room, so the
+  // card is always fully reachable (the compact title bar takes the top 48px).
   function openRow(el: HTMLElement, id: string) {
     const rect = el.getBoundingClientRect();
-    setPlacement(rect.top < window.innerHeight * 0.45 ? "below" : "above");
+    const spaceAbove = rect.top - 48 - 12;
+    const spaceBelow = window.innerHeight - rect.bottom - 12;
+    const below = spaceBelow >= spaceAbove;
+    setPlacement(below ? "below" : "above");
+    setMaxHeight(Math.max(240, Math.min(520, below ? spaceBelow : spaceAbove)));
     setOpenId(id);
   }
 
@@ -91,6 +98,7 @@ export function ConnectionRowList({
               ) : (
                 <div
                   className={`${styles.floating} ${placement === "below" ? styles.floatingBelow : styles.floatingAbove} ${align === "left" ? styles.alignLeft : styles.alignRight}`}
+                  style={{ maxHeight }}
                 >
                   <HoverCard row={row} inline={false} onMutated={onMutated} />
                 </div>

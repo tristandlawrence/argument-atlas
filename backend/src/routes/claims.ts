@@ -136,6 +136,47 @@ claimsRouter.get("/claims/facets", async (_req, res) => {
   res.json({ byType, byTag });
 });
 
+// The whole atlas as nodes and edges, for the graph view. Light on purpose:
+// titles, types, tags, counts and the connection relation/strength only.
+claimsRouter.get("/graph", async (_req, res) => {
+  const [claims, connections] = await Promise.all([
+    prisma.claim.findMany({
+      select: {
+        id: true,
+        slug: true,
+        title: true,
+        type: true,
+        tags: true,
+        _count: { select: { votes: true, usedIn: true, arguedBy: true } },
+      },
+    }),
+    prisma.connection.findMany({
+      select: { id: true, fromClaimId: true, toClaimId: true, relation: true, statedStrength: true, contentiousAsOf: true },
+    }),
+  ]);
+  res.json({
+    nodes: claims.map((c) => ({
+      id: c.id,
+      slug: c.slug,
+      title: c.title,
+      type: c.type,
+      tags: c.tags,
+      raterCount: c._count.votes,
+      arguedByCount: c._count.arguedBy,
+      usedInCount: c._count.usedIn,
+      isRoot: c._count.usedIn === 0 && c._count.arguedBy > 0,
+    })),
+    edges: connections.map((e) => ({
+      id: e.id,
+      from: e.fromClaimId,
+      to: e.toClaimId,
+      relation: e.relation,
+      strength: e.statedStrength,
+      contentious: !!e.contentiousAsOf,
+    })),
+  });
+});
+
 claimsRouter.get("/claims/:idOrSlug", async (req, res) => {
   const claim = await prisma.claim.findFirst({
     where: { OR: [{ id: req.params.idOrSlug }, { slug: req.params.idOrSlug }] },

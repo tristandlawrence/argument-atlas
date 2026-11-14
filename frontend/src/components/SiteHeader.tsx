@@ -18,6 +18,9 @@ export function SiteHeader() {
         <Link href="/" className={styles.navLinkActive}>
           Claims
         </Link>
+        <Link href="/graph" className={styles.navLink}>
+          Graph
+        </Link>
         <span className={styles.navLink}>About</span>
         <ThemeToggle />
         <AuthNavItem />

@@ -1,4 +1,4 @@
-import type { ChallengeKind, ClaimDetail, ClaimListItem, ConnectionStrength, VoiceStance } from "./types";
+import type { ChallengeKind, ClaimDetail, ClaimListItem, ConnectionStrength, GraphData, VoiceStance } from "./types";
 import { authClient } from "./authClient";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
@@ -167,4 +167,8 @@ export async function voteVoice(voiceId: string, agree: boolean, wellConstructed
       body: JSON.stringify({ agree, wellConstructed }),
     })
   );
+}
+
+export async function fetchGraph(): Promise<GraphData> {
+  return json(await fetch(`${API_URL}/graph`, { cache: "no-store" }));
 }

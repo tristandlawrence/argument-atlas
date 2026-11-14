@@ -233,8 +233,22 @@ Never use colour alone to carry the supports/contradicts distinction — the rel
 ### UI Preferences
 
 - **Dark / light mode** — as above.
-- **Compact title bar** *(shipped)* — once the claim header scrolls off, a one-line bar fixes to the top with the truncated title on the left and a pencil **Edit** control on the right. Both edit controls use an inline SVG pencil; no icon library.
+- **Compact title bar** *(shipped)* — once the claim header scrolls off, a one-line bar fixes to the top with the truncated title on the left and a pencil **Edit** control on the right. In the full header the same control sits top-right on the badge row, beside a **Graph** link, so the header carries no extra row and the control is in the same place whether or not the bar is showing. Both edit controls use an inline SVG pencil; no icon library.
 - **Compact view** *(build status: not yet implemented — Phase 4)* — a layout density preference that reduces card padding, inter-card gaps, and line height by one step, for users who want to see more content without scrolling. Intended as a `data-view="compact"` attribute on the root element — no separate component variants needed.
+
+---
+
+## Graph view **(build status: prototype shipped)**
+
+`/graph` draws the whole atlas as a force-directed map: every claim a node, every connection an edge. It answers the question the page model cannot, which is what the shape of the argument is, and it is the fastest way to see how the six debates share claims.
+
+- **Nodes** follow the type treatments used on badges: Fact filled ink, Opinion dashed outline, Value accent outline, Proposal filled primary. Size grows with rater count and number of arguments beneath; debate roots are larger and always labelled.
+- **Edges** keep the row language: supports green, contradicts red, thickness by stated strength, a dashed accent stroke where the connection is marked currently contentious.
+- **Hover** a node to read its title, type, topics and counts and to light up its neighbours; everything else fades. **Click** opens the claim. Nodes are keyboard-focusable and Enter opens them.
+- **Filters**: type chips and a single topic filter; filtered-out nodes fade rather than disappear so the shape stays legible.
+- **Focus mode**: every claim page links to `/graph?focus=<slug>`, which shows that claim and everything within two steps, switchable to one or three. A link returns to the whole atlas.
+- **No dependency.** The layout is a small simulation in the page that settles within a few seconds; the atlas is small enough that this is the right trade for now. If it grows past a few hundred claims, swap in a proper force library and move layout off the main thread (Phase 3).
+- **Phase 3 additions**: pan and zoom, drag to pin, persisted layout so the map stops moving between visits, a "paths between two claims" mode, and colouring by rating quadrant as an alternative to type.
 
 ---
 
@@ -622,6 +636,7 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - First review feedback applied (done): markdown prose, crux marker, nuclear and gas restructured around their cruxes, voices with plot rings, connection challenges, restated claim in the rating box, compact title bar, column hints and hover-card calls to action.
 - Research pass (done): every root checked against the public record; gas, negative gearing and approvals reframed around where the argument now sits; voices replaced with dated, linked pieces; context links added.
 - Second review applied (done): dated contentious mark, coverage rubric and environment-law restructure, differentiated and navigable badges with classification pages, click-through rows, export-tax split.
+- Graph view prototype and header controls moved to the top-right (done).
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -675,6 +690,7 @@ The features that make it safe for many people to add content, in the order they
 - Voice submission form, duplicate-URL detection and a moderator queue for voices.
 - Challenge counts and contentious status as inputs to column ordering.
 - Lens tag on connections (mechanism, effects, magnitude, governance, alternatives, values) with a reader-side filter, driven by the coverage rubric.
+- Graph view: pan and zoom, drag to pin, persisted layout, paths between two claims, colour by quadrant; a force library and off-thread layout once the atlas outgrows the in-page simulation.
 - Re-evaluate open registration.
 
 ### Phase 4 — Insight *(enough data to learn from)*

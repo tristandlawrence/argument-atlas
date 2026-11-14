@@ -129,3 +129,26 @@ export type ClaimListItem = {
   tags: string[];
   contestedAt: string | null;
 };
+
+export type GraphNode = {
+  id: string;
+  slug: string;
+  title: string;
+  type: ClaimType;
+  tags: string[];
+  raterCount: number;
+  arguedByCount: number;
+  usedInCount: number;
+  isRoot: boolean;
+};
+
+export type GraphEdge = {
+  id: string;
+  from: string;
+  to: string;
+  relation: ConnectionRelation;
+  strength: ConnectionStrength;
+  contentious: boolean;
+};
+
+export type GraphData = { nodes: GraphNode[]; edges: GraphEdge[] };

@@ -43,7 +43,8 @@
   max-width: 760px;
 }
 
-.editButton {
+.editButton,
+.graphLink {
   font-family: var(--font-mono);
   font-size: 10.5px;
   font-weight: 600;
@@ -52,7 +53,48 @@
   border: 1px solid var(--primary);
   background: none;
   padding: 6px 13px;
-  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.graphLink {
+  color: var(--text-2);
+  border-color: var(--rule);
+}
+
+.graphLink:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+/* Badges on the left, controls on the right, on one line: the header loses
+   a row and the edit control sits where the compact bar's one will appear. */
+.headerTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.headerTop .badgeRow {
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .headerTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .section {

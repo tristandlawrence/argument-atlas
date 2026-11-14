@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { TypeBadge, EvidenceBadge, TagBadge } from "@/components/ClassificationBadge";
 import { ContestedBanner } from "@/components/ContestedBanner";
@@ -52,19 +53,26 @@ export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail })
       {claim.contested && <ContestedBanner reason={claim.contested.reason} until={claim.contested.until} />}
 
       <div className={styles.header} ref={headerRef}>
-        <div className={styles.badgeRow}>
-          <TypeBadge type={claim.type} />
-          <EvidenceBadge evidenceStrength={claim.evidenceStrength} />
-          {claim.tags.map((tag) => (
-            <TagBadge tag={tag} key={tag} />
-          ))}
+        <div className={styles.headerTop}>
+          <div className={styles.badgeRow}>
+            <TypeBadge type={claim.type} />
+            <EvidenceBadge evidenceStrength={claim.evidenceStrength} />
+            {claim.tags.map((tag) => (
+              <TagBadge tag={tag} key={tag} />
+            ))}
+          </div>
+          <div className={styles.headerActions}>
+            <Link href={`/graph?focus=${claim.slug}`} className={styles.graphLink} title="See this claim and its neighbours in the graph">
+              <GraphIcon /> GRAPH
+            </Link>
+            <button type="button" className={styles.editButton} onClick={() => setEditOpen(true)}>
+              <PencilIcon /> EDIT THIS CLAIM
+            </button>
+          </div>
         </div>
         <h1 className={styles.title}>{claim.title}</h1>
         <p className={styles.oneLiner}>{claim.oneLiner}</p>
         {claim.body && <Markdown source={claim.body} className={styles.bodyProse} />}
-        <button type="button" className={styles.editButton} onClick={() => setEditOpen(true)}>
-          <PencilIcon /> EDIT THIS CLAIM
-        </button>
       </div>
 
       <div className={styles.section}>
@@ -166,6 +174,17 @@ function PencilIcon() {
     <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" style={{ marginRight: 6, verticalAlign: -1 }}>
       <path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" />
       <path d="M10 4l2 2" />
+    </svg>
+  );
+}
+
+function GraphIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" style={{ marginRight: 6, verticalAlign: -1 }}>
+      <circle cx="3.5" cy="12.5" r="2" />
+      <circle cx="12.5" cy="12.5" r="2" />
+      <circle cx="8" cy="3.5" r="2" />
+      <path d="M5 11.2 7 5.3M11 11.2 9 5.3M5.5 12.5h5" />
     </svg>
   );
 }

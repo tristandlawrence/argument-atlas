@@ -84,3 +84,25 @@
 .inlineCard {
   margin-top: 2px;
 }
+
+.cruxTag,
+.challengeTag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 1px 5px;
+  margin-left: 8px;
+  vertical-align: 2px;
+  white-space: nowrap;
+}
+
+.cruxTag {
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+
+.challengeTag {
+  color: var(--text-2);
+  border: 1px solid var(--rule);
+}

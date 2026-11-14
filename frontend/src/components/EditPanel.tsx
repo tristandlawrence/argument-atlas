@@ -2,15 +2,9 @@
 
 import { useState } from "react";
 import { Term } from "./Term";
-import {
-  patchClaim,
-  addEvidence,
-  removeEvidence,
-  revertRevision,
-  patchConnection,
-} from "@/lib/api";
+import { addEvidence, addVoice, patchClaim, patchConnection, removeEvidence, removeVoice, revertRevision } from "@/lib/api";
 import { STRENGTH_DEFINITIONS } from "@/lib/copy";
-import type { ClaimDetail, ConnectionStrength } from "@/lib/types";
+import type { ClaimDetail, ConnectionStrength, VoiceStance } from "@/lib/types";
 import styles from "./EditPanel.module.css";
 
 type Tab = "write" | "evidence" | "history";
@@ -59,6 +53,8 @@ function WriteTab({ claim, onMutated }: { claim: ClaimDetail; onMutated: () => v
   const [title, setTitle] = useState(claim.title);
   const [oneLiner, setOneLiner] = useState(claim.oneLiner);
   const [body, setBody] = useState(claim.body);
+  const [contextBackground, setContextBackground] = useState(claim.contextBackground);
+  const [contextDisagreement, setContextDisagreement] = useState(claim.contextDisagreement);
   const [type, setType] = useState(claim.type);
   const [evidenceStrength, setEvidenceStrength] = useState(claim.evidenceStrength);
   const [tags, setTags] = useState(claim.tags.join(", "));
@@ -76,6 +72,8 @@ function WriteTab({ claim, onMutated }: { claim: ClaimDetail; onMutated: () => v
           title,
           oneLiner,
           body,
+          contextBackground,
+          contextDisagreement,
           type,
           evidenceStrength,
           tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
@@ -100,8 +98,25 @@ function WriteTab({ claim, onMutated }: { claim: ClaimDetail; onMutated: () => v
         <input className={styles.input} value={oneLiner} onChange={(e) => setOneLiner(e.target.value)} />
       </div>
       <div className={styles.field}>
-        <span className={styles.label}>BODY</span>
+        <span className={styles.label}>BODY · MARKDOWN</span>
         <textarea className={styles.textarea} value={body} onChange={(e) => setBody(e.target.value)} />
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>CONTEXT &amp; HISTORY · MARKDOWN</span>
+        <textarea
+          className={styles.textarea}
+          style={{ minHeight: 140 }}
+          value={contextBackground}
+          onChange={(e) => setContextBackground(e.target.value)}
+        />
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>WHERE THE DISAGREEMENT SITS · MARKDOWN</span>
+        <textarea className={styles.textarea} value={contextDisagreement} onChange={(e) => setContextDisagreement(e.target.value)} />
+        <span className={styles.requiredHint}>
+          Paragraphs, [links](https://…), **bold**, *italic*, bullets and ## headings are supported. Link to Wikipedia or an
+          explainer here; put sources that substantiate a Fact under Evidence.
+        </span>
       </div>
       <div className={styles.field}>
         <span className={styles.label}>TYPE</span>
@@ -194,6 +209,8 @@ function EvidenceTab({ claim, onMutated }: { claim: ClaimDetail; onMutated: () =
       <button type="button" className={styles.saveButton} onClick={add} disabled={!citation}>
         Add evidence
       </button>
+
+      <VoicesEditor claim={claim} onMutated={onMutated} />
 
       {claim.usedIn.length > 0 && (
         <>
@@ -324,5 +341,96 @@ function HistoryTab({ claim, onMutated }: { claim: ClaimDetail; onMutated: () =>
         </div>
       ))}
     </div>
+  );
+}
+
+// Voices: public pieces that make the argument. Kept apart from evidence so
+// an op-ed never raises the evidence badge.
+function VoicesEditor({ claim, onMutated }: { claim: ClaimDetail; onMutated: () => void }) {
+  const [title, setTitle] = useState("");
+  const [outlet, setOutlet] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
+  const [kind, setKind] = useState("op-ed");
+  const [stance, setStance] = useState<VoiceStance>("SUPPORTS");
+  const canAdd = title && outlet && /^https?:\/\//.test(url);
+
+  async function add() {
+    if (!canAdd) return;
+    await addVoice(claim.id, { title, outlet, author: author || undefined, url, kind, stance });
+    setTitle("");
+    setOutlet("");
+    setAuthor("");
+    setUrl("");
+    onMutated();
+  }
+
+  return (
+    <>
+      <span className={styles.label} style={{ marginTop: 22 }}>
+        VOICES — WHO ARGUES THIS IN PUBLIC
+      </span>
+      <span className={styles.requiredHint}>
+        Op-eds, explainers, speeches, submissions, blogs. Not evidence: they never change the evidence badge.
+      </span>
+      {claim.voices.map((v) => (
+        <div className={styles.evidenceItem} key={v.id}>
+          <span>
+            <strong>{v.stance === "SUPPORTS" ? "FOR" : v.stance === "CONTRADICTS" ? "AGAINST" : "MIXED"}</strong> — {v.title}{" "}
+            <span style={{ color: "var(--text-2)" }}>
+              ({v.outlet}
+              {v.author ? `, ${v.author}` : ""})
+            </span>
+          </span>
+          <button
+            type="button"
+            className={styles.removeButton}
+            onClick={async () => {
+              await removeVoice(claim.id, v.id);
+              onMutated();
+            }}
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+      <div className={styles.field}>
+        <span className={styles.label}>ADD A VOICE — TITLE</span>
+        <input className={styles.input} value={title} onChange={(e) => setTitle(e.target.value)} />
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>OUTLET</span>
+        <input className={styles.input} value={outlet} onChange={(e) => setOutlet(e.target.value)} placeholder="The Conversation, Grattan Institute, ABC…" />
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>AUTHOR (OPTIONAL)</span>
+        <input className={styles.input} value={author} onChange={(e) => setAuthor(e.target.value)} />
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>URL</span>
+        <input className={styles.input} value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://" />
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>KIND</span>
+        <select className={styles.select} value={kind} onChange={(e) => setKind(e.target.value)}>
+          {["op-ed", "explainer", "speech", "submission", "interview", "blog", "report"].map((k) => (
+            <option key={k} value={k}>
+              {k}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className={styles.field}>
+        <span className={styles.label}>ARGUES</span>
+        <select className={styles.select} value={stance} onChange={(e) => setStance(e.target.value as VoiceStance)}>
+          <option value="SUPPORTS">For this claim</option>
+          <option value="CONTRADICTS">Against this claim</option>
+          <option value="MIXED">Both ways / mixed</option>
+        </select>
+      </div>
+      <button type="button" className={styles.saveButton} onClick={add} disabled={!canAdd}>
+        Add voice
+      </button>
+    </>
   );
 }

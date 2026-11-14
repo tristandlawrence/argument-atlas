@@ -81,6 +81,18 @@ type EvidenceType =
 
 type DemoVotes = { n: number; agree: number; well: number };
 
+/** A public piece that makes the argument. Not evidence; never affects the badge. */
+type VoiceDef = {
+  title: string;
+  outlet: string;
+  author?: string;
+  url: string;
+  kind: "op-ed" | "explainer" | "speech" | "submission" | "interview" | "blog" | "report" | "campaign";
+  stance: "SUPPORTS" | "CONTRADICTS" | "MIXED";
+  /** Demo-only; a rated voice appears on the plot as a ring. */
+  votes?: DemoVotes;
+};
+
 type ClaimDef = {
   key: string;
   title: string;
@@ -95,6 +107,7 @@ type ClaimDef = {
   timeline?: { label: string; text: string }[];
   /** Demo-only. Omit for a claim that should ship with no votes at all. */
   votes?: DemoVotes;
+  voices?: VoiceDef[];
   contested?: { reason: string; hoursAgo: number; revertedBy: string[] };
 };
 
@@ -104,6 +117,8 @@ type ConnDef = {
   relation: ConnectionRelation;
   strength: ConnectionStrength;
   reason: string;
+  /** The connection the parent debate currently turns on. One or two per root. */
+  crux?: boolean;
   /** Demo-only distribution [decisive, relevant, tangential]. */
   votes?: [number, number, number];
 };
@@ -128,7 +143,7 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: [...ENERGY, "CLIMATE"],
     context:
-      "Australia is the only G20 country with a legislated ban on nuclear power. The prohibition was inserted into federal environment and radiation-safety law in 1998 and 1999 as a condition of the Senate passing the bill that created the national radiation regulator. It has never been seriously tested in Parliament since.\n\nThe question returned as coal plants in the National Electricity Market announced closure dates and the pace of renewable and transmission build-out came under strain. In 2024 the federal opposition adopted a policy of government-owned reactors on former coal sites, which put repeal on the agenda for the first time in a generation.",
+      "Australia is the only G20 country with a legislated ban on nuclear power. The prohibition was inserted into [federal environment law](https://www.legislation.gov.au/C2004A00485/latest/text) and radiation-safety law in 1998 and 1999 as a condition of the Senate passing the bill that created the national radiation regulator. See also the [Wikipedia overview of nuclear power in Australia](https://en.wikipedia.org/wiki/Nuclear_power_in_Australia). It has never been seriously tested in Parliament since.\n\nThe question returned as coal plants in the National Electricity Market announced closure dates and the pace of renewable and transmission build-out came under strain. In 2024 the federal opposition adopted a policy of government-owned reactors on former coal sites, which put repeal on the agenda for the first time in a generation.",
     disagreement:
       "Almost nobody argues the ban is a good piece of law on its own terms. The live dispute is whether repeal is harmless because it merely permits, or harmful because it diverts investment and attention from a transition that must happen before any reactor could run.",
     evidence: [
@@ -149,7 +164,85 @@ const claims: ClaimDef[] = [
       { label: "2022–24", text: "Coal plant closure dates across the National Electricity Market are brought forward." },
       { label: "2024", text: "The federal opposition adopts a policy of government-owned reactors at seven former coal sites." },
     ],
-    votes: { n: 42, agree: 18, well: 26 },
+    voices: [
+      { title: "Nuclear for Australia — the case for lifting the ban", outlet: "Nuclear for Australia", url: "https://www.nuclearforaustralia.com/", kind: "campaign", stance: "SUPPORTS", votes: { n: 4, agree: 2, well: 2 } },
+      { title: "Not without your approval: a way forward for nuclear technology in Australia", outlet: "House of Representatives Standing Committee on the Environment and Energy", url: "https://www.aph.gov.au/Parliamentary_Business/Committees/House/Environment_and_Energy/Nuclearenergy/Report", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
+      { title: "Climate Council on nuclear power in Australia", outlet: "Climate Council", url: "https://www.climatecouncil.org.au/", kind: "explainer", stance: "CONTRADICTS", votes: { n: 5, agree: 3, well: 3 } },
+      { title: "Australian Conservation Foundation on nuclear energy", outlet: "Australian Conservation Foundation", url: "https://www.acf.org.au/", kind: "campaign", stance: "CONTRADICTS" },
+    ],
+    votes: { n: 17, agree: 7, well: 11 },
+  },
+  {
+    key: "E-not-in-time",
+    title: "Nuclear power cannot help with Australia's electricity prices or reliability in time to matter",
+    oneLiner: "The pressure on bills and on the grid is this decade; a first reactor is the decade after next.",
+    body: "The case for repeal is usually made in terms of today's problems: high bills, coal plants closing, a grid under strain. Each of those plays out in the 2020s and 2030s. Even on generous assumptions nothing nuclear would generate before 2040, by which time the coal fleet has closed and the firming it needed has been built from something else.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: ENERGY,
+    context:
+      "This is where the live nuclear debate actually sits. Few participants now argue about safety or waste; the argument is about timing. Supporters of repeal say the timeline is an argument for starting now; opponents say it is an argument that nuclear answers a different question from the one being asked. The facts beneath this claim, each argued separately, are the 2040 estimate, the coal closure schedule and the firming already planned with gas.",
+    disagreement:
+      "The dates are broadly agreed. The disagreement is whether 'too late for this decade' settles the matter or merely shifts nuclear's role from replacing coal to replacing the gas and first-generation storage that will themselves age out in the 2040s.",
+    evidence: [
+      {
+        type: "Official report",
+        citation: "CSIRO and AEMO, GenCost — lead time discussion; AEMO Integrated System Plan — coal retirement and firming",
+        url: "https://www.csiro.au/en/research/technology-space/energy/gencost",
+      },
+    ],
+    votes: { n: 9, agree: 6, well: 7 },
+  },
+  {
+    key: "E-distraction",
+    title: "The political fight over nuclear is distracting from solving price and emissions problems now",
+    oneLiner: "Attention and capital spent on a 2040s technology are not spent on the 2020s transition.",
+    body: "Policy attention is finite. A multi-year argument about reactors that could not run for fifteen years crowds out decisions on transmission, storage, gas firming and household electrification that determine bills and emissions this decade. On this view the debate is costly even if repeal itself is harmless.",
+    type: "OPINION",
+    evidenceStrength: "NONE",
+    tags: [...ENERGY, "CLIMATE"],
+    context:
+      "This argument is about the debate rather than the law. It is made by people who might accept repeal in principle but regard the current contest as a delaying tactic, and by energy-industry voices who want policy certainty for projects already under way.",
+    disagreement:
+      "Opponents of this claim say it proves too much: any long-horizon decision could be called a distraction. They also note that a legislated ban is itself a political choice that forecloses the long horizon.",
+    evidence: [],
+    votes: { n: 7, agree: 4, well: 4 },
+  },
+  {
+    key: "E-smr-ban",
+    title: "The ban stops the market from finding cheaper and faster routes to nuclear, such as small modular reactors",
+    oneLiner: "A prohibition rules out every future design, not just today's large plants.",
+    body: "Cost and timeline estimates for nuclear are estimates for large reactors built once. Small modular designs promise factory production, shorter builds and smaller sites, and several are in licensing overseas. A legislated ban means no Australian proponent can test those promises against local conditions, however the technology develops.",
+    type: "OPINION",
+    evidenceStrength: "NONE",
+    tags: ENERGY,
+    context:
+      "This is the positive case for repeal that does not depend on building a large plant soon: it treats the ban as a restriction on what the market may discover. It is the argument most often made by people who are agnostic about whether nuclear will ever pencil out in Australia.",
+    disagreement:
+      "The reply is that small modular reactors do not yet exist commercially in comparable countries, so the option being preserved is speculative. Whether that matters depends on how one values keeping options open.",
+    evidence: [],
+    votes: { n: 8, agree: 5, well: 6 },
+  },
+  {
+    key: "E-smr-none-built",
+    title: "No commercial small modular reactor has yet operated in a Western country, and the first United States project was cancelled in 2023",
+    oneLiner: "The designs being licensed overseas remain unbuilt; the most advanced US project collapsed on cost.",
+    body: "Small modular reactors operate in Russia and China under state programs. In the United States, the NuScale project for a Utah utility consortium was cancelled in November 2023 after its estimated power price rose and subscribers withdrew. No Western SMR has reached commercial operation.",
+    type: "FACT",
+    evidenceStrength: "STRONG",
+    tags: ENERGY,
+    context:
+      "The state of small modular reactor deployment is the factual test of the 'keep the option open' argument. Both sides accept the record; they differ on whether it describes a technology that is early or one that is failing.",
+    disagreement:
+      "Not disputed as fact. Supporters of SMRs argue first-of-a-kind cancellations are normal and later designs are progressing; critics argue the cancellation revealed costs no later design has yet escaped.",
+    evidence: [
+      {
+        type: "Think tank / NGO",
+        citation: "World Nuclear Association, Small Nuclear Power Reactors — status of designs and projects",
+        url: "https://world-nuclear.org/information-library/nuclear-fuel-cycle/nuclear-power-reactors/small-nuclear-power-reactors",
+      },
+    ],
+    votes: { n: 6, agree: 5, well: 6 },
   },
   {
     key: "E-gencost",
@@ -170,7 +263,7 @@ const claims: ClaimDef[] = [
         url: "https://www.csiro.au/en/research/technology-space/energy/gencost",
       },
     ],
-    votes: { n: 38, agree: 31, well: 33 },
+    votes: { n: 11, agree: 9, well: 10 },
   },
   {
     key: "E-not-before-2040",
@@ -195,7 +288,7 @@ const claims: ClaimDef[] = [
         citation: "House of Representatives Standing Committee on the Environment and Energy, Not without your approval: a way forward for nuclear technology in Australia (2019)",
       },
     ],
-    votes: { n: 35, agree: 25, well: 27 },
+    votes: { n: 10, agree: 7, well: 8 },
   },
   {
     key: "E-no-regulator",
@@ -216,7 +309,7 @@ const claims: ClaimDef[] = [
         url: "https://www.arpansa.gov.au/",
       },
     ],
-    votes: { n: 24, agree: 22, well: 19 },
+    votes: { n: 7, agree: 6, well: 6 },
   },
   {
     key: "E-uae-twelve-years",
@@ -238,7 +331,7 @@ const claims: ClaimDef[] = [
       },
     ],
     // Deliberately a "steelman": well made, cited, and persuasive to fewer people.
-    votes: { n: 26, agree: 11, well: 23 },
+    votes: { n: 7, agree: 3, well: 6 },
   },
   {
     key: "E-coal-closures",
@@ -259,7 +352,7 @@ const claims: ClaimDef[] = [
         url: "https://aemo.com.au/energy-systems/major-publications/integrated-system-plan-isp",
       },
     ],
-    votes: { n: 29, agree: 24, well: 22 },
+    votes: { n: 8, agree: 7, well: 6 },
   },
   {
     key: "E-gas-firming",
@@ -280,7 +373,7 @@ const claims: ClaimDef[] = [
         url: "https://aemo.com.au/energy-systems/major-publications/integrated-system-plan-isp",
       },
     ],
-    votes: { n: 21, agree: 18, well: 17 },
+    votes: { n: 6, agree: 5, well: 5 },
   },
   {
     key: "E-ban-separate",
@@ -295,7 +388,6 @@ const claims: ClaimDef[] = [
     disagreement:
       "Opponents answer that in practice repeal would be read as a signal, and that signals shape where capital and political attention go. Whether a legal change can be 'neutral' in that sense is the real dispute.",
     evidence: [],
-    votes: { n: 27, agree: 19, well: 22 },
   },
   {
     key: "E-france-ontario",
@@ -316,7 +408,7 @@ const claims: ClaimDef[] = [
         url: "https://ember-energy.org/data/",
       },
     ],
-    votes: { n: 30, agree: 24, well: 25 },
+    votes: { n: 8, agree: 6, well: 7 },
   },
   {
     key: "E-unsafe",
@@ -332,7 +424,7 @@ const claims: ClaimDef[] = [
       "Opponents of this claim argue that reactor designs, regulation and siting have changed substantially since both accidents, and that per unit of electricity nuclear has a lower death toll than coal or gas. The claim as written does not engage with that comparison.",
     evidence: [],
     // Deliberately in the Weak quadrant: widely heard, poorly constructed, few agree once asked.
-    votes: { n: 25, agree: 6, well: 4 },
+    votes: { n: 7, agree: 2, well: 1 },
   },
 
   // ---------------------------------------------------------------------------
@@ -347,7 +439,7 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: [...ENERGY, "ECONOMY"],
     context:
-      "Until 2015 the east-coast market was isolated: gas produced there could only be sold there. The Gladstone export terminals changed that, linking domestic prices to international ones just as the Bass Strait fields began to decline. The competition regulator has run a standing inquiry into the market since 2017, and successive governments have adopted a price cap, a code of conduct and an export control mechanism, but not reservation.",
+      "Until 2015 the east-coast market was isolated: gas produced there could only be sold there. The Gladstone export terminals changed that, linking domestic prices to international ones just as the Bass Strait fields began to decline. The competition regulator has run a [standing inquiry into the market](https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30) since 2017, and successive governments have adopted a price cap, a code of conduct and an export control mechanism, but not reservation.",
     disagreement:
       "Both sides accept that east-coast prices rose sharply after exports began and that gas remains needed for firming. They divide on whether reservation would lower prices without deterring the new supply the market also needs, and on whether existing contracts could be touched.",
     evidence: [
@@ -364,7 +456,53 @@ const claims: ClaimDef[] = [
       { label: "2022", text: "A temporary wholesale price cap and a mandatory code of conduct follow the energy price spike." },
       { label: "Now", text: "Reservation remains the main policy proposed but not adopted." },
     ],
-    votes: { n: 33, agree: 20, well: 19 },
+    voices: [
+      { title: "Australia Institute on a domestic gas reservation", outlet: "The Australia Institute", url: "https://australiainstitute.org.au/", kind: "report", stance: "SUPPORTS", votes: { n: 3, agree: 2, well: 2 } },
+      { title: "Australian Energy Producers on gas supply and market intervention", outlet: "Australian Energy Producers", url: "https://energyproducers.au/", kind: "submission", stance: "CONTRADICTS", votes: { n: 2, agree: 0, well: 1 } },
+      { title: "Grattan Institute on the east-coast gas market", outlet: "Grattan Institute", url: "https://grattan.edu.au/", kind: "report", stance: "MIXED" },
+    ],
+    votes: { n: 13, agree: 8, well: 7 },
+  },
+  {
+    key: "E-reservation-lowers-prices",
+    title: "A domestic reservation would lower east-coast gas prices for Australian buyers",
+    oneLiner: "The policy's whole purpose, stated as a claim so it can be tested.",
+    body: "If a share of production must be sold domestically, local buyers are no longer bidding against Asian LNG customers for the same gas, and the domestic price should settle below export parity. Western Australia is the precedent proponents cite.",
+    type: "OPINION",
+    evidenceStrength: "MODERATE",
+    tags: ENERGY,
+    context:
+      "This is where the reservation debate actually turns. Most participants agree prices rose after exports began and that gas remains needed for firming. The dispute is whether reservation would bring prices down, by how much, and how soon, given that most current east-coast production is already under long-term export contract.",
+    disagreement:
+      "Supporters point to Western Australia. Opponents say WA's prices reflect cheap, abundant offshore gas and a small market, and that a prospective east-coast policy would reach too little gas to move the price for years.",
+    evidence: [
+      {
+        type: "Official report",
+        citation: "Australian Competition and Consumer Commission, Gas Inquiry 2017–2030 — east-coast and western price comparisons",
+        url: "https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30",
+      },
+    ],
+    votes: { n: 8, agree: 5, well: 5 },
+  },
+  {
+    key: "E-wa-cheap-gas",
+    title: "Western Australia's low domestic gas prices owe more to abundant, cheap offshore gas and a small market than to reservation",
+    oneLiner: "The precedent may show geology, not policy.",
+    body: "Western Australia's LNG projects draw on large offshore fields with low production costs, and its domestic market is a fraction of the east coast's. Critics of the comparison argue those conditions would produce low prices with or without a reservation rule, so the policy cannot be credited with the gap.",
+    type: "OPINION",
+    evidenceStrength: "WEAK",
+    tags: ENERGY,
+    context:
+      "The causal question behind the WA comparison. It is rarely separated out in public debate, where 'WA has reservation and cheap gas' is treated as settling the matter.",
+    disagreement:
+      "Supporters of reservation answer that WA's domestic price has tracked well below what its export-linked price would have been, which is the policy's effect regardless of how cheap the gas is to produce.",
+    evidence: [
+      {
+        type: "Official report",
+        citation: "Australian Competition and Consumer Commission, Gas Inquiry — discussion of western market structure",
+      },
+    ],
+    votes: { n: 5, agree: 2, well: 4 },
   },
   {
     key: "E-wa-domgas",
@@ -389,7 +527,7 @@ const claims: ClaimDef[] = [
         url: "https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30",
       },
     ],
-    votes: { n: 28, agree: 22, well: 18 },
+    votes: { n: 8, agree: 6, well: 5 },
   },
   {
     key: "E-east-prices",
@@ -410,7 +548,7 @@ const claims: ClaimDef[] = [
         url: "https://www.accc.gov.au/inquiries-and-consultations/gas-inquiry-2017-30",
       },
     ],
-    votes: { n: 26, agree: 22, well: 21 },
+    votes: { n: 7, agree: 6, well: 6 },
   },
   {
     key: "E-retrospective",
@@ -425,7 +563,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "Supporters of reservation generally accept the point about existing contracts and answer that a prospective policy avoids it. The disagreement then becomes whether a policy that touches only new gas would do anything useful soon enough.",
     evidence: [],
-    votes: { n: 24, agree: 15, well: 17 },
+    votes: { n: 7, agree: 4, well: 5 },
   },
   {
     key: "E-wa-prospective",
@@ -445,7 +583,6 @@ const claims: ClaimDef[] = [
         citation: "Government of Western Australia, Western Australian Domestic Gas Policy — application to new projects",
       },
     ],
-    votes: { n: 19, agree: 15, well: 15 },
   },
   {
     key: "E-adgsm",
@@ -465,7 +602,7 @@ const claims: ClaimDef[] = [
         citation: "Customs (Prohibited Exports) Regulations 1958, Division 6 — Australian Domestic Gas Security Mechanism",
       },
     ],
-    votes: { n: 20, agree: 17, well: 16 },
+    votes: { n: 6, agree: 5, well: 5 },
   },
   {
     key: "E-market-working",
@@ -481,7 +618,7 @@ const claims: ClaimDef[] = [
       "Critics answer that the burden of the signal falls on manufacturers and low-income households who cannot electrify quickly, and that transition policy should not be run through the gas bill.",
     evidence: [],
     // Deliberately a "steelman": coherent and well made, agreed with by few.
-    votes: { n: 22, agree: 5, well: 18 },
+    votes: { n: 6, agree: 1, well: 5 },
   },
 
   // ---------------------------------------------------------------------------
@@ -496,7 +633,7 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: [...HOUSING, "TAX"],
     context:
-      "Australia is unusual in letting rental losses offset wage income without limit. Combined with the capital gains discount introduced in 1999, this makes a loss-making rental property a tax-effective way to hold an appreciating asset. The policy was briefly quarantined in 1985 and restored in 1987, and a version of this proposal was taken to the 2016 and 2019 federal elections and lost both times.",
+      "Australia is unusual in letting rental losses offset wage income without limit. Combined with the capital gains discount introduced in 1999, this makes a loss-making rental property a tax-effective way to hold an appreciating asset ([Wikipedia: negative gearing in Australia](https://en.wikipedia.org/wiki/Negative_gearing#Australia)). The policy was briefly quarantined in 1985 and restored in 1987, and a version of this proposal was taken to the 2016 and 2019 federal elections and lost both times.",
     disagreement:
       "Economists broadly agree the concession pushes prices up at the margin. The disagreement is about magnitude, about whether rents would rise if investors withdrew, and about whether this is the right lever when supply constraints are so much larger.",
     evidence: [
@@ -518,7 +655,12 @@ const claims: ClaimDef[] = [
       { label: "2016 & 2019", text: "A federal opposition takes a new-builds-only policy to two elections and loses both." },
       { label: "Now", text: "Price-to-income ratios in major cities sit near record highs, and the policy returns to debate in each budget cycle." },
     ],
-    votes: { n: 40, agree: 23, well: 24 },
+    voices: [
+      { title: "Hot property: negative gearing and capital gains tax reform", outlet: "Grattan Institute", author: "John Daley and Danielle Wood", url: "https://grattan.edu.au/report/hot-property/", kind: "report", stance: "SUPPORTS", votes: { n: 5, agree: 4, well: 5 } },
+      { title: "Property Council of Australia on investor tax settings", outlet: "Property Council of Australia", url: "https://www.propertycouncil.com.au/", kind: "submission", stance: "CONTRADICTS", votes: { n: 3, agree: 1, well: 1 } },
+      { title: "The Australia Institute on housing tax concessions", outlet: "The Australia Institute", url: "https://australiainstitute.org.au/", kind: "report", stance: "SUPPORTS" },
+    ],
+    votes: { n: 16, agree: 9, well: 10 },
   },
   {
     key: "H-investor-loans-established",
@@ -539,7 +681,7 @@ const claims: ClaimDef[] = [
         url: "https://www.abs.gov.au/statistics/economy/finance/lending-indicators/latest-release",
       },
     ],
-    votes: { n: 31, agree: 27, well: 26 },
+    votes: { n: 9, agree: 8, well: 8 },
   },
   {
     key: "H-ng-materially-affordable",
@@ -560,7 +702,7 @@ const claims: ClaimDef[] = [
         url: "https://grattan.edu.au/report/hot-property/",
       },
     ],
-    votes: { n: 29, agree: 15, well: 14 },
+    votes: { n: 8, agree: 4, well: 4 },
   },
   {
     key: "H-grattan-two-percent",
@@ -581,7 +723,7 @@ const claims: ClaimDef[] = [
         url: "https://grattan.edu.au/report/hot-property/",
       },
     ],
-    votes: { n: 27, agree: 23, well: 24 },
+    votes: { n: 8, agree: 7, well: 7 },
   },
   {
     key: "H-rents-rise",
@@ -596,7 +738,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "Reform advocates answer that a home sold by an investor is usually bought by an owner-occupier who was renting, so the rental stock and the number of renters fall together. The empirical record from 1985–87 is read differently by each side.",
     evidence: [],
-    votes: { n: 32, agree: 15, well: 18 },
+    votes: { n: 9, agree: 4, well: 5 },
   },
   {
     key: "H-quarantine-1985",
@@ -621,7 +763,7 @@ const claims: ClaimDef[] = [
         citation: "Australian Bureau of Statistics, Consumer Price Index — rents component by capital city, 1985–1988",
       },
     ],
-    votes: { n: 23, agree: 17, well: 20 },
+    votes: { n: 6, agree: 4, well: 5 },
   },
   {
     key: "H-private-landlords",
@@ -642,7 +784,7 @@ const claims: ClaimDef[] = [
         url: "https://www.abs.gov.au/census",
       },
     ],
-    votes: { n: 21, agree: 19, well: 18 },
+    votes: { n: 6, agree: 5, well: 5 },
   },
   {
     key: "H-foreign-buyers",
@@ -658,7 +800,7 @@ const claims: ClaimDef[] = [
       "Critics point to the regulator's own figures on the volume of approved foreign purchases and argue they are too small to drive a national market. Supporters argue the official figures understate purchases made through local intermediaries.",
     evidence: [],
     // Deliberately in the Partisan quadrant: popular, weakly constructed, no evidence attached.
-    votes: { n: 30, agree: 21, well: 7 },
+    votes: { n: 8, agree: 6, well: 2 },
   },
   {
     key: "H-middle-income",
@@ -679,7 +821,7 @@ const claims: ClaimDef[] = [
         url: "https://www.ato.gov.au/about-ato/research-and-statistics/in-detail/taxation-statistics",
       },
     ],
-    votes: { n: 26, agree: 12, well: 10 },
+    votes: { n: 7, agree: 3, well: 3 },
     contested: {
       reason:
         "Three reverts by different users inside 24 hours, over whether 'income' means taxable income after deductions or total income before them. Edits from non-moderators queue for review until the quiet period ends.",
@@ -700,7 +842,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "Opponents answer that the deduction is for the cost of earning assessable rental income, consistent with how every other business expense is treated, and that singling out property is the real unfairness.",
     evidence: [],
-    votes: { n: 28, agree: 20, well: 19 },
+    votes: { n: 8, agree: 6, well: 5 },
   },
 
   // ---------------------------------------------------------------------------
@@ -715,7 +857,7 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: ["IMMIGRATION", ...HOUSING],
     context:
-      "Australia sets an annual permanent migration program but does not directly cap net overseas migration, most of which is temporary: students, working-holiday makers and temporary skilled workers. The post-pandemic rebound pushed net migration to a record, and both major parties have since proposed reducing it, with different targets.\n\nThe debate is entangled with housing: migration adds to demand for homes in the cities where construction is most constrained, and most of the argument for a cap runs through that channel.",
+      "Australia sets an annual permanent migration program but does not directly cap [net overseas migration](https://www.abs.gov.au/statistics/people/population/overseas-migration/latest-release), most of which is temporary: students, working-holiday makers and temporary skilled workers. The post-pandemic rebound pushed net migration to a record, and both major parties have since proposed reducing it, with different targets.\n\nThe debate is entangled with housing: migration adds to demand for homes in the cities where construction is most constrained, and most of the argument for a cap runs through that channel.",
     disagreement:
       "Both sides accept that 2022–23 was exceptional and that housing is the pressure point. They divide on whether the cap is the right tool for a housing problem, and on who pays for it: a cap of this size falls mainly on international education.",
     evidence: [
@@ -736,7 +878,12 @@ const claims: ClaimDef[] = [
       { label: "2022–23", text: "Reopened borders produce a record intake as students and temporary workers return." },
       { label: "2024", text: "Both major parties propose reducing net migration, with caps on international student numbers as the main lever." },
     ],
-    votes: { n: 44, agree: 22, well: 23 },
+    voices: [
+      { title: "Grattan Institute on migration and housing", outlet: "Grattan Institute", url: "https://grattan.edu.au/", kind: "report", stance: "MIXED", votes: { n: 3, agree: 2, well: 3 } },
+      { title: "Centre for Independent Studies on immigration levels", outlet: "Centre for Independent Studies", url: "https://www.cis.org.au/", kind: "report", stance: "SUPPORTS", votes: { n: 2, agree: 1, well: 1 } },
+      { title: "Universities Australia on international students and caps", outlet: "Universities Australia", url: "https://universitiesaustralia.edu.au/", kind: "submission", stance: "CONTRADICTS" },
+    ],
+    votes: { n: 18, agree: 9, well: 9 },
   },
   {
     key: "M-nom-double",
@@ -757,7 +904,7 @@ const claims: ClaimDef[] = [
         url: "https://www.abs.gov.au/statistics/people/population/overseas-migration/latest-release",
       },
     ],
-    votes: { n: 30, agree: 27, well: 25 },
+    votes: { n: 8, agree: 7, well: 7 },
   },
   {
     key: "M-catch-up",
@@ -778,7 +925,7 @@ const claims: ClaimDef[] = [
         url: "https://population.gov.au/",
       },
     ],
-    votes: { n: 27, agree: 21, well: 20 },
+    votes: { n: 8, agree: 6, well: 6 },
   },
   {
     key: "M-cap-needs-student-cuts",
@@ -804,7 +951,7 @@ const claims: ClaimDef[] = [
         url: "https://www.education.gov.au/international-education-data-and-research",
       },
     ],
-    votes: { n: 25, agree: 19, well: 21 },
+    votes: { n: 7, agree: 5, well: 6 },
   },
   {
     key: "M-intl-ed-export",
@@ -825,7 +972,7 @@ const claims: ClaimDef[] = [
         url: "https://www.education.gov.au/international-education-data-and-research",
       },
     ],
-    votes: { n: 24, agree: 21, well: 20 },
+    votes: { n: 7, agree: 6, well: 6 },
   },
   {
     key: "M-shortages",
@@ -846,7 +993,7 @@ const claims: ClaimDef[] = [
         url: "https://www.jobsandskills.gov.au/",
       },
     ],
-    votes: { n: 26, agree: 18, well: 16 },
+    votes: { n: 7, agree: 5, well: 4 },
   },
   {
     key: "M-skilled-minority",
@@ -867,7 +1014,6 @@ const claims: ClaimDef[] = [
         url: "https://population.gov.au/",
       },
     ],
-    votes: { n: 22, agree: 19, well: 19 },
   },
   {
     key: "M-take-jobs",
@@ -883,7 +1029,7 @@ const claims: ClaimDef[] = [
       "The claim treats the number of jobs as fixed. Critics argue that is the error: migrants also spend, start businesses and fill roles that enable other jobs. Whether low-wage local workers are an exception is the one point of genuine dispute.",
     evidence: [],
     // Deliberately in the Weak quadrant.
-    votes: { n: 28, agree: 7, well: 5 },
+    votes: { n: 8, agree: 2, well: 1 },
   },
   {
     key: "M-entitled-to-decide",
@@ -898,7 +1044,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "The principle is barely contested. The disagreement is whether invoking it adds anything to an argument about a specific cap, which is a question about this connection rather than about the claim.",
     evidence: [],
-    votes: { n: 31, agree: 27, well: 17 },
+    votes: { n: 9, agree: 8, well: 5 },
   },
 
   // ---------------------------------------------------------------------------
@@ -928,7 +1074,7 @@ const claims: ClaimDef[] = [
         url: "https://www.housingaustralia.gov.au/",
       },
     ],
-    votes: { n: 39, agree: 34, well: 30 },
+    votes: { n: 11, agree: 10, well: 8 },
   },
 
   // ---------------------------------------------------------------------------
@@ -943,7 +1089,7 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: ["ENVIRONMENT", "ECONOMY"],
     context:
-      "The Environment Protection and Biodiversity Conservation Act has been reviewed twice since it took effect in 2000, and both reviews found it slow and ineffective. The 2020 independent review recommended national environmental standards and an independent regulator; the deadlines proposal comes from the business and renewable-energy side of the same debate, which argues that process delay is now the binding constraint on the energy transition and on housing.",
+      "The [Environment Protection and Biodiversity Conservation Act](https://en.wikipedia.org/wiki/Environment_Protection_and_Biodiversity_Conservation_Act_1999) has been reviewed twice since it took effect in 2000, and both reviews found it slow and ineffective ([2020 review](https://epbcactreview.environment.gov.au/)). The 2020 independent review recommended national environmental standards and an independent regulator; the deadlines proposal comes from the business and renewable-energy side of the same debate, which argues that process delay is now the binding constraint on the energy transition and on housing.",
     disagreement:
       "Both sides accept the process is slow and that the Act is failing on its environmental objectives. They divide on whether a deadline fixes the delay or simply changes who bears it, and above all on what should happen when the clock runs out.",
     evidence: [
@@ -959,7 +1105,12 @@ const claims: ClaimDef[] = [
       { label: "2020", text: "The second independent review finds the Act 'ineffective and inefficient', failing both industry and the environment." },
       { label: "2024", text: "Reform legislation is split and partly deferred; renewable-energy developers join miners in calling for faster decisions." },
     ],
-    votes: { n: 34, agree: 17, well: 18 },
+    voices: [
+      { title: "Business Council of Australia on approval reform", outlet: "Business Council of Australia", url: "https://www.bca.com.au/", kind: "submission", stance: "SUPPORTS", votes: { n: 2, agree: 1, well: 1 } },
+      { title: "Clean Energy Council on planning and approval timeframes", outlet: "Clean Energy Council", url: "https://www.cleanenergycouncil.org.au/", kind: "submission", stance: "MIXED" },
+      { title: "Australian Conservation Foundation on environment law reform", outlet: "Australian Conservation Foundation", url: "https://www.acf.org.au/", kind: "campaign", stance: "CONTRADICTS", votes: { n: 3, agree: 2, well: 2 } },
+    ],
+    votes: { n: 14, agree: 7, well: 7 },
   },
   {
     key: "A-samuel-slow",
@@ -980,7 +1131,7 @@ const claims: ClaimDef[] = [
         url: "https://epbcactreview.environment.gov.au/",
       },
     ],
-    votes: { n: 29, agree: 26, well: 25 },
+    votes: { n: 8, agree: 7, well: 7 },
   },
   {
     key: "A-delays-hit-renewables",
@@ -1001,7 +1152,7 @@ const claims: ClaimDef[] = [
         url: "https://www.cleanenergycouncil.org.au/",
       },
     ],
-    votes: { n: 23, agree: 19, well: 17 },
+    votes: { n: 6, agree: 5, well: 4 },
   },
   {
     key: "A-act-failed-species",
@@ -1022,7 +1173,7 @@ const claims: ClaimDef[] = [
         url: "https://epbcactreview.environment.gov.au/",
       },
     ],
-    votes: { n: 26, agree: 23, well: 23 },
+    votes: { n: 7, agree: 6, well: 6 },
   },
   {
     key: "A-deemed-approval",
@@ -1037,7 +1188,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "Supporters of deadlines mostly accept the incentive problem and argue it is a reason to design the default carefully, not to abandon deadlines. The disagreement is over whether any default short of approval would actually bind.",
     evidence: [],
-    votes: { n: 27, agree: 20, well: 23 },
+    votes: { n: 8, agree: 6, well: 7 },
   },
   {
     key: "A-default-refusal",
@@ -1052,7 +1203,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "Industry argues default refusal simply moves the delay to a re-referral loop. Environment groups argue that a published-reasons extension would in practice become routine. Both may be right about different regulators.",
     evidence: [],
-    votes: { n: 19, agree: 14, well: 15 },
+    votes: { n: 5, agree: 4, well: 4 },
   },
   {
     key: "A-delay-pre-referral",
@@ -1072,7 +1223,6 @@ const claims: ClaimDef[] = [
         citation: "Productivity Commission, Resources Sector Regulation, study report, 2020 — evidence on pre-referral timelines",
       },
     ],
-    votes: { n: 17, agree: 11, well: 9 },
   },
 
   // ---------------------------------------------------------------------------
@@ -1087,7 +1237,7 @@ const claims: ClaimDef[] = [
     evidenceStrength: "MODERATE",
     tags: [...HOUSING, "TRANSPORT", "LOCAL"],
     context:
-      "Parking minimums date from the mid-twentieth century and were set to prevent new buildings from pushing cars onto the street. They have since been identified as a significant hidden cost of housing, because structured parking is expensive and the requirement applies whether or not residents own cars. Several cities overseas and a small number of Australian councils have removed them in whole or in part.\n\nThis is a local-government question that most people never encounter directly but which shapes what gets built near them.",
+      "Parking minimums date from the mid-twentieth century and were set to prevent new buildings from pushing cars onto the street. They have since been identified as a significant hidden cost of housing ([Wikipedia: parking mandates](https://en.wikipedia.org/wiki/Parking_mandates)), because structured parking is expensive and the requirement applies whether or not residents own cars. Several cities overseas and a small number of Australian councils have removed them in whole or in part.\n\nThis is a local-government question that most people never encounter directly but which shapes what gets built near them.",
     disagreement:
       "Both sides accept that parking is costly and that some residents will own cars regardless. They divide on who should bear the mismatch: the resident who parks on the street, the neighbour who loses a space, or the buyer who pays for a car space they do not use.",
     evidence: [
@@ -1102,7 +1252,12 @@ const claims: ClaimDef[] = [
       { label: "2016", text: "Auckland removes minimums citywide; several US cities follow over the next decade." },
       { label: "Now", text: "Some Australian inner-city councils have removed minimums near transit; most retain them." },
     ],
-    votes: { n: 30, agree: 16, well: 17 },
+    voices: [
+      { title: "Strong Towns on ending parking minimums", outlet: "Strong Towns", url: "https://www.strongtowns.org/", kind: "blog", stance: "SUPPORTS", votes: { n: 4, agree: 3, well: 3 } },
+      { title: "Infrastructure Victoria on parking and land use", outlet: "Infrastructure Victoria", url: "https://www.infrastructurevictoria.com.au/", kind: "report", stance: "MIXED" },
+      { title: "YIMBY Melbourne on parking mandates", outlet: "YIMBY Melbourne", url: "https://www.yimby.melbourne/", kind: "campaign", stance: "SUPPORTS" },
+    ],
+    votes: { n: 12, agree: 6, well: 7 },
   },
   {
     key: "P-cost-per-space",
@@ -1122,7 +1277,7 @@ const claims: ClaimDef[] = [
         citation: "Donald Shoup, The High Cost of Free Parking — construction cost of structured parking",
       },
     ],
-    votes: { n: 26, agree: 22, well: 20 },
+    votes: { n: 7, agree: 6, well: 5 },
   },
   {
     key: "P-auckland",
@@ -1143,7 +1298,7 @@ const claims: ClaimDef[] = [
         url: "https://www.aucklandcouncil.govt.nz/",
       },
     ],
-    votes: { n: 23, agree: 18, well: 19 },
+    votes: { n: 6, agree: 5, well: 5 },
   },
   {
     key: "P-spillover",
@@ -1158,7 +1313,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "Supporters of removal generally concede spillover occurs where street parking is free and unmanaged, and argue the remedy is to manage the street. Opponents regard that as shifting a cost onto existing residents who did not choose it.",
     evidence: [],
-    votes: { n: 27, agree: 16, well: 14 },
+    votes: { n: 8, agree: 5, well: 4 },
   },
   {
     key: "P-manage-street",
@@ -1173,7 +1328,7 @@ const claims: ClaimDef[] = [
     disagreement:
       "The tools exist and work. The disagreement is political: residents who currently park free on the street are being asked to accept permits or charges so that new residents can pay less for housing.",
     evidence: [],
-    votes: { n: 22, agree: 15, well: 17 },
+    votes: { n: 6, agree: 4, well: 5 },
   },
   {
     key: "P-suburbs-lack-transit",
@@ -1194,7 +1349,7 @@ const claims: ClaimDef[] = [
         url: "https://www.abs.gov.au/census",
       },
     ],
-    votes: { n: 21, agree: 17, well: 16 },
+    votes: { n: 6, agree: 5, well: 5 },
   },
   {
     key: "P-market-provides",
@@ -1209,7 +1364,6 @@ const claims: ClaimDef[] = [
     disagreement:
       "Opponents argue developers under-provide because the spillover cost falls on neighbours, not on the building, so the market signal is incomplete. Whether that externality is large is the dispute.",
     evidence: [],
-    votes: { n: 24, agree: 17, well: 20 },
   },
 ];
 
@@ -1220,86 +1374,92 @@ const claims: ClaimDef[] = [
 
 const connections: ConnDef[] = [
   // --- nuclear ---------------------------------------------------------------
-  { from: "E-gencost", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", reason: "If nuclear is the most expensive option, the main argument for lifting the ban loses its footing.", votes: [22, 9, 5] },
-  { from: "E-not-before-2040", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", reason: "The proposal is argued as a way to replace coal; if nothing could run before 2040 that purpose fails.", votes: [19, 10, 4] },
-  { from: "E-coal-closures", to: "R-nuclear", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Coal exits before a reactor could arrive, so nuclear cannot be the coal replacement proponents describe.", votes: [8, 14, 6] },
-  { from: "E-gas-firming", to: "R-nuclear", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Firming through the transition is already planned with gas; this weakens the urgency argument without addressing the ban itself.", votes: [2, 7, 12] },
-  { from: "E-ban-separate", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Separates repeal from construction, which blunts most cost and timing objections without settling them.", votes: [7, 13, 6] },
-  { from: "E-france-ontario", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the technology can run a low-emissions grid; it does not show it can be built here in time or at a competitive cost.", votes: [6, 16, 7] },
-  { from: "E-unsafe", to: "R-nuclear", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Safety is a reason to regulate reactors, which repeal would permit; it does not by itself argue for a legislative ban.", votes: [3, 5, 16] },
+  { from: "E-gencost", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", reason: "If nuclear is the most expensive option, the main argument for lifting the ban loses its footing.", votes: [7, 3, 2] },
+  { from: "E-not-in-time", to: "R-nuclear", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "The case for repeal is made in terms of this decade's problems; if nuclear cannot touch them, the case has to be remade on other grounds.", votes: [6, 3, 1] },
+  { from: "E-distraction", to: "R-nuclear", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Counts against pursuing repeal now even for those who accept it in principle.", votes: [1, 4, 2] },
+  { from: "E-smr-ban", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "A positive reason for repeal that does not depend on building a large plant soon.", votes: [2, 4, 1] },
+  { from: "E-ban-separate", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Separates repeal from construction, which blunts most cost and timing objections without settling them.", votes: [2, 4, 2] },
+  { from: "E-france-ontario", to: "R-nuclear", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the technology can run a low-emissions grid; it does not show it can be built here in time or at a competitive cost.", votes: [2, 5, 2] },
+  { from: "E-unsafe", to: "R-nuclear", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Safety is a reason to regulate reactors, which repeal would permit; it does not by itself argue for a legislative ban.", votes: [1, 2, 5] },
 
   // --- the nuclear crux has its own arguments --------------------------------
-  { from: "E-no-regulator", to: "E-not-before-2040", relation: "SUPPORTS", strength: "RELEVANT", reason: "Each missing institution adds years to the sequence before construction can start.", votes: [8, 12, 3] },
-  { from: "E-uae-twelve-years", to: "E-not-before-2040", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Shows a newcomer can build in about twelve years; from 2026 that lands in the late 2030s, so it narrows the claim without defeating it.", votes: [5, 14, 6] },
-  { from: "A-samuel-slow", to: "E-not-before-2040", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "A reactor would pass through the same slow approval process as every other major project, adding to the timeline.", votes: [1, 6, 11] },
+  { from: "E-not-before-2040", to: "E-not-in-time", relation: "SUPPORTS", strength: "DECISIVE", reason: "The timing claim rests on this estimate.", votes: [5, 2, 0] },
+  { from: "E-coal-closures", to: "E-not-in-time", relation: "SUPPORTS", strength: "RELEVANT", reason: "Sets the deadline nuclear would miss.", votes: [2, 4, 1] },
+  { from: "E-gas-firming", to: "E-not-in-time", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the firming problem is being solved by other means in the meantime.", votes: [1, 3, 2] },
+  { from: "E-smr-none-built", to: "E-smr-ban", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The option being kept open has not yet been shown to exist commercially.", votes: [2, 3, 0] },
+  { from: "E-no-regulator", to: "E-not-before-2040", relation: "SUPPORTS", strength: "RELEVANT", reason: "Each missing institution adds years to the sequence before construction can start.", votes: [2, 4, 1] },
+  { from: "E-uae-twelve-years", to: "E-not-before-2040", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Shows a newcomer can build in about twelve years; from 2026 that lands in the late 2030s, so it narrows the claim without defeating it.", votes: [2, 4, 2] },
+  { from: "A-samuel-slow", to: "E-not-before-2040", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "A reactor would pass through the same slow approval process as every other major project, adding to the timeline.", votes: [0, 2, 3] },
 
   // --- gas reservation -------------------------------------------------------
-  { from: "E-wa-domgas", to: "R-gas", relation: "SUPPORTS", strength: "DECISIVE", reason: "The one Australian precedent for the policy coincides with the outcome the policy is meant to produce.", votes: [15, 9, 3] },
-  { from: "E-east-prices", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "Establishes the problem the proposal responds to; it does not by itself show reservation is the fix.", votes: [7, 13, 4] },
-  { from: "E-gas-firming", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "If gas remains necessary for firming, securing domestic supply has a system-reliability rationale beyond price.", votes: [6, 11, 4] },
-  { from: "E-coal-closures", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "Coal's exit increases reliance on gas for firming during the 2030s, when a shortfall would bite hardest.", votes: [5, 10, 6] },
-  { from: "E-retrospective", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Counts against any design that touches existing contracts; a prospective policy avoids most of it.", votes: [6, 12, 4] },
-  { from: "E-adgsm", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If a supply lever already exists, reservation must show what it adds beyond price suppression.", votes: [5, 11, 4] },
-  { from: "E-market-working", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Attacks the premise that lower domestic gas prices are desirable at all during a transition away from gas.", votes: [5, 10, 7] },
-  { from: "E-gencost", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Cheaper renewables reduce long-run gas demand, which weakens the case for securing supply, but only slowly.", votes: [1, 6, 13] },
+  { from: "E-reservation-lowers-prices", to: "R-gas", relation: "SUPPORTS", strength: "DECISIVE", crux: true, reason: "The proposal exists to lower prices; if it would not, little else about it matters.", votes: [5, 2, 0] },
+  { from: "E-wa-domgas", to: "E-reservation-lowers-prices", relation: "SUPPORTS", strength: "DECISIVE", reason: "The one Australian precedent for the policy coincides with the outcome the policy is meant to produce.", votes: [4, 3, 1] },
+  { from: "E-wa-cheap-gas", to: "E-reservation-lowers-prices", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If geology explains the precedent, the precedent proves less than it seems.", votes: [1, 3, 1] },
+  { from: "E-east-prices", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "Establishes the problem the proposal responds to; it does not by itself show reservation is the fix.", votes: [2, 4, 1] },
+  { from: "E-gas-firming", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "If gas remains necessary for firming, securing domestic supply has a system-reliability rationale beyond price.", votes: [2, 3, 1] },
+  { from: "E-coal-closures", to: "R-gas", relation: "SUPPORTS", strength: "RELEVANT", reason: "Coal's exit increases reliance on gas for firming during the 2030s, when a shortfall would bite hardest.", votes: [2, 3, 2] },
+  { from: "E-retrospective", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Counts against any design that touches existing contracts; a prospective policy avoids most of it.", votes: [2, 4, 1] },
+  { from: "E-adgsm", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If a supply lever already exists, reservation must show what it adds beyond price suppression.", votes: [2, 3, 1] },
+  { from: "E-market-working", to: "R-gas", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Attacks the premise that lower domestic gas prices are desirable at all during a transition away from gas.", votes: [2, 3, 2] },
+  { from: "E-gencost", to: "R-gas", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Cheaper renewables reduce long-run gas demand, which weakens the case for securing supply, but only slowly.", votes: [0, 2, 4] },
 
   // --- the sovereign-risk objection has a rebuttal ---------------------------
-  { from: "E-wa-prospective", to: "E-retrospective", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The precedent the proposal relies on did not reopen contracts, so a prospective design is available.", votes: [6, 10, 3] },
+  { from: "E-wa-prospective", to: "E-retrospective", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The precedent the proposal relies on did not reopen contracts, so a prospective design is available.", votes: [2, 3, 1] },
 
   // --- negative gearing ------------------------------------------------------
-  { from: "H-investor-loans-established", to: "R-negative-gearing", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal's core premise is that the concession is not producing new supply; this is the evidence for it.", votes: [17, 10, 4] },
-  { from: "H-ng-materially-affordable", to: "R-negative-gearing", relation: "SUPPORTS", strength: "RELEVANT", reason: "The outcome most proponents want from the proposal; it is argued separately because it may be false while the proposal is still justified.", votes: [9, 14, 6] },
-  { from: "H-second-home-value", to: "R-negative-gearing", relation: "SUPPORTS", strength: "RELEVANT", reason: "A fairness ground that survives even if the price effect is negligible.", votes: [8, 12, 8] },
-  { from: "H-rents-rise", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "DECISIVE", reason: "If true, the proposal harms the renters it is meant to help, which would defeat it.", votes: [14, 11, 7] },
-  { from: "H-supply-lagged", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If supply is the dominant driver, the concession is a second-order factor and the proposal aims at the wrong target.", votes: [12, 11, 5] },
-  { from: "H-middle-income", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Who benefits bears on fairness, not on whether the concession adds supply or raises prices.", votes: [3, 9, 14] },
-  { from: "H-foreign-buyers", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Argues the price problem lies elsewhere; even if true it does not bear on what the concession does.", votes: [9, 10, 11] },
+  { from: "H-investor-loans-established", to: "R-negative-gearing", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal's core premise is that the concession is not producing new supply; this is the evidence for it.", votes: [5, 3, 1] },
+  { from: "H-ng-materially-affordable", to: "R-negative-gearing", relation: "SUPPORTS", strength: "RELEVANT", reason: "The outcome most proponents want from the proposal; it is argued separately because it may be false while the proposal is still justified.", votes: [3, 4, 2] },
+  { from: "H-second-home-value", to: "R-negative-gearing", relation: "SUPPORTS", strength: "RELEVANT", reason: "A fairness ground that survives even if the price effect is negligible.", votes: [2, 4, 2] },
+  { from: "H-rents-rise", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If true, the proposal harms the renters it is meant to help, which would defeat it.", votes: [4, 3, 2] },
+  { from: "H-supply-lagged", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If supply is the dominant driver, the concession is a second-order factor and the proposal aims at the wrong target.", votes: [4, 3, 2] },
+  { from: "H-middle-income", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Who benefits bears on fairness, not on whether the concession adds supply or raises prices.", votes: [1, 3, 4] },
+  { from: "H-foreign-buyers", to: "R-negative-gearing", relation: "CONTRADICTS", strength: "TANGENTIAL", reason: "Argues the price problem lies elsewhere; even if true it does not bear on what the concession does.", votes: [3, 3, 3] },
 
   // --- the affordability claim has evidence against it -------------------------
-  { from: "H-grattan-two-percent", to: "H-ng-materially-affordable", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A 2 per cent effect is real but hard to call material against a decade of double-digit growth.", votes: [8, 13, 3] },
+  { from: "H-grattan-two-percent", to: "H-ng-materially-affordable", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A 2 per cent effect is real but hard to call material against a decade of double-digit growth.", votes: [2, 4, 1] },
 
   // --- the rent objection has arguments both ways ----------------------------
-  { from: "H-quarantine-1985", to: "H-rents-rise", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The only natural experiment shows rent rises tracked local vacancy, not the tax change.", votes: [9, 10, 4] },
-  { from: "H-private-landlords", to: "H-rents-rise", relation: "SUPPORTS", strength: "RELEVANT", reason: "If individuals supply most rentals, a change to their incentives acts on most of the stock.", votes: [5, 12, 4] },
+  { from: "H-quarantine-1985", to: "H-rents-rise", relation: "CONTRADICTS", strength: "RELEVANT", reason: "The only natural experiment shows rent rises tracked local vacancy, not the tax change.", votes: [3, 3, 1] },
+  { from: "H-private-landlords", to: "H-rents-rise", relation: "SUPPORTS", strength: "RELEVANT", reason: "If individuals supply most rentals, a change to their incentives acts on most of the stock.", votes: [2, 4, 1] },
 
   // --- migration -------------------------------------------------------------
-  { from: "H-supply-lagged", to: "R-migration", relation: "SUPPORTS", strength: "DECISIVE", reason: "Housing pressure is the central argument for a cap; without a supply shortfall the case largely dissolves.", votes: [20, 9, 3] },
-  { from: "M-nom-double", to: "R-migration", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the recent intake was far above the proposed cap, which is the problem the proposal names.", votes: [8, 15, 4] },
-  { from: "M-entitled-to-decide", to: "R-migration", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes that a cap is legitimate, not that this cap is right; it does little work for the specific number.", votes: [6, 8, 17] },
-  { from: "M-take-jobs", to: "R-migration", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Widely made, but it does not engage with how labour markets actually absorb migrants.", votes: [4, 6, 15] },
-  { from: "M-catch-up", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the record year corrects itself, a permanent cap is a response to a temporary condition.", votes: [9, 13, 5] },
-  { from: "M-cap-needs-student-cuts", to: "R-migration", relation: "CONTRADICTS", strength: "DECISIVE", reason: "Names the cost of the proposal; whether it is acceptable is what the debate actually turns on.", votes: [13, 9, 3] },
-  { from: "M-shortages", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A cap that reached skilled migration would worsen shortages; whether it need reach them is argued below.", votes: [6, 14, 6] },
-  { from: "M-intl-ed-export", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Quantifies what a student-heavy cut would put at risk.", votes: [7, 12, 5] },
+  { from: "H-supply-lagged", to: "R-migration", relation: "SUPPORTS", strength: "DECISIVE", reason: "Housing pressure is the central argument for a cap; without a supply shortfall the case largely dissolves.", votes: [6, 3, 1] },
+  { from: "M-nom-double", to: "R-migration", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the recent intake was far above the proposed cap, which is the problem the proposal names.", votes: [2, 4, 1] },
+  { from: "M-entitled-to-decide", to: "R-migration", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Establishes that a cap is legitimate, not that this cap is right; it does little work for the specific number.", votes: [2, 2, 5] },
+  { from: "M-take-jobs", to: "R-migration", relation: "SUPPORTS", strength: "TANGENTIAL", reason: "Widely made, but it does not engage with how labour markets actually absorb migrants.", votes: [1, 2, 4] },
+  { from: "M-catch-up", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If the record year corrects itself, a permanent cap is a response to a temporary condition.", votes: [3, 4, 2] },
+  { from: "M-cap-needs-student-cuts", to: "R-migration", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "Names the cost of the proposal; whether it is acceptable is what the debate actually turns on.", votes: [4, 3, 1] },
+  { from: "M-shortages", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A cap that reached skilled migration would worsen shortages; whether it need reach them is argued below.", votes: [2, 4, 2] },
+  { from: "M-intl-ed-export", to: "R-migration", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Quantifies what a student-heavy cut would put at risk.", votes: [2, 4, 2] },
 
   // --- the migration crux has its own argument -------------------------------
-  { from: "M-intl-ed-export", to: "M-cap-needs-student-cuts", relation: "SUPPORTS", strength: "DECISIVE", reason: "Shows why cutting student numbers is a cost and not a rounding error.", votes: [14, 8, 3] },
-  { from: "M-skilled-minority", to: "M-shortages", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A cap could be met without touching skilled visas, so shortages need not follow from a cap.", votes: [7, 11, 4] },
+  { from: "M-intl-ed-export", to: "M-cap-needs-student-cuts", relation: "SUPPORTS", strength: "DECISIVE", reason: "Shows why cutting student numbers is a cost and not a rounding error.", votes: [4, 2, 1] },
+  { from: "M-skilled-minority", to: "M-shortages", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A cap could be met without touching skilled visas, so shortages need not follow from a cap.", votes: [2, 3, 1] },
 
   // --- housing supply has its own causes ---------------------------------------
-  { from: "A-samuel-slow", to: "H-supply-lagged", relation: "SUPPORTS", strength: "RELEVANT", reason: "Approval delay is one of several constraints on how fast homes get built.", votes: [4, 12, 7] },
-  { from: "M-nom-double", to: "H-supply-lagged", relation: "SUPPORTS", strength: "RELEVANT", reason: "The record intake increased the demand side of the shortfall in a single year.", votes: [8, 11, 5] },
+  { from: "A-samuel-slow", to: "H-supply-lagged", relation: "SUPPORTS", strength: "RELEVANT", reason: "Approval delay is one of several constraints on how fast homes get built.", votes: [1, 4, 2] },
+  { from: "M-nom-double", to: "H-supply-lagged", relation: "SUPPORTS", strength: "RELEVANT", reason: "The record intake increased the demand side of the shortfall in a single year.", votes: [2, 3, 2] },
 
   // --- approvals -------------------------------------------------------------
-  { from: "A-samuel-slow", to: "R-approvals", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal exists to fix exactly the problem the review documented.", votes: [16, 9, 4] },
-  { from: "A-delays-hit-renewables", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "Broadens who bears the cost of delay, which strengthens the case without changing its logic.", votes: [7, 12, 4] },
-  { from: "A-act-failed-species", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Suggests speed is not the Act's only failure, and that fixing speed alone may worsen the other.", votes: [8, 13, 5] },
-  { from: "A-deemed-approval", to: "R-approvals", relation: "CONTRADICTS", strength: "DECISIVE", reason: "If the only workable default is approval, the proposal gutted the assessment it was meant to speed up.", votes: [13, 10, 4] },
-  { from: "A-delay-pre-referral", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If most delay is outside the clock, the proposal addresses a minority of the problem.", votes: [4, 9, 4] },
+  { from: "A-samuel-slow", to: "R-approvals", relation: "SUPPORTS", strength: "DECISIVE", reason: "The proposal exists to fix exactly the problem the review documented.", votes: [5, 3, 1] },
+  { from: "A-delays-hit-renewables", to: "R-approvals", relation: "SUPPORTS", strength: "RELEVANT", reason: "Broadens who bears the cost of delay, which strengthens the case without changing its logic.", votes: [2, 4, 1] },
+  { from: "A-act-failed-species", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Suggests speed is not the Act's only failure, and that fixing speed alone may worsen the other.", votes: [2, 4, 2] },
+  { from: "A-deemed-approval", to: "R-approvals", relation: "CONTRADICTS", strength: "DECISIVE", crux: true, reason: "If the only workable default is approval, the proposal gutted the assessment it was meant to speed up.", votes: [4, 3, 1] },
+  { from: "A-delay-pre-referral", to: "R-approvals", relation: "CONTRADICTS", strength: "RELEVANT", reason: "If most delay is outside the clock, the proposal addresses a minority of the problem.", votes: [1, 3, 1] },
 
   // --- the approvals crux has a rebuttal -------------------------------------
-  { from: "A-default-refusal", to: "A-deemed-approval", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Shows the incentive problem attaches to one default, not to deadlines as such.", votes: [6, 10, 3] },
+  { from: "A-default-refusal", to: "A-deemed-approval", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Shows the incentive problem attaches to one default, not to deadlines as such.", votes: [2, 3, 1] },
 
   // --- parking ---------------------------------------------------------------
-  { from: "P-cost-per-space", to: "R-parking", relation: "SUPPORTS", strength: "DECISIVE", reason: "The affordability case rests on parking being expensive; this is the evidence that it is.", votes: [14, 9, 3] },
-  { from: "P-auckland", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the policy produces the intended change in provision in a comparable city.", votes: [7, 12, 4] },
-  { from: "H-supply-lagged", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Anything that lowers the cost of building homes bears on the shortfall, though parking is one factor among many.", votes: [5, 13, 8] },
-  { from: "P-market-provides", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Answers the fear that removal means no parking anywhere.", votes: [6, 12, 6] },
-  { from: "P-spillover", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", reason: "A genuine cost of the proposal, borne by people who did not choose it.", votes: [8, 13, 6] },
-  { from: "P-suburbs-lack-transit", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Limits where the proposal's premise holds; it argues for a narrower policy rather than none.", votes: [5, 12, 4] },
+  { from: "P-cost-per-space", to: "R-parking", relation: "SUPPORTS", strength: "DECISIVE", reason: "The affordability case rests on parking being expensive; this is the evidence that it is.", votes: [4, 3, 1] },
+  { from: "P-auckland", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Shows the policy produces the intended change in provision in a comparable city.", votes: [2, 4, 1] },
+  { from: "H-supply-lagged", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Anything that lowers the cost of building homes bears on the shortfall, though parking is one factor among many.", votes: [2, 4, 2] },
+  { from: "P-market-provides", to: "R-parking", relation: "SUPPORTS", strength: "RELEVANT", reason: "Answers the fear that removal means no parking anywhere.", votes: [2, 4, 2] },
+  { from: "P-spillover", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", crux: true, reason: "A genuine cost of the proposal, borne by people who did not choose it.", votes: [2, 4, 2] },
+  { from: "P-suburbs-lack-transit", to: "R-parking", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Limits where the proposal's premise holds; it argues for a narrower policy rather than none.", votes: [2, 4, 1] },
 
   // --- the spillover objection has a rebuttal --------------------------------
-  { from: "P-manage-street", to: "P-spillover", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Spillover is real only where the street is unmanaged, and managing it is within the same council's power.", votes: [7, 11, 4] },
+  { from: "P-manage-street", to: "P-spillover", relation: "CONTRADICTS", strength: "RELEVANT", reason: "Spillover is real only where the street is unmanaged, and managing it is within the same council's power.", votes: [2, 3, 1] },
 ];
 
 // =============================================================================
@@ -1331,6 +1491,14 @@ function validate() {
     if (c.votes && (c.votes.agree > c.votes.n || c.votes.well > c.votes.n)) {
       problems.push(`${c.key}: demo vote counts exceed total`);
     }
+    for (const v of c.voices ?? []) {
+      if (!/^https?:\/\//.test(v.url)) problems.push(`${c.key}: voice "${v.title}" has no http(s) URL`);
+      if (v.votes && (v.votes.agree > v.votes.n || v.votes.well > v.votes.n)) problems.push(`${c.key}: voice vote counts exceed total`);
+    }
+  }
+  for (const root of claims.filter((c) => c.key.startsWith("R-"))) {
+    const cruxes = connections.filter((c) => c.to === root.key && c.crux).length;
+    if (cruxes < 1 || cruxes > 2) problems.push(`${root.key}: expected 1–2 crux connections, found ${cruxes}`);
   }
 
   const pairs = new Set<string>();
@@ -1410,9 +1578,12 @@ async function main() {
 
   console.log("Clearing existing data...");
   await prisma.connectionStrengthVote.deleteMany();
+  await prisma.connectionChallenge.deleteMany();
   await prisma.connectionRevision.deleteMany();
   await prisma.connection.deleteMany();
   await prisma.claimVote.deleteMany();
+  await prisma.voiceVote.deleteMany();
+  await prisma.voice.deleteMany();
   await prisma.claimRevert.deleteMany();
   await prisma.claimFlag.deleteMany();
   await prisma.claimRevision.deleteMany();
@@ -1443,6 +1614,17 @@ async function main() {
         contestedUntil: contestedAt ? new Date(contestedAt.getTime() + 7 * 24 * 3600_000) : null,
         timeline: c.timeline ? { create: c.timeline.map((t, i) => ({ label: t.label, text: t.text, sortOrder: i })) } : undefined,
         evidenceItems: { create: c.evidence },
+        voices: {
+          create: (c.voices ?? []).map((v, i) => ({
+            title: v.title,
+            outlet: v.outlet,
+            author: v.author ?? null,
+            url: v.url,
+            kind: v.kind,
+            stance: v.stance,
+            votes: { create: demoClaimVotes(`${c.key}-voice-${i}`, v.votes) },
+          })),
+        },
         votes: { create: demoClaimVotes(c.key, c.votes) },
         revisions: { create: { ...AUTHOR, summary: "Initial claim", snapshot: {}, pending: false } },
         reverts: c.contested
@@ -1467,13 +1649,15 @@ async function main() {
         relation: conn.relation,
         statedStrength: conn.strength,
         statedReason: conn.reason,
+        crux: conn.crux ?? false,
         strengthVotes: { create: demoStrengthVotes(`${conn.from}-${conn.to}`, conn.votes) },
         revisions: { create: { ...AUTHOR, summary: "Initial connection", snapshot: {}, pending: false } },
       },
     });
   }
 
-  console.log(`Done. ${claims.length} claims (${s.roots} debates), ${connections.length} connections, ${s.reused.length} claims used in more than one place.`);
+  const voiceCount = claims.reduce((n, c) => n + (c.voices?.length ?? 0), 0);
+  console.log(`Done. ${claims.length} claims (${s.roots} debates), ${connections.length} connections, ${s.reused.length} claims used in more than one place, ${voiceCount} voices.`);
 }
 
 main()

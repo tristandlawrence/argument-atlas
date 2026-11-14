@@ -5,9 +5,10 @@ import { Term } from "./Term";
 import { ScoreBar } from "./ScoreBar";
 import { TwoAxisPlot } from "./TwoAxisPlot";
 import { TypeBadge, EvidenceBadge } from "./ClassificationBadge";
-import { voteStrength } from "@/lib/api";
+import { challengeConnection, voteStrength } from "@/lib/api";
+import { Markdown } from "./Markdown";
 import { AGREE_TOOLTIP, WELL_CONSTRUCTED_TOOLTIP } from "@/lib/copy";
-import type { ConnectionRow } from "@/lib/types";
+import type { ChallengeKind, ConnectionRow } from "@/lib/types";
 import styles from "./HoverCard.module.css";
 
 export function HoverCard({
@@ -26,11 +27,16 @@ export function HoverCard({
     onMutated();
   }
 
+  async function challenge(kind: ChallengeKind) {
+    await challengeConnection(row.connectionId, kind);
+    onMutated();
+  }
+
   return (
     <div className={inline ? styles.cardInline : styles.card}>
       <div className={styles.bandOne}>
         <div className={styles.bandLabel}>THE CLAIM ITSELF</div>
-        <p className={styles.body}>{claim.body}</p>
+        <Markdown source={claim.body} className={styles.body} />
         <div className={styles.badgeRow}>
           <TypeBadge type={claim.type} />
           <EvidenceBadge evidenceStrength={claim.evidenceStrength} />
@@ -73,7 +79,7 @@ export function HoverCard({
           </div>
         )}
         <Link href={`/claim/${claim.slug}`} className={styles.readMore}>
-          Read more and rate &ldquo;{claim.title}&rdquo; on its own page →
+          Read and rate this claim on its own page →
         </Link>
       </div>
 
@@ -85,7 +91,10 @@ export function HoverCard({
           >
             {row.relationSentence}
           </span>
-          <span className={styles.howStrongly}>HOW STRONGLY?</span>
+          <span className={styles.howStrongly}>
+            {row.crux && <span className={styles.cruxTag}>CRUX</span>}
+            RATE HOW IT RELATES
+          </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           {row.strengthDistribution.map((d) => (
@@ -112,6 +121,15 @@ export function HoverCard({
               </button>
             </div>
           ))}
+        </div>
+        <div className={styles.challengeRow}>
+          <span className={styles.challengeLabel}>Or say it is misplaced:</span>
+          <button type="button" className={styles.challengeButton} onClick={() => challenge("NOT_RELEVANT")}>
+            Doesn&rsquo;t belong here{row.challenges.notRelevant > 0 ? ` · ${row.challenges.notRelevant}` : ""}
+          </button>
+          <button type="button" className={styles.challengeButton} onClick={() => challenge("WRONG_DIRECTION")}>
+            Points the other way{row.challenges.wrongDirection > 0 ? ` · ${row.challenges.wrongDirection}` : ""}
+          </button>
         </div>
       </div>
     </div>

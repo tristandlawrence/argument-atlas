@@ -1,4 +1,4 @@
-import type { ClaimDetail, ClaimListItem, ConnectionStrength } from "./types";
+import type { ChallengeKind, ClaimDetail, ClaimListItem, ConnectionStrength, VoiceStance } from "./types";
 import { authClient } from "./authClient";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api";
@@ -119,6 +119,44 @@ export async function patchConnection(
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...fields, authorName, summary }),
+    })
+  );
+}
+
+export async function challengeConnection(connectionId: string, kind: ChallengeKind) {
+  return json(
+    await fetch(`${API_URL}/connections/${connectionId}/challenge`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-voter-id": await getVoterId() },
+      body: JSON.stringify({ kind }),
+    })
+  );
+}
+
+export async function addVoice(
+  claimId: string,
+  voice: { title: string; outlet: string; author?: string; url: string; kind: string; stance: VoiceStance }
+) {
+  return json(
+    await fetch(`${API_URL}/claims/${claimId}/voices`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(voice),
+    })
+  );
+}
+
+export async function removeVoice(claimId: string, voiceId: string) {
+  const res = await fetch(`${API_URL}/claims/${claimId}/voices/${voiceId}`, { method: "DELETE" });
+  if (!res.ok && res.status !== 204) throw new Error("Failed to remove voice");
+}
+
+export async function voteVoice(voiceId: string, agree: boolean, wellConstructed: boolean) {
+  return json(
+    await fetch(`${API_URL}/voices/${voiceId}/vote`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "x-voter-id": await getVoterId() },
+      body: JSON.stringify({ agree, wellConstructed }),
     })
   );
 }

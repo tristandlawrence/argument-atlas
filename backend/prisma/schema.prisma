@@ -70,6 +70,7 @@ model Claim {
   votes         ClaimVote[]
   reverts       ClaimRevert[]
   flags         ClaimFlag[]
+  voices        Voice[]
 
   // Connections where this claim is the child — "where this claim is used" (upward)
   usedIn   Connection[] @relation("FromClaim")
@@ -88,12 +89,16 @@ model Connection {
   relation       ConnectionRelation
   statedStrength ConnectionStrength
   statedReason   String?
+  // Marks the connection the debate currently turns on. Set by editors; at
+  // most a few per parent. See requirements.md → Debate lifecycle.
+  crux           Boolean            @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   strengthVotes ConnectionStrengthVote[]
   revisions     ConnectionRevision[]
+  challenges    ConnectionChallenge[]
 
   @@unique([fromClaimId, toClaimId])
   @@index([toClaimId])
@@ -110,6 +115,66 @@ model ConnectionStrengthVote {
   updatedAt    DateTime           @updatedAt
 
   @@unique([connectionId, voterId])
+}
+
+// A vote that a connection does not belong where it is: either the child
+// does no work for the parent at all, or it points the other way. Kept
+// separate from the strength scale so the decisive/relevant/tangential
+// distribution stays a distribution.
+enum ChallengeKind {
+  NOT_RELEVANT
+  WRONG_DIRECTION
+}
+
+model ConnectionChallenge {
+  id           String        @id @default(cuid())
+  connectionId String
+  connection   Connection    @relation(fields: [connectionId], references: [id])
+  voterId      String
+  kind         ChallengeKind
+  createdAt    DateTime      @default(now())
+
+  @@unique([connectionId, voterId])
+}
+
+// A voice is a public piece — op-ed, explainer, speech, submission, blog —
+// that makes the argument for or against a claim. Voices are not evidence:
+// they never affect the evidence badge. They are rated on the same two
+// signals as claims so they can be plotted on the claim's own chart.
+enum VoiceStance {
+  SUPPORTS
+  CONTRADICTS
+  MIXED
+}
+
+model Voice {
+  id        String      @id @default(cuid())
+  claimId   String
+  claim     Claim       @relation(fields: [claimId], references: [id])
+  title     String
+  outlet    String
+  author    String?
+  url       String
+  kind      String
+  stance    VoiceStance
+  createdAt DateTime    @default(now())
+
+  votes VoiceVote[]
+
+  @@index([claimId])
+}
+
+model VoiceVote {
+  id              String   @id @default(cuid())
+  voiceId         String
+  voice           Voice    @relation(fields: [voiceId], references: [id])
+  voterId         String
+  agree           Boolean
+  wellConstructed Boolean
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([voiceId, voterId])
 }
 
 // Two independent signals, per delta §6. Modelled as booleans (a deliberate

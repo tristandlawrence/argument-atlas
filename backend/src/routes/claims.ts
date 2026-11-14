@@ -6,7 +6,9 @@ import { expireIfStale, checkAutoContest, enterContested } from "../lib/conteste
 import { claimVoteDemographicBreakdown, isDemographicDimension } from "../lib/demographics.ts";
 import {
   ageLabel,
+  challengeCounts,
   claimSummary,
+  voiceSummary,
   strengthDefinition,
   strengthDistribution,
   strengthMark,
@@ -20,16 +22,19 @@ const DETAIL_INCLUDE = {
   evidenceItems: { orderBy: { createdAt: "asc" as const } },
   votes: true,
   revisions: { orderBy: { createdAt: "desc" as const } },
+  voices: { include: { votes: true }, orderBy: { createdAt: "asc" as const } },
   usedIn: {
     include: {
       toClaim: { include: { votes: true, arguedBy: { include: { fromClaim: true } } } },
       strengthVotes: true,
+      challenges: true,
     },
   },
   arguedBy: {
     include: {
       fromClaim: { include: { votes: true, arguedBy: { include: { fromClaim: true } } } },
       strengthVotes: true,
+      challenges: true,
     },
   },
 };
@@ -47,7 +52,9 @@ function buildUpwardRow(
     id: string;
     relation: string;
     statedStrength: string;
+    crux: boolean;
     strengthVotes: { value: string }[];
+    challenges: { kind: string }[];
     toClaim: Parameters<typeof claimSummary>[0] & { tags: string[]; votes: { id: string; agree: boolean; wellConstructed: boolean }[] };
   },
   thisClaim: { tags: string[] }
@@ -59,6 +66,8 @@ function buildUpwardRow(
     connectionId: conn.id,
     relation: conn.relation,
     statedStrength: conn.statedStrength,
+    crux: conn.crux,
+    challenges: challengeCounts(conn.challenges),
     ...strengthMark(conn.statedStrength),
     otherClaim: { id: parent.id, slug: parent.slug, title: parent.title },
     crossDebate,
@@ -75,7 +84,9 @@ function buildDownwardRow(conn: {
   id: string;
   relation: string;
   statedStrength: string;
+  crux: boolean;
   strengthVotes: { value: string }[];
+  challenges: { kind: string }[];
   fromClaim: Parameters<typeof claimSummary>[0];
 }, thisClaim: { title: string }) {
   const child = conn.fromClaim;
@@ -84,6 +95,8 @@ function buildDownwardRow(conn: {
     connectionId: conn.id,
     relation: conn.relation,
     statedStrength: conn.statedStrength,
+    crux: conn.crux,
+    challenges: challengeCounts(conn.challenges),
     ...strengthMark(conn.statedStrength),
     otherClaim: { id: child.id, slug: child.slug, title: child.title },
     claimItself: claimSummary(child),
@@ -144,6 +157,7 @@ claimsRouter.get("/claims/:idOrSlug", async (req, res) => {
       crossDebateUsedInCount: usedIn.filter((r) => r.crossDebate).length,
     },
     votes: stats,
+    voices: fresh.voices.map(voiceSummary),
     usedIn,
     supports,
     contradicts,
@@ -281,6 +295,40 @@ claimsRouter.post("/claims/:id/contest", async (req, res) => {
   if (!reason) return res.status(400).json({ error: "reason is required" });
   await enterContested(req.params.id, reason);
   res.json({ ok: true });
+});
+
+// --- voices: public pieces that make the argument, rated like claims ----------
+
+const VOICE_STANCES = ["SUPPORTS", "CONTRADICTS", "MIXED"];
+
+claimsRouter.post("/claims/:id/voices", async (req, res) => {
+  const { title, outlet, author, url, kind, stance } = req.body;
+  if (!title || !outlet || !url || !stance) {
+    return res.status(400).json({ error: "title, outlet, url and stance are required" });
+  }
+  if (!VOICE_STANCES.includes(stance)) return res.status(400).json({ error: "stance must be SUPPORTS, CONTRADICTS or MIXED" });
+  if (!/^https?:\/\//.test(url)) return res.status(400).json({ error: "url must start with http:// or https://" });
+  const voice = await prisma.voice.create({
+    data: { claimId: req.params.id, title, outlet, author: author || null, url, kind: kind || "article", stance },
+  });
+  res.status(201).json(voice);
+});
+
+claimsRouter.delete("/claims/:id/voices/:voiceId", async (req, res) => {
+  await prisma.voiceVote.deleteMany({ where: { voiceId: req.params.voiceId } });
+  await prisma.voice.delete({ where: { id: req.params.voiceId } });
+  res.status(204).end();
+});
+
+claimsRouter.post("/voices/:id/vote", async (req, res) => {
+  const voterId = requireVoterId(req);
+  const { agree, wellConstructed } = req.body;
+  const vote = await prisma.voiceVote.upsert({
+    where: { voiceId_voterId: { voiceId: req.params.id, voterId } },
+    create: { voiceId: req.params.id, voterId, agree: !!agree, wellConstructed: !!wellConstructed },
+    update: { agree: !!agree, wellConstructed: !!wellConstructed },
+  });
+  res.json(vote);
 });
 
 claimsRouter.post("/claims/:id/evidence", async (req, res) => {

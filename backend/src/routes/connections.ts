@@ -67,3 +67,26 @@ connectionsRouter.post("/connections/:id/strength-vote", async (req, res) => {
   });
   res.json(vote);
 });
+
+// A challenge says the connection does not belong as placed: the child does
+// no work for the parent (NOT_RELEVANT) or points the other way
+// (WRONG_DIRECTION). One per voter per connection; posting again replaces it.
+connectionsRouter.post("/connections/:id/challenge", async (req, res) => {
+  const voterId = requireVoterId(req);
+  const { kind } = req.body;
+  if (kind !== "NOT_RELEVANT" && kind !== "WRONG_DIRECTION") {
+    return res.status(400).json({ error: "kind must be NOT_RELEVANT or WRONG_DIRECTION" });
+  }
+  const challenge = await prisma.connectionChallenge.upsert({
+    where: { connectionId_voterId: { connectionId: req.params.id, voterId } },
+    create: { connectionId: req.params.id, voterId, kind },
+    update: { kind },
+  });
+  res.json(challenge);
+});
+
+connectionsRouter.delete("/connections/:id/challenge", async (req, res) => {
+  const voterId = requireVoterId(req);
+  await prisma.connectionChallenge.deleteMany({ where: { connectionId: req.params.id, voterId } });
+  res.status(204).end();
+});

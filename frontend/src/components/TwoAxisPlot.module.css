@@ -134,3 +134,84 @@
   color: var(--text-2);
   margin-top: 6px;
 }
+
+/* Voices: public pieces rated on the same two axes, drawn as rings so they
+   read as a different population from the vote dots. */
+.voiceRing {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 2px solid var(--accent);
+  background: var(--surface);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.voiceRing[data-stance="SUPPORTS"] {
+  border-color: var(--supports);
+}
+
+.voiceRing[data-stance="CONTRADICTS"] {
+  border-color: var(--contradicts);
+}
+
+.voiceRing:hover,
+.voiceRing:focus-visible {
+  z-index: 3;
+  outline: none;
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--text);
+}
+
+.voiceTip {
+  display: none;
+  position: absolute;
+  width: 190px;
+  padding: 7px 9px;
+  background: var(--overlay-ink);
+  color: var(--overlay-text);
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  line-height: 1.4;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.voiceRing:hover .voiceTip,
+.voiceRing:focus-visible .voiceTip {
+  display: block;
+}
+
+.voiceTipBelow {
+  top: 14px;
+}
+
+.voiceTipAbove {
+  bottom: 14px;
+}
+
+.voiceTipRight {
+  left: -6px;
+}
+
+.voiceTipLeft {
+  right: -6px;
+}
+
+.voiceTipTitle {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.voiceTipMeta {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.03em;
+  opacity: 0.8;
+}
+
+.footerNote {
+  color: var(--text-3);
+}

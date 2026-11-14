@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TypeBadge, EvidenceBadge, TagBadge } from "@/components/ClassificationBadge";
 import { ContestedBanner } from "@/components/ContestedBanner";
 import { ConnectionRowList } from "@/components/ConnectionRowList";
 import { RateClaim } from "@/components/RateClaim";
 import { EditPanel } from "@/components/EditPanel";
+import { Markdown } from "@/components/Markdown";
 import { fetchClaim } from "@/lib/api";
 import type { ClaimDetail } from "@/lib/types";
 import styles from "./ClaimPage.module.css";
@@ -13,6 +14,18 @@ import styles from "./ClaimPage.module.css";
 export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail }) {
   const [claim, setClaim] = useState(initialClaim);
   const [editOpen, setEditOpen] = useState(false);
+  const [headerGone, setHeaderGone] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
+
+  // The compact bar appears once the claim header has scrolled off, so the
+  // title and the edit control stay in reach down the whole page.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const obs = new IntersectionObserver(([entry]) => setHeaderGone(!entry.isIntersecting), { threshold: 0 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   async function refetch() {
     const fresh = await fetchClaim(claim.slug);
@@ -23,13 +36,22 @@ export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail })
 
   return (
     <main className={styles.main}>
+      <div className={`${styles.stickyBar} ${headerGone ? styles.stickyBarVisible : ""}`} aria-hidden={!headerGone}>
+        <div className={styles.stickyInner}>
+          <span className={styles.stickyTitle}>{claim.title}</span>
+          <button type="button" className={styles.stickyEdit} onClick={() => setEditOpen(true)} tabIndex={headerGone ? 0 : -1}>
+            <PencilIcon /> EDIT
+          </button>
+        </div>
+      </div>
+
       <div className={styles.breadcrumb}>
         CLAIMS / {primaryTag} / {claim.title.slice(0, 40).toUpperCase()}
       </div>
 
       {claim.contested && <ContestedBanner reason={claim.contested.reason} until={claim.contested.until} />}
 
-      <div className={styles.header}>
+      <div className={styles.header} ref={headerRef}>
         <div className={styles.badgeRow}>
           <TypeBadge type={claim.type} />
           <EvidenceBadge evidenceStrength={claim.evidenceStrength} />
@@ -39,8 +61,9 @@ export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail })
         </div>
         <h1 className={styles.title}>{claim.title}</h1>
         <p className={styles.oneLiner}>{claim.oneLiner}</p>
+        {claim.body && <Markdown source={claim.body} className={styles.bodyProse} />}
         <button type="button" className={styles.editButton} onClick={() => setEditOpen(true)}>
-          EDIT THIS CLAIM
+          <PencilIcon /> EDIT THIS CLAIM
         </button>
       </div>
 
@@ -48,7 +71,7 @@ export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail })
         <h2 className={styles.sectionHeading}>CONTEXT &amp; HISTORY</h2>
         <div className={styles.contextGrid}>
           <div>
-            <p className={styles.prose}>{claim.contextBackground}</p>
+            <Markdown source={claim.contextBackground} className={styles.prose} />
             {claim.timeline.length > 0 && (
               <>
                 <h3 className={styles.timelineHeading}>HOW WE GOT HERE</h3>
@@ -64,7 +87,7 @@ export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail })
           <div>
             <div className={styles.sideCard}>
               <h3 className={styles.sideCardHeading}>WHERE THE DISAGREEMENT SITS</h3>
-              <p className={styles.sideCardText}>{claim.contextDisagreement}</p>
+              <Markdown source={claim.contextDisagreement} className={styles.sideCardText} />
             </div>
             <div className={styles.sideCard}>
               <h3 className={styles.sideCardHeading}>THIS CLAIM</h3>
@@ -114,20 +137,35 @@ export function ClaimPageClient({ initialClaim }: { initialClaim: ClaimDetail })
             <h2 className={`${styles.sectionHeading} ${styles.supportsHeading}`}>
               WHAT SUPPORTS THIS CLAIM&nbsp;&nbsp;({claim.supports.length})
             </h2>
+            <p className={styles.columnHint}>
+              Hover or tap a row to rate how much it does for this claim. Open it to rate the claim itself.
+            </p>
             <ConnectionRowList rows={claim.supports} direction="downward" align="left" onMutated={refetch} />
           </div>
           <div>
             <h2 className={`${styles.sectionHeading} ${styles.contradictsHeading}`}>
               WHAT CONTRADICTS THIS CLAIM&nbsp;&nbsp;({claim.contradicts.length})
             </h2>
+            <p className={styles.columnHint}>
+              Hover or tap a row to rate how much it counts against this claim. Open it to rate the claim itself.
+            </p>
             <ConnectionRowList rows={claim.contradicts} direction="downward" align="right" onMutated={refetch} />
           </div>
         </div>
       </div>
 
-      <RateClaim claimId={claim.id} votes={claim.votes} onMutated={refetch} />
+      <RateClaim claimId={claim.id} claimTitle={claim.title} votes={claim.votes} voices={claim.voices} onMutated={refetch} />
 
       {editOpen && <EditPanel claim={claim} onClose={() => setEditOpen(false)} onMutated={refetch} />}
     </main>
+  );
+}
+
+function PencilIcon() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true" style={{ marginRight: 6, verticalAlign: -1 }}>
+      <path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" />
+      <path d="M10 4l2 2" />
+    </svg>
   );
 }

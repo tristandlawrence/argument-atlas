@@ -65,7 +65,10 @@ export function ConnectionRowList({
                     {row.relation}
                   </span>
                   <div className={styles.claimTextCol}>
-                    <div className={styles.claimText}>{row.otherClaim.title}</div>
+                    <div className={styles.claimText}>
+                      {row.otherClaim.title}
+                      <RowMarks row={row} />
+                    </div>
                     <div className={styles.contextLine}>{row.contextLabel}</div>
                   </div>
                   <StrengthBar relation={row.relation} weight={row.weight} opacity={row.opacity} />
@@ -73,7 +76,10 @@ export function ConnectionRowList({
               ) : (
                 <>
                   <StrengthBar relation={row.relation} weight={row.weight} opacity={row.opacity} />
-                  <span className={styles.claimText}>{row.otherClaim.title}</span>
+                  <span className={styles.claimText}>
+                    {row.otherClaim.title}
+                    <RowMarks row={row} />
+                  </span>
                 </>
               )}
             </button>
@@ -93,5 +99,26 @@ export function ConnectionRowList({
         );
       })}
     </div>
+  );
+}
+
+function RowMarks({ row }: { row: ConnectionRow }) {
+  if (!row.crux && row.challenges.total === 0) return null;
+  return (
+    <>
+      {row.crux && (
+        <span className={styles.cruxTag} title="The debate currently turns on this connection">
+          CRUX
+        </span>
+      )}
+      {row.challenges.total > 0 && (
+        <span
+          className={styles.challengeTag}
+          title={`${row.challenges.notRelevant} say it doesn't belong here, ${row.challenges.wrongDirection} say it points the other way`}
+        >
+          {row.challenges.total} CHALLENGED
+        </span>
+      )}
+    </>
   );
 }

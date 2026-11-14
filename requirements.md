@@ -6,6 +6,8 @@ This is the single source of truth for the product. Sections are marked **(build
 
 **Revision note, 14 November 2026 (later the same day).** A prototype phase is inserted ahead of everything else: the site runs locally with the new seed and no hardening, purely to gather feedback on the model and the UI. Every previously numbered phase moves back by one. Phase 1 is to be broken down further before it starts.
 
+**Revision note, 14 November 2026 (third pass, after first prototype review).** Adds: markdown for every prose field; a debate lifecycle and the editorial process that produced the nuclear and gas restructure; a crux marker on connections; voices (public pieces that make an argument), rated like claims and plotted on the claim's chart; connection challenges ("doesn't belong here", "points the other way") kept separate from the strength scale; the rating box restating the claim; a compact sticky title bar with the edit control; column hints and clearer hover-card calls to action; sparser demo votes. Remaining feedback is scheduled in the Roadmap.
+
 ---
 
 ## Project Overview
@@ -52,6 +54,8 @@ Debates and arguments collapse into **one type: a claim**. An argument is just a
 
 This supersedes the original Phase 2 plan of separate `debate/[id]`, `argument/[id]`, and `results/[id]` pages.
 
+**Prose is markdown.** Body, context, disagreement and every other prose field accept markdown and render it. Phase 0 ships a safe subset (paragraphs, links, bold, italic, bullets, headings) rendered to elements with no HTML pass-through; Phase 1 widens it to CommonMark with sanitisation. Context prose is expected to link out to orientation sources such as Wikipedia and explainers. Those links are not evidence and never affect the evidence badge.
+
 **Claims are a graph, not a tree.** The same claim can sit under several parents, in several debates, with a different connection strength in each. Nothing in the UI or data model may assume a claim has exactly one parent.
 
 **Question roots** *(decision: Phase 4, decide now)*. The one-object model forces every debate root to be a yes/no proposition. Some public questions are naturally multi-option ("How should Australia firm its grid?") with competing sibling proposals. Phase 4 adds a *question* framing for a root: a claim of type Proposal may be marked as one of several answers to a shared question, and the sibling comparison view (deferred below) renders them side by side. Until then, authors write each answer as its own proposal and link them with contradicting connections. This decision is recorded now so that nothing built in Phases 1–3 assumes roots are always propositions.
@@ -73,6 +77,35 @@ These rules apply to seeded content and to the guidance shown to users in the ed
 
 ---
 
+## Debate lifecycle **(new)**
+
+Debates are not written once. The first prototype review showed the pattern: a debate seeded as a flat list of pros and cons turned out to have a single live question underneath several of them, and the right move was to name that question as a claim and move the facts beneath it. That is an editorial process, and it applies to every debate, not just the one that exposed it. It is written down here so it can be repeated, and so the product grows the operations it needs.
+
+### The process
+
+1. **Find the active debate.** Ask what participants are actually arguing about this season, not what the topic's history contains. For nuclear it is timing, not safety. For gas reservation it is whether prices would fall, not whether they rose. The answer is usually one or two sentences.
+2. **Write the active debate as a claim.** The crux becomes an ordinary claim with its own page, context, evidence, supports and contradicts. Its connection to the root is marked **crux**. A root has one or two crux connections, never more.
+3. **Promote and regroup.** Children of the root that are really sub-points of the crux move under it. The atomic facts stay atomic; they are never merged into the opinion they support. Merging is for duplicates, promotion is for structure.
+4. **Add the missing positive case.** After regrouping, check that the root has at least one argument for it that is not merely a rebuttal of an objection. Debates seeded from the critics' side are common and read as rigged.
+5. **Add the argument about the argument.** Many live debates include a claim about the debate itself ("this fight is a distraction"). It is a legitimate contradicting claim and belongs in the graph.
+6. **Attach voices.** For the root and the crux, list who makes the case well in public, for and against.
+7. **Record why.** The connection reason for the crux says in one sentence why the debate turns there. The disagreement note links to it.
+
+### Lifecycle states of a claim
+
+| State | Meaning | Product support |
+| --- | --- | --- |
+| Live | Ordinary claim, connected, rateable | Shipped |
+| Crux | Marked on a connection as where the parent debate turns | Shipped (editor-set flag) |
+| Promoted | Became a parent for siblings that were really its sub-points | Re-parenting exists; **insert a parent** as a single structural edit is Phase 3 |
+| Absorbed | A duplicate merged into a canonical claim; slug redirects | Phase 3 |
+| Challenged | Enough raters say a connection is misplaced | Counts shipped; thresholds and edit prompt Phase 2 |
+| Stale | A time-bound claim whose "as of" has passed | Phase 4 |
+
+Does this need solving for every debate now? The editorial pass, yes: it costs nothing but attention and the seed now follows it in all six debates. The product operations, no: a crux flag is enough for the prototype, and insert-a-parent, merge and stale marking are scheduled where they can be built once rather than twice.
+
+---
+
 ## Seed content policy **(build status: new seed shipped in `backend/prisma/seed.ts`)**
 
 The seed is the product's first impression and the only content new users see. It is held to the authoring standard above, plus:
@@ -82,6 +115,9 @@ The seed is the product's first impression and the only content new users see. I
 - **The plot teaches itself.** Demo votes deliberately place claims in all four quadrants, including a well-made claim few agree with (Steelman), a popular poorly-made one (Partisan) and a weak one, so a developer or reviewer sees what the quadrants mean.
 - **Evidence is real and typed.** Every Fact claim has at least one evidence item from the evidence taxonomy. Strong evidence requires a checkable URL. The seed validates this and refuses to run if it is violated.
 - **One contested claim.** The seed includes one claim in contested status with a real reason, so the banner, the queue and the expiry have something to show.
+- **Sparse votes.** Roots carry ten to twenty demo votes, children zero to ten, and several claims none, so the review sees what thin and empty data look like. The quadrant examples survive at small numbers.
+- **Every root has a crux and voices.** The crux connection is marked; voices are attached with stance and kind. Seeded voice URLs are organisation-level pages, chosen because they can be stood behind; the pass that replaces them with specific articles is Phase 1 content work, not something to invent.
+- **Context links out.** Root context links to legislation, the regulator's inquiry, or the Wikipedia overview as orientation. A full link pass across all claims is Phase 1.
 - **Attribution is honest.** Revisions are authored by "Argument Atlas editors", not "Seed data". Connection reasons are substantive.
 - **Nothing time-sensitive.** No debate depends on an event, a poll or a bill from the last twelve months. Content that dates within a year is created by users, not seeded.
 - **No children with templated context.** The previous seed generated each child's context from its parent's; the current schema makes context required, so each claim's context is written by hand. If that proves unsustainable as content grows, make the fields nullable and hide the section (Phase 3).
@@ -145,6 +181,7 @@ Never use colour alone to carry the supports/contradicts distinction — the rel
 ### UI Preferences
 
 - **Dark / light mode** — as above.
+- **Compact title bar** *(shipped)* — once the claim header scrolls off, a one-line bar fixes to the top with the truncated title on the left and a pencil **Edit** control on the right. Both edit controls use an inline SVG pencil; no icon library.
 - **Compact view** *(build status: not yet implemented — Phase 4)* — a layout density preference that reduces card padding, inter-card gaps, and line height by one step, for users who want to see more content without scrolling. Intended as a `data-view="compact"` attribute on the root element — no separate component variants needed.
 
 ---
@@ -191,7 +228,13 @@ Two labelled bands, answering two different questions:
 - A **Vote** control to the right of each bar, so voting happens on the value being voted for
 - Term labels dotted-underlined, with the connection-strength definitions on hover
 
-**Footer** — the claim's own graph counts and a **"Read more and rate it →"** call to action.
+**Footer of band 1** — a single call to action, **"Read and rate this claim on its own page →"**.
+
+**Band 2 header** reads **"Rate how it relates"** and carries a **CRUX** mark when the connection is the one the parent debate turns on.
+
+**Challenges (band 2, below the scale)** — two buttons, **"Doesn't belong here"** and **"Points the other way"**, each showing its count. They are not strength values. The strength scale answers "how much work does this do?"; a challenge says the connection is misplaced or reversed. Keeping them apart keeps the decisive/relevant/tangential bars a true distribution. One challenge per voter per connection, replaceable. Rows with challenges show a small **N CHALLENGED** mark. Phase 2 adds thresholds: when challenges exceed a share of strength votes the row is flagged and the edit panel prompts a re-parent or flip; challenges then count toward contested status.
+
+**Column hints** — one line under each column heading: "Hover or tap a row to rate how much it does for this claim. Open it to rate the claim itself." Rows themselves stay clean.
 
 The two bands must remain visually distinct. Their job is to keep apart "is this claim any good?" and "how much does it do for the claim it's attached to?" — these are independent judgements and the UI must never blur them.
 
@@ -244,6 +287,20 @@ Nothing in the shipped build specifies how supports and contradicts are ordered 
 - In hover cards and rows, the miniature plot and score bars are shown as now **but without the numeric percentages** until the viewer has voted on that claim. The rater count is always shown.
 - Unauthenticated viewers, who cannot vote, see everything. The anchoring concern applies to votes, not to reading.
 
+### The rating box restates the claim **(shipped)**
+
+The box is the last thing on the page and the reader may have scrolled past the title several screens ago. The claim is quoted, in serif, directly under "Now rate the claim", so the question being answered is never implied by position.
+
+### Voices **(shipped, curation workflow Phase 3)**
+
+A **voice** is a public piece that makes the argument: an op-ed, explainer, speech, submission, interview, blog or report. Voices are **not evidence**. They never affect the evidence badge, and they live in their own section, "Who argues this in public", inside the rating panel beside the aggregate of who rated the claim.
+
+- Each voice has a title, outlet, optional author, URL, kind and **stance** (for, against, mixed).
+- Voices are rated on the same two signals as claims ("Persuaded?" and "Well made?"), one vote per voter per voice.
+- A voice with at least one rating is drawn on the claim's two-axis plot as a **ring**, coloured by stance, at its aggregate position. Hover or focus shows title, outlet, stance and rater count; the ring links to the piece. Vote dots and voice rings are visibly different populations.
+- Voices are added and removed from the edit panel's Evidence tab, in a block labelled so that the distinction from evidence is explicit.
+- Phase 3 adds a public submission form, duplicate-URL detection and a moderator queue for voices.
+
 ### Scatterplot (results view) **(build status: shipped)**
 
 - X-axis: agreement · Y-axis: quality — **both axes must be labelled**
@@ -253,7 +310,7 @@ Nothing in the shipped build specifies how supports and contradicts are ordered 
 
 ---
 
-## Classification **(build status: tooltips shipped; derived evidence strength and type challenge are Phase 2/2)**
+## Classification **(build status: tooltips shipped; derived evidence strength and type challenge are Phase 1/2)**
 
 Every classification badge explains itself on hover, focus, or tap. Same copy wherever the badge appears — claim header, hover card, editor.
 
@@ -278,8 +335,8 @@ Every classification badge explains itself on hover, focus, or tap. Same copy wh
 
 Editing happens in a **side panel** beside the live claim, never on a separate page. Three tabs: Write / Evidence / History.
 
-- **Write** — claim, body, type, evidence strength, tags, and a required one-line "why this change?"
-- **Evidence** — attach and remove evidence items (type, citation, URL); also hosts per-connection strength editing
+- **Write** — claim, one-liner, body, context and history, where the disagreement sits (all prose fields in markdown, with a hint under the field), type, evidence strength, tags, and a required one-line "why this change?"
+- **Evidence** — attach and remove evidence items (type, citation, URL); attach and remove **voices** in a clearly separate block; also hosts per-connection strength editing
 - **History** — revision list with author, date and change summary; readable diff; revert without leaving the page
 - Entry points: the edit affordance on any claim, and a one-time dismissible prompt after a low quality rating: *"You rated this claim as poorly constructed — want to help improve it?"*, linking directly to the edit view
 
@@ -396,7 +453,18 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 
 ### Connection (formerly ArgumentSupport)
 - `fromClaimId`, `toClaimId`, `relation` (supports/contradicts), `statedStrength` (tangential/relevant/decisive), `statedReason`
-- Community strength votes, revision history
+- `crux` (boolean, editor-set; one or two per parent)
+- Community strength votes, challenges, revision history
+
+### ConnectionChallenge
+- `connectionId`, `voterId`, `kind` (NOT_RELEVANT / WRONG_DIRECTION); one per (connection, voter), replaceable
+
+### Voice
+- `claimId`, `title`, `outlet`, `author?`, `url`, `kind`, `stance` (SUPPORTS / CONTRADICTS / MIXED)
+- Never joined to evidence strength
+
+### VoiceVote
+- `agree`, `wellConstructed`; one per (voice, voter). Same signals as `ClaimVote`; subject to the same Phase 2 changes (Unsure, history)
 
 ### ClaimVote
 - `agree` (boolean, *nullable from Phase 2 for Unsure*), `wellConstructed` (boolean, *nullable from Phase 2*)
@@ -494,7 +562,8 @@ The phases are ordered by a single rule: **learn from a prototype first, then ge
 The site runs on a developer's machine with the new seed, for the project owner and a handful of invited reviewers to look at and react to. It exists to test the model and the page design, not to collect data.
 
 - Local hosting only. No public URL, no real users, no sign-ups beyond what is needed to exercise the UI.
-- The new seed loaded (done), with demo votes on so the plot, score bars and hover cards have something to show.
+- The new seed loaded (done), with sparse demo votes so the plot, score bars and hover cards have something to show.
+- First review feedback applied (done): markdown prose, crux marker, nuclear and gas restructured around their cruxes, voices with plot rings, connection challenges, restated claim in the rating box, compact title bar, column hints and hover-card calls to action.
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -511,6 +580,8 @@ Prerequisites. None of these is optional and none depends on another. **This pha
 - Evidence strength derived: no evidence items means No evidence, enforced at the API.
 - `seed:check` runs in CI.
 - Contested-status copy corrected to "reading and rating stay open".
+- Markdown widened to CommonMark with sanitisation; the Phase 0 subset renderer retired.
+- Content pass: specific article URLs for every seeded voice; orientation links in every claim's context; voices on every crux claim.
 
 ### Phase 2 — The model means what it says *(first cohort, invite-only)*
 
@@ -526,6 +597,8 @@ Changes to what votes and revisions mean. Each is small; together they are the d
 - Score visibility: numbers hidden until the viewer has voted.
 - Contested thresholds scaled to rater count; half-weight for new accounts.
 - Moderator `role` on `User` and a minimal pending-edit review page (needed to exit contested status at all).
+- Challenge thresholds: a connection whose challenges exceed a set share of its strength votes is flagged on the row, the edit panel prompts a re-parent or flip, and challenges count toward contested status.
+- Unsure and vote history applied to voice votes as well as claim votes.
 
 ### Phase 3 — Contribution at scale *(open the gate, or decide not to)*
 
@@ -538,6 +611,9 @@ The features that make it safe for many people to add content, in the order they
 - Tag taxonomy with admin management.
 - Full moderator tooling: queues for pending edits and large merges, apply/lift contested, delete and ban.
 - Nullable context fields and a hidden empty context section, if hand-written context is not keeping up.
+- **Insert a parent** as a single structural edit: pick siblings, write the claim they are sub-points of, and move them under it in one revision.
+- Voice submission form, duplicate-URL detection and a moderator queue for voices.
+- Challenge counts and crux status as inputs to column ordering.
 - Re-evaluate open registration.
 
 ### Phase 4 — Insight *(enough data to learn from)*
@@ -548,6 +624,7 @@ The features that make it safe for many people to add content, in the order they
 - Demographic breakdown presentation beyond the raw endpoint.
 - Compact view, i18n scaffolding, Contributor role.
 - Argument Lock design, if contested status has proven insufficient.
+- Stale marking for time-bound claims: an "as of" date, a prompt to revisit, and a retired state that keeps history but leaves the live columns.
 
 ### Deliberately not scheduled
 
@@ -579,6 +656,10 @@ Each item names its phase; the Roadmap above is the sequence.
 - **v7 hover-card changes agreed but not yet drawn** *(Phase 2, design)*: move the claim's own supporting/contradicting list and the CTA into band 1 of the hover card; rewrite relationship headings so the referenced claim is named inline rather than implied by column position.
 - **Plain-language mechanism** (glossary terms, or a required plain-English summary per claim) — deferred, not dropped.
 - **Sentiment fields** — legacy `sentimentScore`/`sentimentLabel` from the pre-unification schema; confirmed removed in the current schema, no action needed.
+- **Full markdown and sanitisation** *(Phase 1)*. The Phase 0 renderer is a safe subset; CommonMark with a sanitiser replaces it.
+- **Voice and link curation pass** *(Phase 1, content)*. Seeded voice URLs are organisation pages; replace with specific pieces. Add orientation links across all claims.
+- **Challenge thresholds** *(Phase 2)*. Specified under the hover card.
+- **Insert a parent, voice submission queue, stale marking** *(Phases 3–4)*. Specified under Debate lifecycle and Voices.
 - **README** still refers to a `code/` directory and the original tech stack; update to `backend/` and `frontend/` *(Phase 1, trivial)*.
 
 ---

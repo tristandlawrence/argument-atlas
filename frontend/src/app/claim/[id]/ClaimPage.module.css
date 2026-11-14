@@ -185,3 +185,78 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Compact bar: title and edit stay in reach once the header scrolls off. */
+.stickyBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background: var(--surface);
+  border-bottom: 1px solid var(--text);
+  transform: translateY(-100%);
+  transition: transform 160ms ease;
+  pointer-events: none;
+}
+
+.stickyBarVisible {
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.stickyInner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stickyTitle {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stickyEdit {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  background: var(--surface);
+  padding: 5px 11px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.bodyProse {
+  font-size: 15px;
+  line-height: 1.65;
+  margin-top: 14px;
+  max-width: 760px;
+  color: var(--text);
+}
+
+.columnHint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+  margin: -8px 0 10px;
+}
+
+@media (max-width: 640px) {
+  .stickyInner {
+    padding: 8px 16px;
+  }
+}

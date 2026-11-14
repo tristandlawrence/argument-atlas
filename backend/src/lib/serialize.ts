@@ -132,3 +132,47 @@ export function ageLabel(createdAt: Date) {
 export function capitalize(word: string) {
   return word.charAt(0) + word.slice(1).toLowerCase();
 }
+
+// --- voices -------------------------------------------------------------------
+// A voice is rated on the same two signals as a claim, so it can sit on the
+// claim's own plot. Unlike the vote scatter (which jitters within a quadrant),
+// a voice is placed at its aggregate position and only once someone has rated it.
+
+type VoiceLike = {
+  id: string;
+  title: string;
+  outlet: string;
+  author: string | null;
+  url: string;
+  kind: string;
+  stance: string;
+  votes: ClaimVoteLike[];
+};
+
+export function voiceSummary(v: VoiceLike) {
+  const stats = voteStats(v.votes);
+  return {
+    id: v.id,
+    title: v.title,
+    outlet: v.outlet,
+    author: v.author,
+    url: v.url,
+    kind: v.kind,
+    stance: v.stance,
+    raterCount: stats.raterCount,
+    agreePct: stats.agreePct,
+    wellConstructedPct: stats.wellConstructedPct,
+    plot:
+      stats.raterCount > 0 && stats.agreePct !== null && stats.wellConstructedPct !== null
+        ? { left: stats.agreePct, top: 100 - stats.wellConstructedPct }
+        : null,
+  };
+}
+
+// --- connection challenges ----------------------------------------------------
+
+export function challengeCounts(challenges: { kind: string }[]) {
+  const notRelevant = challenges.filter((c) => c.kind === "NOT_RELEVANT").length;
+  const wrongDirection = challenges.filter((c) => c.kind === "WRONG_DIRECTION").length;
+  return { notRelevant, wrongDirection, total: notRelevant + wrongDirection };
+}

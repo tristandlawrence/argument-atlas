@@ -42,10 +42,32 @@ export type StrengthDistributionEntry = {
   weight: number;
 };
 
+export type ChallengeKind = "NOT_RELEVANT" | "WRONG_DIRECTION";
+
+export type ChallengeCounts = { notRelevant: number; wrongDirection: number; total: number };
+
+export type VoiceStance = "SUPPORTS" | "CONTRADICTS" | "MIXED";
+
+export type Voice = {
+  id: string;
+  title: string;
+  outlet: string;
+  author: string | null;
+  url: string;
+  kind: string;
+  stance: VoiceStance;
+  raterCount: number;
+  agreePct: number | null;
+  wellConstructedPct: number | null;
+  plot: { left: number; top: number } | null;
+};
+
 export type ConnectionRow = {
   connectionId: string;
   relation: ConnectionRelation;
   statedStrength: ConnectionStrength;
+  crux: boolean;
+  challenges: ChallengeCounts;
   weight: number;
   opacity: number;
   otherClaim: { id: string; slug: string; title: string };
@@ -90,6 +112,7 @@ export type ClaimDetail = {
     crossDebateUsedInCount: number;
   };
   votes: VoteStats;
+  voices: Voice[];
   usedIn: ConnectionRow[];
   supports: ConnectionRow[];
   contradicts: ConnectionRow[];

@@ -171,3 +171,46 @@
   color: var(--text);
   border-color: var(--text-2);
 }
+
+.cruxTag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 1px 5px;
+  margin-right: 8px;
+}
+
+/* Challenges sit under the strength scale, visually separate from it: they
+   say the connection is misplaced, not how much it weighs. */
+.challengeRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--rule);
+}
+
+.challengeLabel {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+}
+
+.challengeButton {
+  font-size: 11px;
+  color: var(--text-2);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  padding: 3px 9px;
+}
+
+.challengeButton:hover {
+  color: var(--text);
+  border-color: var(--text-2);
+}

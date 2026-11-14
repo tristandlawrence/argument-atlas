@@ -75,3 +75,129 @@
   color: var(--text);
   font-size: 15px;
 }
+
+.restate {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0 0 10px;
+  max-width: 480px;
+}
+
+/* Voices: who argues this in public, beside the aggregate of who rated it. */
+.voices {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.voicesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.voicesHeading {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.voicesNote {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-3);
+  letter-spacing: 0.03em;
+}
+
+.voicesEmpty {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.voiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.voiceRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--rule-soft);
+  background: var(--surface-alt);
+}
+
+@media (max-width: 720px) {
+  .voiceRow {
+    flex-wrap: wrap;
+  }
+}
+
+.voiceStance {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  width: 56px;
+  flex-shrink: 0;
+}
+
+.voiceMain {
+  flex: 1;
+  min-width: 200px;
+}
+
+.voiceTitle {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
+.voiceTitle:hover {
+  text-decoration-color: var(--primary);
+  color: var(--primary);
+}
+
+.voiceMeta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-2);
+  letter-spacing: 0.03em;
+  margin-top: 3px;
+}
+
+.voiceControls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.voiceControlLabel {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: var(--text-2);
+  letter-spacing: 0.04em;
+  margin: 0 2px 0 8px;
+}
+
+.miniChoice {
+  padding: 3px 8px;
+  font-size: 11px;
+  color: var(--text-2);
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}

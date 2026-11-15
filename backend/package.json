@@ -9,6 +9,7 @@
     "seed": "tsx prisma/seed.ts",
     "seed:check": "SEED_DRY_RUN=true tsx prisma/seed.ts",
     "seed:postcodes": "tsx prisma/seed-postcodes.ts",
+    "snapshot": "tsx scripts/snapshot.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Source_Serif_4, Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/SiteHeader";
+import { StaticBanner } from "@/components/StaticBanner";
 
 const sourceSerif4 = Source_Serif_4({
   variable: "--font-source-serif-4",
@@ -54,6 +55,7 @@ export default function RootLayout({
       </head>
       <body>
         <SiteHeader />
+        <StaticBanner />
         {children}
       </body>
     </html>

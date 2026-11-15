@@ -284,7 +284,7 @@ function TwoFactorSection() {
 }
 
 function PasskeySection() {
-  const [passkeys, setPasskeys] = useState<{ id: string; name?: string | null; createdAt?: string }[]>([]);
+  const [passkeys, setPasskeys] = useState<{ id: string; name?: string | null; createdAt?: string | Date }[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   async function refresh() {
@@ -343,7 +343,7 @@ function LinkedAccountsSection() {
     async function load() {
       const result = await authClient.listAccounts();
       const accounts = result.data ?? [];
-      setLinked(accounts.map((a: { provider: string }) => a.provider));
+      setLinked(accounts.map((a: { providerId: string }) => a.providerId));
     }
     load();
     fetch(`${API_URL}/auth-info/providers`)

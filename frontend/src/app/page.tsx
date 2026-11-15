@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { fetchClaims } from "@/lib/api";
+import { loadClaims } from "@/lib/data.server";
 import { SLICES } from "@/lib/slices";
 import { DebateCard } from "@/components/HomeBrowser";
 import { showTurnsOn } from "@/lib/types";
@@ -11,7 +11,7 @@ import styles from "./home.module.css";
  * The full browser lives at /claims.
  */
 export default async function Home() {
-  const claims = await fetchClaims();
+  const claims = await loadClaims();
   const slices = SLICES.map((s) => {
     const hits = claims.filter(s.test);
     const example = [...hits].sort((a, b) => b.raterCount - a.raterCount)[0];

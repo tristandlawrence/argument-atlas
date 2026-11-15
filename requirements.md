@@ -635,7 +635,18 @@ Current schema (`backend/prisma/schema.prisma`), renamed from the original Conte
 | Realtime | Pusher | Not implemented (not currently required) |
 | Styling | Tailwind CSS | CSS Modules + design-token CSS custom properties |
 | i18n | `next-intl`, all strings externalised from day one | Not implemented — Phase 4 |
-| Deployment | Vercel | Not yet decided (split frontend/backend changes the deployment shape Vercel alone assumed) |
+| Deployment | Vercel | Live app: not yet decided (split frontend/backend changes the deployment shape Vercel alone assumed). Phase 0 review copy: a **read-only static snapshot on GitHub Pages** (see below) |
+
+### Read-only snapshot on GitHub Pages **(shipped)**
+
+GitHub Pages serves static files only, so the live app cannot run there. What runs there is a snapshot: the front end built with `NEXT_PUBLIC_STATIC_EXPORT=1` and `NEXT_PUBLIC_BASE_PATH=/argument-atlas`, reading its data from JSON files under `frontend/public/data` instead of the API. Every page is browsable at the same URLs; a banner states the snapshot date; voting, challenging and editing are accepted by the UI and quietly do nothing; sign-in is replaced by a READ-ONLY mark.
+
+- `npm run snapshot` in `backend/` (with `SNAPSHOT_API` pointing at a running API) rewrites the data files in the same shapes the pages consume. The files are committed, so the Pages build needs no database.
+- `.github/workflows/pages.yml` builds and deploys on every push to `main` or the prototype branch that touches `frontend/`, and on demand. The site is at https://tristandlawrence.github.io/argument-atlas/.
+- Server components read the snapshot through `lib/data.server.ts`; browser code reads it through the same `lib/api.ts` functions, which switch to the static files in snapshot mode. Pages that depended on URL parameters on the server (`/claims`, `/graph`) now read them on the client so they can be exported.
+- Refreshing the review copy is: load the seed, run the snapshot, commit, push. Until stale marking ships this happens with each research pass.
+
+This is for reviewers in Phase 0. It is not a hosting plan for the live app, which needs the API and a database; that decision stays open under Tech Stack.
 
 ---
 
@@ -685,6 +696,7 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - Second review applied (done): dated contentious mark, coverage rubric and environment-law restructure, differentiated and navigable badges with classification pages, click-through rows, export-tax split.
 - Graph view prototype and header controls moved to the top-right (done).
 - Homepage browser with topic, type, evidence, quadrant and status filters (done); split into a front door with recommended slices and a `/claims` browser with cards and table views (done); proposal texture and per-topic palette (done).
+- Read-only snapshot published to GitHub Pages for reviewers (done).
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.

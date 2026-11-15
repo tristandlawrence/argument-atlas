@@ -1,13 +1,20 @@
 import Link from "next/link";
 import { TypeBadge, TagBadge } from "@/components/ClassificationBadge";
-import { fetchClaims, fetchFacets } from "@/lib/api";
+import { loadClaims, loadFacets } from "@/lib/data.server";
+import { IS_STATIC } from "@/lib/static";
 import { TAG_COPY } from "@/lib/copy";
 import styles from "../../page.module.css";
+
+export async function generateStaticParams() {
+  if (!IS_STATIC) return [];
+  const facets = await loadFacets();
+  return Object.keys(facets.byTag).map((t) => ({ tag: t.toLowerCase() }));
+}
 
 export default async function TagPage({ params }: { params: Promise<{ tag: string }> }) {
   const { tag } = await params;
   const upper = decodeURIComponent(tag).toUpperCase();
-  const [claims, facets] = await Promise.all([fetchClaims({ tag: upper }), fetchFacets()]);
+  const [claims, facets] = await Promise.all([loadClaims({ tag: upper }), loadFacets()]);
   const otherTags = Object.keys(facets.byTag)
     .filter((t) => t !== upper)
     .sort();

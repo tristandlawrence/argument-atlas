@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { TypeBadge, TagBadge } from "@/components/ClassificationBadge";
-import { fetchClaims } from "@/lib/api";
+import { loadClaims } from "@/lib/data.server";
 import { CLASSIFICATION_COPY, TYPE_LABEL } from "@/lib/copy";
 import styles from "../../page.module.css";
 
 const TYPES = ["fact", "opinion", "value", "proposal"];
 
+export function generateStaticParams() {
+  return TYPES.map((type) => ({ type }));
+}
+
 export default async function TypePage({ params }: { params: Promise<{ type: string }> }) {
   const { type } = await params;
   if (!TYPES.includes(type)) notFound();
   const upper = type.toUpperCase();
-  const claims = await fetchClaims({ type: upper });
+  const claims = await loadClaims({ type: upper });
 
   return (
     <main className={styles.main}>

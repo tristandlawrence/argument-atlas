@@ -1,11 +1,12 @@
-import { fetchGraph } from "@/lib/api";
-import { GraphView } from "@/components/GraphView";
+import { Suspense } from "react";
+import { loadGraph } from "@/lib/data.server";
+import { GraphRoute } from "@/components/GraphRoute";
 
-export default async function GraphPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ focus?: string; tag?: string }>;
-}) {
-  const [{ focus, tag }, data] = await Promise.all([searchParams, fetchGraph()]);
-  return <GraphView data={data} focusSlug={focus} initialTag={tag?.toUpperCase()} />;
+export default async function GraphPage() {
+  const data = await loadGraph();
+  return (
+    <Suspense fallback={null}>
+      <GraphRoute data={data} />
+    </Suspense>
+  );
 }

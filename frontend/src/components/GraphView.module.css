@@ -112,7 +112,7 @@
 .swFACT { background: var(--text); }
 .swOPINION { background: var(--surface); border: 1.5px dashed var(--text-2); }
 .swVALUE { background: var(--surface); border: 2px solid var(--accent); }
-.swPROPOSAL { background: var(--primary); }
+.swPROPOSAL { background: var(--proposal-hatch), var(--surface); border: 1px solid var(--text); }
 
 .canvasWrap {
   position: relative;
@@ -157,9 +157,18 @@
 }
 
 .nPROPOSAL {
-  fill: var(--primary);
-  stroke: var(--surface);
-  stroke-width: 1.2;
+  fill: url(#proposal-hatch);
+  stroke: var(--text);
+  stroke-width: 1.4;
+}
+
+.hatchBg {
+  fill: var(--surface);
+}
+
+.hatchFg {
+  fill: var(--text);
+  opacity: 0.55;
 }
 
 .label {

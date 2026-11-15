@@ -79,15 +79,26 @@ a.badge:focus-visible {
 }
 
 .typeProposal {
-  border: 1px solid var(--primary);
-  background: var(--primary);
-  color: var(--surface);
+  border: 1px solid var(--text);
+  background: var(--proposal-hatch), var(--surface);
+  color: var(--text);
 }
 
-/* Topics: six palette slots from globals.css, chosen per tag. */
+/* Topics: palette slots from globals.css, fixed per known topic. */
 .tag0 { color: var(--tag-ink-0); background: var(--tag-wash-0); border-color: var(--tag-wash-0); }
 .tag1 { color: var(--tag-ink-1); background: var(--tag-wash-1); border-color: var(--tag-wash-1); }
 .tag2 { color: var(--tag-ink-2); background: var(--tag-wash-2); border-color: var(--tag-wash-2); }
 .tag3 { color: var(--tag-ink-3); background: var(--tag-wash-3); border-color: var(--tag-wash-3); }
 .tag4 { color: var(--tag-ink-4); background: var(--tag-wash-4); border-color: var(--tag-wash-4); }
 .tag5 { color: var(--tag-ink-5); background: var(--tag-wash-5); border-color: var(--tag-wash-5); }
+.tag6 { color: var(--tag-ink-6); background: var(--tag-wash-6); border-color: var(--tag-wash-6); }
+.tag7 { color: var(--tag-ink-7); background: var(--tag-wash-7); border-color: var(--tag-wash-7); }
+.tag8 { color: var(--tag-ink-8); background: var(--tag-wash-8); border-color: var(--tag-wash-8); }
+.tag9 { color: var(--tag-ink-9); background: var(--tag-wash-9); border-color: var(--tag-wash-9); }
+.tag10 { color: var(--tag-ink-10); background: var(--tag-wash-10); border-color: var(--tag-wash-10); }
+.tag11 { color: var(--tag-ink-11); background: var(--tag-wash-11); border-color: var(--tag-wash-11); }
+.tag12 { color: var(--tag-ink-12); background: var(--tag-wash-12); border-color: var(--tag-wash-12); }
+.tag13 { color: var(--tag-ink-13); background: var(--tag-wash-13); border-color: var(--tag-wash-13); }
+.tag14 { color: var(--tag-ink-14); background: var(--tag-wash-14); border-color: var(--tag-wash-14); }
+.tag15 { color: var(--tag-ink-15); background: var(--tag-wash-15); border-color: var(--tag-wash-15); }
+.tag16 { color: var(--tag-ink-16); background: var(--tag-wash-16); border-color: var(--tag-wash-16); }

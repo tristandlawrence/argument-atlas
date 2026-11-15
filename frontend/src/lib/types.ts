@@ -138,9 +138,21 @@ export type ClaimListItem = {
   usedInCount: number;
   voiceCount: number;
   isRoot: boolean;
+  /** This claim is itself the marked question beneath some parent. */
+  isTurningPoint: boolean;
   /** The child connection currently marked contentious, if any. */
-  turnsOn: { slug: string; title: string } | null;
+  turnsOn: { slug: string; title: string; raterCount: number; reviewDue: boolean } | null;
 };
+
+/**
+ * Whether a debate's "turns on" line is confident enough to show in lists.
+ * Phase 0 heuristic: the mark is current and the question has a few raters.
+ * Phase 2 replaces this with the derived contentious signal.
+ */
+export const TURNS_ON_MIN_RATERS = 5;
+export function showTurnsOn(c: ClaimListItem) {
+  return !!c.turnsOn && !c.turnsOn.reviewDue && c.turnsOn.raterCount >= TURNS_ON_MIN_RATERS;
+}
 
 export type Quadrant = "COMPELLING" | "STEELMAN" | "PARTISAN" | "WEAK" | "UNRATED";
 

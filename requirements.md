@@ -120,6 +120,20 @@ Rules of thumb:
 - *Governance* claims attract editors and lawyers and crowd out everything else; cap them hardest.
 - Rolled-up claims are opinions by nature ("the minister remains the final decision-maker"); their children are the facts. Never merge facts into the opinion.
 
+### Competing proposals under a generic one
+
+Many debates have a generic proposal ("net overseas migration should be reduced") and several specific ones that compete to be the way of doing it (the Coalition's 160,000, the government's 225,000 glide path, One Nation's deeper cuts), each with a proposer, a target and a date. Today the only tool is a supporting connection, which loses two things: that the specifics are alternatives to each other, not merely reasons for the parent, and that they come and go with the politics while the generic question stays.
+
+The structure, scheduled for Phase 2 (model) and Phase 4 (comparison view):
+
+- **A third relation, `SPECIFIES`.** A specific proposal *specifies* the generic one: it is a way of doing it, not an argument that it should be done. On the parent page these appear under their own heading, "Ways of doing this", beside supports and contradicts, so a reader sees the field of alternatives at once. A specific proposal can still have ordinary supports and contradicts beneath it.
+- **Proposal metadata on the claim.** `proposedBy` (a party, a body, a person or "community"), `proposedOn`, `target` as free text, and a `proposalStatus` of proposed, adopted, withdrawn or superseded. These are facts about the proposal, not votes, and are editable like any field.
+- **Staleness is a status, not a deletion.** A withdrawn or superseded proposal stays in the graph, greyed, with its history and ratings intact, because the record of what was proposed and how it rated is part of the debate. The generic parent does not go stale when a specific child does, which is the point of separating them. The Phase 2 "as of" date applies to the specifics; the generic claim rarely needs one.
+- **Comparison, not just listing.** Phase 4's sibling comparison view renders the specifics of one generic proposal as a table: proposer, target, status, raters, agree, well made, and the strongest argument for and against each. This is the "argument-vs-sibling comparison" the original scope deferred, now with a reason to exist.
+- **The coverage rubric already asks for it.** Alternatives are a lens; a generic proposal with no `SPECIFIES` children is a debate that has not yet said what, concretely, anyone proposes.
+
+Until the relation exists, the seed represents specifics as supporting connections with a reason beginning "A specific version:", so they can be migrated mechanically.
+
 ### Lifecycle states of a claim
 
 | State | Meaning | Product support |
@@ -201,7 +215,7 @@ Structure is broadsheet — ink typography, hairline rules, no decorative colour
 
 Quadrant washes: steelman `#F3EFE7`, compelling `#E8EFE6`, weak `#FBFAF7`, partisan `#F7E7E1`.
 
-Topic washes (six slots, assigned per tag; the tag name is always printed so hue never carries meaning alone): `--tag-wash-0…5` / `--tag-ink-0…5`, light `#EFE6D6/#7A5A1F`, `#E4ECEF/#2F5D6B`, `#E8ECE2/#4A6A3A`, `#EFE3E6/#7A3F52`, `#E9E6F0/#4E4572`, `#ECE9E0/#5E5A4A`, with dark-theme counterparts in `globals.css`.
+Topic washes: seventeen slots `--tag-wash-0…16` / `--tag-ink-0…16`, one fixed per known topic, pastel washes over darker inks, with dark-theme counterparts; values live in `globals.css` beside the topic each slot is assigned to. Proposal texture: `--proposal-hatch`, a 135° hatch of the ink colour at low strength over the surface.
 
 ### Dark — "Ink night" (D1)
 
@@ -238,23 +252,36 @@ Never use colour alone to carry the supports/contradicts distinction — the rel
 
 ---
 
-## Homepage **(build status: browser shipped; search proper is Phase 3)**
+## Homepage and claims browser **(build status: shipped as prototype; search proper is Phase 3)**
 
-The homepage is a browser, not a feed. It opens on **Debates**: claims with arguments beneath them and nothing above, ordered by rater count, each shown as a card with its badges, one-liner, the claim it currently **turns on** (the connection marked contentious), counts for and against, raters, the two percentages and the rating quadrant, voices, and a link to the graph focused on it. **All claims** switches to compact rows of every claim with the same filters.
+Two pages, two jobs.
 
-Every classification the product uses is a filter, and nothing is ever ordered by agreement:
+**`/` is the front door.** A short lede, then **Start here**: recommended slices, each a pre-canned filter view with its count and its most-rated example, then the **contentious proposals** (debates with a confident live question, shown as cards with the claim they turn on) and the other debates as a plain list. The slices are not editorial picks; each is derived from a principle already in this document and says which one:
 
-| Filter | Values | Why it is here |
+| Slice | Filter | Comes from |
 | --- | --- | --- |
-| Topic | the tags in use, with counts | the only filter most readers will touch |
-| Type | Fact, Opinion, Value, Proposal | lets a reader find what can be settled by evidence and what cannot |
-| Evidence | Strong, Moderate, Weak, None | surfaces claims that need sources |
-| How it rates | Compelling, Steelman, Partisan, Weak, Unrated | the quadrants from the plot; Steelman and Unrated are the useful ones |
-| Status | Contested, Has a live question, Used elsewhere, Not yet rated | editorial and structural state |
-| Search | title and one-liner, client-side | a stopgap until Phase 3 search over bodies and tags |
-| Sort | Most rated, Most argued, Newest, A to Z | never by agreement |
+| Contentious proposals | debate roots with a confident live question | Debate lifecycle |
+| The questions themselves | claims that are a marked question | The crux is a claim, not a paragraph |
+| Well made, unpersuasive | Steelman quadrant | the quadrant called uniquely valuable |
+| Facts that need sources | Fact with weak or no evidence | evidence discipline |
+| Nobody has rated these | zero raters | rating comes after reading |
+| Load-bearing claims | used in two or more places | where this claim is used |
+| Proposals inside debates | Proposal that is not a root | alternatives lens; competing proposals |
+| What people hold regardless | Value type | values lens |
+| Contested right now | contested status | contested status is public |
 
-Filter chips explain themselves on hover where the value is not self-evident (quadrants, status). The URL accepts `tag`, `type`, `q` and `scope` so a filtered view can be linked; the `/type/…` and `/tag/…` pages remain as the badge click-through destinations. The Phase 2 homepage-ordering item is therefore delivered early as a prototype; Phase 3 search replaces the client-side title match.
+Slices with no members are hidden rather than shown empty.
+
+**`/claims` is the browser.** Every classification the product uses is a filter, nothing is ever ordered by agreement, and two presentations share the same state:
+
+- **Cards** with a sticky filter rail of chips: topic (with counts), type, evidence, how it rates (the quadrants plus Unrated), and status (debate root, argument, has a live question, is the question, contested, used elsewhere, not yet rated). Chips explain themselves on hover where the value is not self-evident.
+- **Table** for a compact view: one row per claim with type, topics, evidence, for, against, used in, raters, agree, well made, quadrant and status columns, and the same filters as a row of dropdowns above it.
+- A title search (client-side, a stopgap until Phase 3 search) and sorts of most rated, most argued, newest and A to Z.
+- Filter state is mirrored into the URL (`view`, `q`, `tag`, `type`, `evidence`, `quadrant`, `status`, `sort`, comma-separated where multiple), which is how the homepage's slices and any shared link work.
+
+**"Turns on" has a threshold.** A debate card shows the claim it turns on only when the contentious mark is current (not review-due) and the question claim has at least five raters (`TURNS_ON_MIN_RATERS`). Below that the line is withheld rather than shown with false confidence; the debate still appears, in the plain list rather than as a card. Phase 2 replaces this heuristic with the derived contentious signal.
+
+The former "Debates" scope was really "proposals that are contentious", so it became a slice and a status filter rather than a mode.
 
 ---
 
@@ -413,7 +440,7 @@ Every classification badge explains itself on hover, focus, or tap. Same copy wh
 | Weak evidence | Sources are thin, contested, or only loosely connected to what the claim actually asserts. |
 | No evidence | Nothing attached yet. Not a verdict on the claim — an invitation to supply what is missing. |
 
-**Badges are tellable apart, self-explaining and navigable** *(shipped)*. The four claim types have four visual treatments, always with the word printed: Fact solid, Opinion dashed, Value double-ruled, Proposal filled. Topics draw from six muted palette slots assigned deterministically per tag, so a topic is always the same colour and two topics side by side differ. Hovering or focusing any type or topic badge shows its definition and the hint "Click to see every claim with this label"; clicking opens `/type/<type>` or `/tag/<topic>`, a page with the definition, the count and every claim carrying it, with links to the other types or topics. Topic definitions are a copy table until the Phase 3 taxonomy makes them data.
+**Badges are tellable apart, self-explaining and navigable** *(shipped)*. The four claim types have four visual treatments, always with the word printed: Fact solid, Opinion dashed, Value double-ruled, Proposal **hatched**. The proposal treatment is a texture, not a hue, so it reads the same beside any topic colour and in both themes; the same hatch is used on the badge, the graph node and the filter swatch. Topics draw from seventeen pastel washes with darker inks. Every known topic has a fixed slot (energy amber, housing terracotta, transport ochre, local rose, and so on) so no two topics share a colour; unknown tags hash into the same slots. The tag name is always printed, so hue never carries meaning alone. Hovering or focusing any type or topic badge shows its definition and the hint "Click to see every claim with this label"; clicking opens `/type/<type>` or `/tag/<topic>`, a page with the definition, the count and every claim carrying it, with links to the other types or topics. Topic definitions are a copy table until the Phase 3 taxonomy makes them data.
 
 **Evidence strength is derived, not declared** *(Phase 1)*. The badge copy already assumes this ("Nothing attached yet"), and the shipped build lets an editor set Strong on a claim with no evidence. From Phase 1: a claim with no evidence items is **No evidence**, regardless of the stored field. Phase 2 moves the rating onto the evidence item: each item carries a strength (strong / moderate / weak) set by the editor with a one-line reason, and the claim badge shows the strongest item. The claim-level field is then removed.
 
@@ -657,7 +684,7 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - Research pass (done): every root checked against the public record; gas, negative gearing and approvals reframed around where the argument now sits; voices replaced with dated, linked pieces; context links added.
 - Second review applied (done): dated contentious mark, coverage rubric and environment-law restructure, differentiated and navigable badges with classification pages, click-through rows, export-tax split.
 - Graph view prototype and header controls moved to the top-right (done).
-- Homepage browser with topic, type, evidence, quadrant and status filters (done).
+- Homepage browser with topic, type, evidence, quadrant and status filters (done); split into a front door with recommended slices and a `/claims` browser with cards and table views (done); proposal texture and per-topic palette (done).
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -693,7 +720,8 @@ Changes to what votes and revisions mean. Each is small; together they are the d
 - Moderator `role` on `User` and a minimal pending-edit review page (needed to exit contested status at all).
 - Challenge thresholds: a connection whose challenges exceed a set share of its strength votes is flagged on the row, the edit panel prompts a re-parent or flip, and challenges count toward contested status.
 - Stale marking (moved up from Phase 4): an optional "as of" date on any claim, a visible "this may have been overtaken" note once it passes, and a retired state that keeps history but leaves the live columns.
-- Contentious candidates: connections with split strength votes, rising challenges or high vote-change rates surfaced to editors beside the dated mark; an editors' review list of marks older than 90 days.
+- Contentious candidates: connections with split strength votes, rising challenges or high vote-change rates surfaced to editors beside the dated mark; an editors' review list of marks older than 90 days. The "turns on" threshold on cards moves from a rater count to this signal.
+- `SPECIFIES` relation and proposal metadata (proposedBy, proposedOn, target, proposalStatus), so competing proposals under a generic one are modelled rather than implied.
 - Unsure and vote history applied to voice votes as well as claim votes.
 
 ### Phase 3 — Contribution at scale *(open the gate, or decide not to)*
@@ -718,7 +746,7 @@ The features that make it safe for many people to add content, in the order they
 
 - Persuasion signal: "Which of these did the most work for you?"
 - Mind-change analytics by claim and by connection, aggregate-only.
-- Question roots and the sibling comparison view.
+- Question roots and the sibling comparison view, rendering the `SPECIFIES` children of a generic proposal as a comparison table.
 - Demographic breakdown presentation beyond the raw endpoint.
 - Compact view, i18n scaffolding, Contributor role.
 - Argument Lock design, if contested status has proven insufficient.

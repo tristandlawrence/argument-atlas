@@ -15,7 +15,7 @@ export function SiteHeader() {
         <span className={styles.wordmark}>Argument Atlas</span>
       </Link>
       <nav className={styles.nav}>
-        <Link href="/" className={styles.navLinkActive}>
+        <Link href="/claims" className={styles.navLinkActive}>
           Claims
         </Link>
         <Link href="/graph" className={styles.navLink}>

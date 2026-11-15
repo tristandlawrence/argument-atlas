@@ -128,23 +128,50 @@ button {
   cursor: pointer;
 }
 
-/* Topic badge palette — six muted washes assigned deterministically per tag so
-   topics are tellable apart at a glance. Hue never carries meaning on its own:
-   the tag name is always printed. Documented in requirements.md → Colour. */
+/* Topic badge palette — seventeen pastel washes with darker inks. Known topics
+   have a fixed slot (see ClassificationBadge.tsx) so two topics never share
+   a colour; unknown tags hash into the same slots. Hue never carries meaning
+   on its own: the tag name is always printed. Documented in requirements.md. */
 :root {
-  --tag-wash-0: #efe6d6; --tag-ink-0: #7a5a1f;
-  --tag-wash-1: #e4ecef; --tag-ink-1: #2f5d6b;
-  --tag-wash-2: #e8ece2; --tag-ink-2: #4a6a3a;
-  --tag-wash-3: #efe3e6; --tag-ink-3: #7a3f52;
-  --tag-wash-4: #e9e6f0; --tag-ink-4: #4e4572;
-  --tag-wash-5: #ece9e0; --tag-ink-5: #5e5a4a;
+  --tag-wash-0: #f3e4d0;  --tag-ink-0: #7a4a12;  /* amber      — ENERGY */
+  --tag-wash-1: #dfeedd;  --tag-ink-1: #2f5d35;  /* leaf       — CLIMATE */
+  --tag-wash-2: #f4ddd3;  --tag-ink-2: #8a3a22;  /* terracotta — HOUSING */
+  --tag-wash-3: #ece0f0;  --tag-ink-3: #5c2f6e;  /* plum       — TAX */
+  --tag-wash-4: #dde6f2;  --tag-ink-4: #2b4a78;  /* slate      — ECONOMY */
+  --tag-wash-5: #d9eeee;  --tag-ink-5: #1f5e63;  /* teal       — IMMIGRATION */
+  --tag-wash-6: #e1e0f4;  --tag-ink-6: #3c3a84;  /* indigo     — EDUCATION */
+  --tag-wash-7: #eaeccf;  --tag-ink-7: #5a5e12;  /* olive      — LABOUR */
+  --tag-wash-8: #e3e7ea;  --tag-ink-8: #3e4f5c;  /* grey-blue  — GOVERNANCE */
+  --tag-wash-9: #d7ecdc;  --tag-ink-9: #1f5a3a;  /* moss       — ENVIRONMENT */
+  --tag-wash-10: #f6e9c7; --tag-ink-10: #7a5a00; /* ochre      — TRANSPORT */
+  --tag-wash-11: #f6dde6; --tag-ink-11: #8a2e52; /* rose       — LOCAL */
+  --tag-wash-12: #e6dcf4; --tag-ink-12: #4d2a84; /* violet     — TECHNOLOGY */
+  --tag-wash-13: #dbe4e8; --tag-ink-13: #2f4f5e; /* steel      — DEFENCE */
+  --tag-wash-14: #f0dada; --tag-ink-14: #7a1f2b; /* burgundy   — LAW */
+  --tag-wash-15: #d8f0e6; --tag-ink-15: #1d5c45; /* mint       — HEALTH */
+  --tag-wash-16: #f1e6cf; --tag-ink-16: #6b4e14; /* wheat      — AGRICULTURE */
+
+  /* Proposal badge: a texture, not a hue. Hatched ink at low strength under a solid rule. */
+  --proposal-hatch: repeating-linear-gradient(135deg, color-mix(in srgb, var(--text) 16%, transparent) 0 2px, transparent 2px 6px);
 }
 
 :root[data-theme='dark'] {
-  --tag-wash-0: #2c2415; --tag-ink-0: #d9b26a;
-  --tag-wash-1: #16262b; --tag-ink-1: #8fc3cf;
-  --tag-wash-2: #1c261a; --tag-ink-2: #a3c48d;
-  --tag-wash-3: #2b1b20; --tag-ink-3: #d99aae;
-  --tag-wash-4: #211d2d; --tag-ink-4: #b3a8d9;
-  --tag-wash-5: #26241c; --tag-ink-5: #c4bea6;
+  --tag-wash-0: #332412;  --tag-ink-0: #e4b56a;
+  --tag-wash-1: #1b2b1d;  --tag-ink-1: #9fcf9a;
+  --tag-wash-2: #35201a;  --tag-ink-2: #e8a58c;
+  --tag-wash-3: #2b1f31;  --tag-ink-3: #cfa6dc;
+  --tag-wash-4: #1c2533;  --tag-ink-4: #9fbbe6;
+  --tag-wash-5: #15292b;  --tag-ink-5: #86cfd3;
+  --tag-wash-6: #1f1f33;  --tag-ink-6: #b4b1ea;
+  --tag-wash-7: #262814;  --tag-ink-7: #cbd07a;
+  --tag-wash-8: #22292e;  --tag-ink-8: #aebcc8;
+  --tag-wash-9: #152a1e;  --tag-ink-9: #8fd1ad;
+  --tag-wash-10: #312a12; --tag-ink-10: #e3c25d;
+  --tag-wash-11: #321b24; --tag-ink-11: #e59ab9;
+  --tag-wash-12: #261b33; --tag-ink-12: #c4a6ec;
+  --tag-wash-13: #1b2529; --tag-ink-13: #a3bfcc;
+  --tag-wash-14: #301a1d; --tag-ink-14: #e39aa2;
+  --tag-wash-15: #15291f; --tag-ink-15: #8fd9b6;
+  --tag-wash-16: #2f2614; --tag-ink-16: #dfc07a;
+  --proposal-hatch: repeating-linear-gradient(135deg, color-mix(in srgb, var(--text) 22%, transparent) 0 2px, transparent 2px 6px);
 }

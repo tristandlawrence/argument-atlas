@@ -229,6 +229,13 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
 
       <div className={styles.canvasWrap}>
         <svg viewBox={`0 0 ${W} ${H}`} className={styles.canvas} role="img" aria-label="Graph of claims and their connections">
+          <defs>
+            {/* Proposal nodes use the same hatch texture as the proposal badge. */}
+            <pattern id="proposal-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <rect width="5" height="5" className={styles.hatchBg} />
+              <rect width="2" height="5" className={styles.hatchFg} />
+            </pattern>
+          </defs>
           {edges.map((e) => {
             const a = pos.current[index.get(e.from) ?? -1];
             const b = pos.current[index.get(e.to) ?? -1];

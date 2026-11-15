@@ -131,8 +131,13 @@ claimsRouter.get("/claims", async (req, res) => {
       createdAt: true,
       votes: { select: { agree: true, wellConstructed: true } },
       arguedBy: {
-        select: { relation: true, contentiousAsOf: true, fromClaim: { select: { slug: true, title: true } } },
+        select: {
+          relation: true,
+          contentiousAsOf: true,
+          fromClaim: { select: { slug: true, title: true, _count: { select: { votes: true } } } },
+        },
       },
+      usedIn: { select: { contentiousAsOf: true } },
       _count: { select: { usedIn: true, voices: true } },
     },
   });
@@ -162,7 +167,15 @@ claimsRouter.get("/claims", async (req, res) => {
         usedInCount: c._count.usedIn,
         voiceCount: c._count.voices,
         isRoot: c._count.usedIn === 0 && c.arguedBy.length > 0,
-        turnsOn: contentious ? { slug: contentious.fromClaim.slug, title: contentious.fromClaim.title } : null,
+        isTurningPoint: c.usedIn.some((u) => u.contentiousAsOf),
+        turnsOn: contentious
+          ? {
+              slug: contentious.fromClaim.slug,
+              title: contentious.fromClaim.title,
+              raterCount: contentious.fromClaim._count.votes,
+              reviewDue: !!contentiousStatus(contentious.contentiousAsOf)?.reviewDue,
+            }
+          : null,
       };
     })
   );

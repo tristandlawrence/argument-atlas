@@ -78,11 +78,18 @@ export function EvidenceBadge({ evidenceStrength }: { evidenceStrength: string }
   );
 }
 
-/** Deterministic palette slot so the same topic is always the same colour. */
+/** Known topics have fixed slots so no two share a colour; unknown tags hash into the same range. */
+const TAG_SLOT: Record<string, number> = {
+  ENERGY: 0, CLIMATE: 1, HOUSING: 2, TAX: 3, ECONOMY: 4, IMMIGRATION: 5, EDUCATION: 6, LABOUR: 7,
+  GOVERNANCE: 8, ENVIRONMENT: 9, TRANSPORT: 10, LOCAL: 11, TECHNOLOGY: 12, DEFENCE: 13, LAW: 14, HEALTH: 15, AGRICULTURE: 16,
+};
+export const TAG_SLOT_COUNT = 17;
+
 export function tagSlot(tag: string) {
+  if (tag in TAG_SLOT) return TAG_SLOT[tag];
   let h = 0;
   for (let i = 0; i < tag.length; i++) h = (h * 31 + tag.charCodeAt(i)) >>> 0;
-  return h % 6;
+  return h % TAG_SLOT_COUNT;
 }
 
 export function TagBadge({ tag }: { tag: string }) {

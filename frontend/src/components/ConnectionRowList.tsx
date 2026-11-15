@@ -59,7 +59,8 @@ export function ConnectionRowList({
                 // Hover previews; click goes to the claim. On touch the first tap
                 // opens the inline card (which carries the link) instead.
                 if (isNarrow) {
-                  isOpen ? setOpenId(null) : openRow(e.currentTarget, row.connectionId);
+                  if (isOpen) setOpenId(null);
+                  else openRow(e.currentTarget, row.connectionId);
                 } else {
                   router.push(`/claim/${row.otherClaim.slug}`);
                 }

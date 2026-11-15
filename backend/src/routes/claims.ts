@@ -454,7 +454,9 @@ claimsRouter.post("/voices/:id/vote", async (req, res) => {
 claimsRouter.post("/claims/:id/evidence", async (req, res) => {
   const { type, citation, url } = req.body;
   if (!type || !citation) return res.status(400).json({ error: "type and citation are required" });
-  const item = await prisma.evidenceItem.create({ data: { claimId: req.params.id, type, citation, url } });
+  // Evidence URLs are rendered as links; only web schemes are accepted.
+  if (url && !/^https?:\/\//.test(String(url))) return res.status(400).json({ error: "url must start with http:// or https://" });
+  const item = await prisma.evidenceItem.create({ data: { claimId: req.params.id, type, citation, url: url || null } });
   res.status(201).json(item);
 });
 

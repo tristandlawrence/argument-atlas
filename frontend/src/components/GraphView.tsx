@@ -48,7 +48,9 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
   const [types, setTypes] = useState<Set<string>>(new Set(["FACT", "OPINION", "VALUE", "PROPOSAL"]));
   const [depth, setDepth] = useState(2);
   const [hover, setHover] = useState<string | null>(null);
-  const [tick, setTick] = useState(0);
+  // Positions live in a ref for the simulation and are copied into state once
+  // per frame for rendering, so render never reads the ref.
+  const [positions, setPositions] = useState<Pos[]>([]);
 
   const focusNode = useMemo(() => data.nodes.find((n) => n.slug === focusSlug) ?? null, [data, focusSlug]);
 
@@ -128,7 +130,7 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
       }
       alpha = Math.max(0.02, alpha * 0.985);
       steps++;
-      setTick((t) => t + 1);
+      setPositions(p.map((q) => ({ ...q })));
       if (steps < 420) frame.current = requestAnimationFrame(run);
     };
     frame.current = requestAnimationFrame(run);
@@ -146,7 +148,7 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
   }, [hover, edges]);
 
   const hovered = hover ? nodes[index.get(hover) ?? -1] : null;
-  const hoveredPos = hover ? pos.current[index.get(hover) ?? -1] : null;
+  const hoveredPos = hover ? positions[index.get(hover) ?? -1] : null;
 
   function toggleType(t: string) {
     setTypes((prev) => {
@@ -162,8 +164,6 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
     if (tag && !nodeTags.includes(tag)) return true;
     return false;
   };
-
-  void tick;
 
   return (
     <main className={styles.main}>
@@ -237,8 +237,8 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
             </pattern>
           </defs>
           {edges.map((e) => {
-            const a = pos.current[index.get(e.from) ?? -1];
-            const b = pos.current[index.get(e.to) ?? -1];
+            const a = positions[index.get(e.from) ?? -1];
+            const b = positions[index.get(e.to) ?? -1];
             if (!a || !b) return null;
             const faded = hoverNeighbours ? !(e.from === hover || e.to === hover) : tag ? dimmed(e.from, nodes[index.get(e.from)!].tags) && dimmed(e.to, nodes[index.get(e.to)!].tags) : false;
             return (
@@ -256,7 +256,7 @@ export function GraphView({ data, focusSlug, initialTag }: { data: GraphData; fo
             );
           })}
           {nodes.map((n, i) => {
-            const p = pos.current[i];
+            const p = positions[i];
             if (!p) return null;
             const r = radius(n);
             const isDim = dimmed(n.id, n.tags);

@@ -1,0 +1,220 @@
+.main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 28px 60px;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0 0 6px;
+}
+
+.sub {
+  font-size: 13.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+  margin: 0;
+  max-width: 720px;
+}
+
+.sub a,
+.linkButton {
+  color: var(--primary);
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.legend {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendLine {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+}
+
+.legendDashed {
+  background: repeating-linear-gradient(90deg, var(--accent) 0 5px, transparent 5px 9px);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.filterLabel {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-right: 4px;
+}
+
+.chip {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--text-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chipOn {
+  color: var(--text);
+  border-color: var(--text);
+}
+
+.swatch {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+}
+
+.swFACT { background: var(--text); }
+.swOPINION { background: var(--surface); border: 1.5px dashed var(--text-2); }
+.swVALUE { background: var(--surface); border: 2px solid var(--accent); }
+.swPROPOSAL { background: var(--proposal-hatch), var(--surface); border: 1px solid var(--text); }
+
+.canvasWrap {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.node {
+  cursor: pointer;
+  outline: none;
+}
+
+.node:focus-visible circle:last-of-type {
+  stroke: var(--primary);
+  stroke-width: 3;
+}
+
+/* Node fills follow the type treatments used on badges. */
+.nFACT {
+  fill: var(--text);
+  stroke: var(--surface);
+  stroke-width: 1.2;
+}
+
+.nOPINION {
+  fill: var(--surface);
+  stroke: var(--text-2);
+  stroke-width: 1.6;
+  stroke-dasharray: 2.5 2;
+}
+
+.nVALUE {
+  fill: var(--surface);
+  stroke: var(--accent);
+  stroke-width: 2.4;
+}
+
+.nPROPOSAL {
+  fill: url(#proposal-hatch);
+  stroke: var(--text);
+  stroke-width: 1.4;
+}
+
+.hatchBg {
+  fill: var(--surface);
+}
+
+.hatchFg {
+  fill: var(--text);
+  opacity: 0.55;
+}
+
+.label {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  fill: var(--text-2);
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.tooltip {
+  position: absolute;
+  width: 300px;
+  background: var(--overlay-ink);
+  color: var(--overlay-text);
+  padding: 10px 12px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tooltipBadges {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 6px;
+}
+
+.tooltipTitle {
+  font-family: var(--font-serif);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 5px;
+}
+
+.tooltipMeta {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: 16px 16px 40px;
+  }
+}

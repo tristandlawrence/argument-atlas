@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Public Sans', sans-serif; background: #F9F7F4; }
+    a { color: #0B7285; text-decoration: none; }
+    a:hover { color: #085e6d; text-decoration: underline; }
+  </style>
+</helmet>
+
+<div style="max-width:1240px;margin:0 auto;padding:56px 32px 120px;display:flex;flex-direction:column;gap:76px;color:#1A202C;">
+
+  <!-- ============ 1 · NAMING ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">1 &middot; Naming &amp; mark</h1>
+    <p style="color:#6B7280;font-size:15px;max-width:660px;margin:0 0 26px;">Throughline is out. The replacement is <strong>Crux</strong> &mdash; the decisive point on which an argument turns. Short, ownable, and it names the thing the product is trying to find.</p>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:300px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:4px;padding:26px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;margin-bottom:16px;">OPTION A</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <svg width="34" height="34" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#0B7285" stroke-width="2.5"/><ellipse cx="18" cy="18" rx="15" ry="6" fill="none" stroke="#0B7285" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="33" stroke="#0B7285" stroke-width="2"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;">Argument Atlas</span>
+        </div>
+        <p style="font-size:14px;color:#374151;margin:0 0 12px;font-style:italic;">&ldquo;Arguments worth having.&rdquo;</p>
+        <p style="font-size:14px;color:#6B7280;line-height:1.6;margin:0;">Maps the terrain of a debate. Reads as a reference work. Two words and four syllables is the cost.</p>
+      </div>
+
+      <div style="flex:1;min-width:300px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:4px;padding:26px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;margin-bottom:16px;">OPTION B</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <svg width="34" height="34" viewBox="0 0 36 36"><rect x="2" y="7" width="20" height="14" rx="7" fill="#0B7285"/><rect x="14" y="16" width="20" height="14" rx="7" fill="#D97706" opacity="0.88"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;">Debattic</span>
+        </div>
+        <p style="font-size:14px;color:#374151;margin:0 0 12px;font-style:italic;">&ldquo;Arguments worth having.&rdquo;</p>
+        <p style="font-size:14px;color:#6B7280;line-height:1.6;margin:0;">Ownable and distinct, but the portmanteau reads startup rather than civic institution.</p>
+      </div>
+
+      <div style="flex:1;min-width:300px;background:#FFFFFF;border:1px solid #0B7285;border-radius:4px;padding:26px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;color:#FFFFFF;background:#0B7285;padding:3px 8px;border-radius:3px;margin-bottom:16px;">OPTION C &middot; new</span>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <svg width="34" height="34" viewBox="0 0 36 36"><line x1="5" y1="9" x2="31" y2="27" stroke="#0B7285" stroke-width="2.5"/><line x1="31" y1="9" x2="5" y2="27" stroke="#0B7285" stroke-width="2.5"/><circle cx="18" cy="18" r="5" fill="#D97706"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:23px;font-weight:600;">Crux</span>
+        </div>
+        <p style="font-size:14px;color:#374151;margin:0 0 12px;font-style:italic;">&ldquo;Find the crux.&rdquo;</p>
+        <p style="font-size:14px;color:#6B7280;line-height:1.6;margin:0;">One syllable, plain English, no explanation needed. The mark is two claims crossing with the point of disagreement marked &mdash; which is literally the data model.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2 · PALETTES ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">2 &middot; Three colour directions</h1>
+    <p style="color:#6B7280;font-size:15px;max-width:660px;margin:0 0 26px;">Same component in each: nav bar, an argument row, badges. The requirements palette carries four hues plus neutrals, which is a lot of meaning to hold at once &mdash; B and C tighten it to one primary, one accent, and a for/against pair that sits in the same tonal family.</p>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+
+      <div style="flex:1;min-width:320px;">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
+          <span style="font-size:14px;font-weight:700;">A &middot; Civic warm</span>
+          <span style="font-size:12px;color:#6B7280;">as specified &mdash; teal, amber, sage, terracotta</span>
+        </div>
+        <div style="border:1px solid #E8E2D9;border-radius:6px;overflow:hidden;background:#F9F7F4;">
+          <div style="background:#FFFFFF;border-bottom:1px solid #E8E2D9;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:#1A202C;">Argument Atlas</span>
+            <span style="font-size:12px;font-weight:600;color:#0B7285;border:1.5px solid #0B7285;padding:4px 10px;border-radius:4px;">Sign in</span>
+          </div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-left:3px solid #2D9E6B;border-radius:5px;padding:12px;">
+              <p style="font-size:13px;font-weight:600;margin:0 0 8px;color:#1A202C;">Amplification is an editorial decision, not passive hosting</p>
+              <div style="display:flex;gap:6px;">
+                <span style="font-size:10px;font-weight:600;color:#6B7280;border:1px solid #E8E2D9;padding:2px 7px;border-radius:3px;">FACT</span>
+                <span style="font-size:10px;font-weight:600;color:#FFFFFF;background:#2D9E6B;padding:2px 7px;border-radius:3px;">STRONG</span>
+                <span style="font-size:10px;font-weight:600;color:#0B7285;background:#E3F7FA;padding:2px 7px;border-radius:3px;">TECHNOLOGY</span>
+              </div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-left:3px solid #C0533A;border-radius:5px;padding:12px;">
+              <p style="font-size:13px;font-weight:600;margin:0;color:#1A202C;">Section 230 is the legal foundation of the participatory web</p>
+            </div>
+          </div>
+          <div style="display:flex;">
+            <div style="flex:1;height:26px;background:#0B7285;"></div>
+            <div style="flex:1;height:26px;background:#D97706;"></div>
+            <div style="flex:1;height:26px;background:#2D9E6B;"></div>
+            <div style="flex:1;height:26px;background:#C0533A;"></div>
+            <div style="flex:1;height:26px;background:#F9F7F4;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:320px;">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
+          <span style="font-size:14px;font-weight:700;">B &middot; Archival ink</span>
+          <span style="font-size:12px;color:#6B7280;">recommended &mdash; reference-work restraint</span>
+        </div>
+        <div style="border:1px solid #E2DED4;border-radius:6px;overflow:hidden;background:#F4F2ED;">
+          <div style="background:#FFFFFF;border-bottom:1px solid #E2DED4;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:#14181F;">Argument Atlas</span>
+            <span style="font-size:12px;font-weight:600;color:#1F3A5F;border:1.5px solid #1F3A5F;padding:4px 10px;border-radius:4px;">Sign in</span>
+          </div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="background:#FFFFFF;border:1px solid #E2DED4;border-left:3px solid #2E7D6B;border-radius:5px;padding:12px;">
+              <p style="font-size:13px;font-weight:600;margin:0 0 8px;color:#14181F;">Amplification is an editorial decision, not passive hosting</p>
+              <div style="display:flex;gap:6px;">
+                <span style="font-size:10px;font-weight:600;color:#6A6C72;border:1px solid #E2DED4;padding:2px 7px;border-radius:3px;">FACT</span>
+                <span style="font-size:10px;font-weight:600;color:#FFFFFF;background:#2E7D6B;padding:2px 7px;border-radius:3px;">STRONG</span>
+                <span style="font-size:10px;font-weight:600;color:#1F3A5F;background:#E7ECF3;padding:2px 7px;border-radius:3px;">TECHNOLOGY</span>
+              </div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid #E2DED4;border-left:3px solid #A8452F;border-radius:5px;padding:12px;">
+              <p style="font-size:13px;font-weight:600;margin:0;color:#14181F;">Section 230 is the legal foundation of the participatory web</p>
+            </div>
+          </div>
+          <div style="display:flex;">
+            <div style="flex:1;height:26px;background:#1F3A5F;"></div>
+            <div style="flex:1;height:26px;background:#B4741E;"></div>
+            <div style="flex:1;height:26px;background:#2E7D6B;"></div>
+            <div style="flex:1;height:26px;background:#A8452F;"></div>
+            <div style="flex:1;height:26px;background:#F4F2ED;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:320px;">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:10px;">
+          <span style="font-size:14px;font-weight:700;">C &middot; Field notes</span>
+          <span style="font-size:12px;color:#6B7280;">warmer, higher contrast</span>
+        </div>
+        <div style="border:1px solid #E4E1D8;border-radius:6px;overflow:hidden;background:#FBFAF7;">
+          <div style="background:#FFFFFF;border-bottom:1px solid #E4E1D8;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:'Source Serif 4',serif;font-size:16px;font-weight:600;color:#14211C;">Argument Atlas</span>
+            <span style="font-size:12px;font-weight:600;color:#FFFFFF;background:#17453B;padding:5px 12px;border-radius:4px;">Sign in</span>
+          </div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:10px;">
+            <div style="background:#FFFFFF;border:1px solid #E4E1D8;border-left:3px solid #3F7D5C;border-radius:5px;padding:12px;">
+              <p style="font-size:13px;font-weight:600;margin:0 0 8px;color:#14211C;">Amplification is an editorial decision, not passive hosting</p>
+              <div style="display:flex;gap:6px;">
+                <span style="font-size:10px;font-weight:600;color:#6B7280;border:1px solid #E4E1D8;padding:2px 7px;border-radius:3px;">FACT</span>
+                <span style="font-size:10px;font-weight:600;color:#FFFFFF;background:#3F7D5C;padding:2px 7px;border-radius:3px;">STRONG</span>
+                <span style="font-size:10px;font-weight:600;color:#17453B;background:#E4EFEA;padding:2px 7px;border-radius:3px;">TECHNOLOGY</span>
+              </div>
+            </div>
+            <div style="background:#FFFFFF;border:1px solid #E4E1D8;border-left:3px solid #9E4A45;border-radius:5px;padding:12px;">
+              <p style="font-size:13px;font-weight:600;margin:0;color:#14211C;">Section 230 is the legal foundation of the participatory web</p>
+            </div>
+          </div>
+          <div style="display:flex;">
+            <div style="flex:1;height:26px;background:#17453B;"></div>
+            <div style="flex:1;height:26px;background:#C2691A;"></div>
+            <div style="flex:1;height:26px;background:#3F7D5C;"></div>
+            <div style="flex:1;height:26px;background:#9E4A45;"></div>
+            <div style="flex:1;height:26px;background:#FBFAF7;"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p style="font-size:13px;color:#6B7280;margin:18px 0 0;">Screens below are drawn in <strong>A</strong> so they stay comparable with v1. Say the word and I'll reflow everything into B or C.</p>
+  </section>
+
+  <!-- ============ 3 · UNIFIED ITEM PAGE ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">3 &middot; One page type for everything</h1>
+    <p style="color:#6B7280;font-size:15px;max-width:720px;margin:0 0 22px;">Debates and arguments are the same object: a claim with things that support it and things that contradict it. There is no separate results page &mdash; analytics sit in the claim header. Rows are one line until you hover.</p>
+
+    <div style="background:#F9F7F4;border:1px solid #E8E2D9;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+      <header style="background:#FFFFFF;border-bottom:1px solid #E8E2D9;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="28" height="28" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#0B7285" stroke-width="2.5"/><ellipse cx="18" cy="18" rx="15" ry="6" fill="none" stroke="#0B7285" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="33" stroke="#0B7285" stroke-width="2"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;">Argument Atlas</span>
+        </div>
+        <nav style="display:flex;align-items:center;gap:24px;font-size:14px;">
+          <a href="#" style="color:#1A202C;font-weight:500;">Claims</a>
+          <a href="#" style="color:#6B7280;">About</a>
+          <span style="padding:8px 18px;border:1.5px solid #0B7285;color:#0B7285;border-radius:5px;font-weight:600;">Sign in</span>
+        </nav>
+      </header>
+
+      <main style="max-width:1000px;margin:0 auto;padding:40px 28px 72px;">
+        <div style="font-size:13px;color:#6B7280;margin-bottom:16px;"><a href="#">Claims</a> &nbsp;/&nbsp; <a href="#">Technology</a> &nbsp;/&nbsp; Platform liability</div>
+
+        <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:28px;margin-bottom:28px;">
+          <div style="display:flex;gap:32px;align-items:flex-start;">
+            <div style="flex:1;">
+              <div style="display:flex;gap:6px;margin-bottom:12px;">
+                <span style="font-size:10px;font-weight:700;color:#6B7280;border:1px solid #E8E2D9;padding:3px 8px;border-radius:3px;">PROPOSAL</span>
+                <span style="font-size:10px;font-weight:700;color:#FFFFFF;background:#2D9E6B;padding:3px 8px;border-radius:3px;">STRONG EVIDENCE</span>
+                <span style="font-size:10px;font-weight:700;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;">TECHNOLOGY</span>
+                <span style="font-size:10px;font-weight:700;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;">LAW</span>
+              </div>
+              <h1 style="font-family:'Source Serif 4',serif;font-size:27px;font-weight:600;line-height:1.25;margin:0 0 12px;">Social media platforms should be held legally responsible for content posted by users</h1>
+              <p style="font-size:15px;color:#6B7280;line-height:1.6;margin:0 0 20px;">Whether platforms should face liability for user-generated content, or whether the protections that shield them today should remain intact.</p>
+
+              <div style="border-top:1px solid #E8E2D9;padding-top:18px;">
+                <p style="font-size:13px;color:#6B7280;margin:0 0 12px;">Two independent signals &mdash; rate both.</p>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:13px;width:140px;color:#374151;">Was this persuasive?</span>
+                    <span style="padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600;color:#9CA3AF;background:#F1EFEA;border:1px solid #E8E2D9;">&#9650; Yes</span>
+                    <span style="padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600;color:#9CA3AF;background:#F1EFEA;border:1px solid #E8E2D9;">&#9660; No</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:13px;width:140px;color:#374151;">Well constructed?</span>
+                    <span style="padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600;color:#9CA3AF;background:#F1EFEA;border:1px solid #E8E2D9;">&#9650; Yes</span>
+                    <span style="padding:7px 15px;border-radius:20px;font-size:13px;font-weight:600;color:#9CA3AF;background:#F1EFEA;border:1px solid #E8E2D9;">&#9660; No</span>
+                  </div>
+                </div>
+                <p style="font-size:13px;margin:14px 0 0;"><a href="#" style="font-weight:600;">Sign in to add your vote</a><span style="color:#6B7280;"> &mdash; 86 people have rated this claim.</span></p>
+              </div>
+            </div>
+
+            <div style="width:280px;flex-shrink:0;">
+              <div style="display:flex;justify-content:space-between;font-size:12px;color:#6B7280;margin-bottom:8px;">
+                <span><strong style="color:#1A202C;font-size:15px;">3.9</strong> persuasive</span>
+                <span><strong style="color:#1A202C;font-size:15px;">4.2</strong> well made</span>
+              </div>
+              <div style="position:relative;width:100%;aspect-ratio:1;border:1px solid #E8E2D9;border-radius:6px;overflow:hidden;background:#FFFFFF;">
+                <div style="position:absolute;left:0;top:0;width:50%;height:50%;background:#FCF3D9;"></div>
+                <div style="position:absolute;left:50%;top:0;width:50%;height:50%;background:#E3F7FA;"></div>
+                <div style="position:absolute;left:0;top:50%;width:50%;height:50%;background:#F1EFEA;"></div>
+                <div style="position:absolute;left:50%;top:50%;width:50%;height:50%;background:#FBEAE4;"></div>
+                <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#D8D2C8;"></div>
+                <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:#D8D2C8;"></div>
+                <span style="position:absolute;left:8px;top:8px;font-size:9px;font-weight:700;color:#9C7A17;">STEELMAN</span>
+                <span style="position:absolute;right:8px;top:8px;font-size:9px;font-weight:700;color:#0B7285;">COMPELLING</span>
+                <span style="position:absolute;left:8px;bottom:8px;font-size:9px;font-weight:700;color:#8B8F97;">WEAK</span>
+                <span style="position:absolute;right:8px;bottom:8px;font-size:9px;font-weight:700;color:#A24A34;">PARTISAN</span>
+                <sc-for list="{{ scatterDots }}" as="dot" hint-placeholder-count="14">
+                  <div style="position:absolute;width:7px;height:7px;border-radius:50%;background:#0B7285;opacity:0.8;transform:translate(-50%,-50%);left:{{ dot.left }}%;top:{{ dot.top }}%;"></div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:#6B7280;margin-top:6px;">
+                <span>&larr; not persuasive</span>
+                <span>persuasive &rarr;</span>
+              </div>
+              <p style="font-size:12px;color:#6B7280;line-height:1.5;margin:12px 0 0;">86 votes &middot; 4 revisions &middot; quality rose 3.1 &rarr; 4.2 after the last edit</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <div style="width:9px;height:9px;border-radius:50%;background:#2D9E6B;"></div>
+              <h2 style="font-size:15px;font-weight:700;margin:0;">Supports this claim</h2>
+              <span style="font-size:12px;color:#6B7280;">(3)</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;" onMouseLeave="{{ clearHover }}">
+              <sc-for list="{{ supports }}" as="row" hint-placeholder-count="3">
+                <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-left:3px solid #2D9E6B;border-radius:5px;overflow:hidden;" onMouseEnter="{{ row.hover }}">
+                  <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;">
+                    <span style="width:5px;height:5px;border-radius:50%;background:#2D9E6B;flex-shrink:0;"></span>
+                    <span style="font-size:13.5px;font-weight:500;flex:1;line-height:1.35;">{{ row.claim }}</span>
+                    <span style="font-size:11px;color:#6B7280;flex-shrink:0;">{{ row.score }}</span>
+                  </div>
+                  <sc-if value="{{ row.isOpen }}">
+                    <div style="border-top:1px solid #F0EDE7;padding:14px;background:#FCFBF9;">
+                      <p style="font-size:13px;color:#374151;line-height:1.55;margin:0 0 12px;">{{ row.detail }}</p>
+                      <div style="display:flex;gap:6px;margin-bottom:14px;">
+                        <span style="font-size:10px;font-weight:600;color:#6B7280;border:1px solid #E8E2D9;padding:2px 7px;border-radius:3px;">{{ row.type }}</span>
+                        <span style="font-size:10px;font-weight:600;color:#FFFFFF;background:#2D9E6B;padding:2px 7px;border-radius:3px;">{{ row.evidence }}</span>
+                      </div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                        <div>
+                          <div style="font-size:10px;font-weight:700;color:#2D9E6B;margin-bottom:5px;">SUPPORTED BY</div>
+                          <ul style="margin:0;padding-left:14px;font-size:12px;color:#6B7280;line-height:1.5;">
+                            <sc-for list="{{ row.pro }}" as="p" hint-placeholder-count="3"><li>{{ p }}</li></sc-for>
+                          </ul>
+                        </div>
+                        <div>
+                          <div style="font-size:10px;font-weight:700;color:#C0533A;margin-bottom:5px;">CONTRADICTED BY</div>
+                          <ul style="margin:0;padding-left:14px;font-size:12px;color:#6B7280;line-height:1.5;">
+                            <sc-for list="{{ row.con }}" as="c" hint-placeholder-count="2"><li>{{ c }}</li></sc-for>
+                          </ul>
+                        </div>
+                      </div>
+                      <a href="#" style="font-size:12px;font-weight:600;">Open this claim &rarr;</a>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+              <div style="width:9px;height:9px;border-radius:50%;background:#C0533A;"></div>
+              <h2 style="font-size:15px;font-weight:700;margin:0;">Contradicts this claim</h2>
+              <span style="font-size:12px;color:#6B7280;">(3)</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;" onMouseLeave="{{ clearHover }}">
+              <sc-for list="{{ contradicts }}" as="row" hint-placeholder-count="3">
+                <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-left:3px solid #C0533A;border-radius:5px;overflow:hidden;" onMouseEnter="{{ row.hover }}">
+                  <div style="display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;">
+                    <span style="width:5px;height:5px;border-radius:50%;background:#C0533A;flex-shrink:0;"></span>
+                    <span style="font-size:13.5px;font-weight:500;flex:1;line-height:1.35;">{{ row.claim }}</span>
+                    <span style="font-size:11px;color:#6B7280;flex-shrink:0;">{{ row.score }}</span>
+                  </div>
+                  <sc-if value="{{ row.isOpen }}">
+                    <div style="border-top:1px solid #F0EDE7;padding:14px;background:#FCFBF9;">
+                      <p style="font-size:13px;color:#374151;line-height:1.55;margin:0 0 12px;">{{ row.detail }}</p>
+                      <div style="display:flex;gap:6px;margin-bottom:14px;">
+                        <span style="font-size:10px;font-weight:600;color:#6B7280;border:1px solid #E8E2D9;padding:2px 7px;border-radius:3px;">{{ row.type }}</span>
+                        <span style="font-size:10px;font-weight:600;color:#FFFFFF;background:#D97706;padding:2px 7px;border-radius:3px;">{{ row.evidence }}</span>
+                      </div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                        <div>
+                          <div style="font-size:10px;font-weight:700;color:#2D9E6B;margin-bottom:5px;">SUPPORTED BY</div>
+                          <ul style="margin:0;padding-left:14px;font-size:12px;color:#6B7280;line-height:1.5;">
+                            <sc-for list="{{ row.pro }}" as="p" hint-placeholder-count="3"><li>{{ p }}</li></sc-for>
+                          </ul>
+                        </div>
+                        <div>
+                          <div style="font-size:10px;font-weight:700;color:#C0533A;margin-bottom:5px;">CONTRADICTED BY</div>
+                          <ul style="margin:0;padding-left:14px;font-size:12px;color:#6B7280;line-height:1.5;">
+                            <sc-for list="{{ row.con }}" as="c" hint-placeholder-count="2"><li>{{ c }}</li></sc-for>
+                          </ul>
+                        </div>
+                      </div>
+                      <a href="#" style="font-size:12px;font-weight:600;">Open this claim &rarr;</a>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:26px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:20px 24px;">
+          <h3 style="font-size:14px;font-weight:700;margin:0 0 12px;">Evidence attached to this claim</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:baseline;">
+              <span style="font-size:10px;font-weight:700;color:#6B7280;border:1px solid #E8E2D9;padding:2px 7px;border-radius:3px;flex-shrink:0;">JOURNALISM</span>
+              <div><a href="#" style="font-size:13px;font-weight:600;">The Facebook Files (WSJ, 2021)</a><p style="font-size:12px;color:#6B7280;margin:2px 0 0;line-height:1.5;">Internal research showing the algorithm amplified divisive content, and leadership chose not to act.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:baseline;">
+              <span style="font-size:10px;font-weight:700;color:#6B7280;border:1px solid #E8E2D9;padding:2px 7px;border-radius:3px;flex-shrink:0;">LEGAL TEXT</span>
+              <div><a href="#" style="font-size:13px;font-weight:600;">Communications Decency Act &sect;230 &mdash; statutory text</a><p style="font-size:12px;color:#6B7280;margin:2px 0 0;line-height:1.5;">Grants platforms immunity for third-party content; the legislative history sets out the intent.</p></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- ============ 4 · SUPPORT STRENGTH OPTIONS ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">4 &middot; Rating the connection, three ways</h1>
+    <p style="color:#6B7280;font-size:15px;max-width:720px;margin:0 0 26px;">Once any claim can attach to any other claim, the link itself needs a quality signal &mdash; a true statement can be irrelevant to the claim it's filed under.</p>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+
+      <div style="flex:1;min-width:300px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:6px;padding:22px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;margin-bottom:14px;">OPTION 1 &middot; third signal</span>
+        <div style="background:#F9F7F4;border:1px solid #E8E2D9;border-radius:5px;padding:14px;margin-bottom:14px;">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:12px;width:120px;color:#374151;">Persuasive?</span><span style="padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;background:#FFFFFF;border:1px solid #E8E2D9;color:#6B7280;">&#9650;</span><span style="padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;background:#FFFFFF;border:1px solid #E8E2D9;color:#6B7280;">&#9660;</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:12px;width:120px;color:#374151;">Well made?</span><span style="padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;background:#FFFFFF;border:1px solid #E8E2D9;color:#6B7280;">&#9650;</span><span style="padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;background:#FFFFFF;border:1px solid #E8E2D9;color:#6B7280;">&#9660;</span></div>
+            <div style="display:flex;align-items:center;gap:10px;padding-top:8px;border-top:1px dashed #E8E2D9;"><span style="font-size:12px;width:120px;color:#0B7285;font-weight:600;">Relevant here?</span><span style="padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;background:#FFFFFF;border:1.5px solid #0B7285;color:#0B7285;">&#9650;</span><span style="padding:5px 12px;border-radius:16px;font-size:11px;font-weight:600;background:#FFFFFF;border:1.5px solid #0B7285;color:#0B7285;">&#9660;</span></div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0;">One more thumb pair on the child card. Cheapest to build and consistent with what's there &mdash; but three questions per card is real voting fatigue, and the answer changes depending on which parent you're viewing it from.</p>
+      </div>
+
+      <div style="flex:1;min-width:300px;background:#FFFFFF;border:1px solid #0B7285;border-radius:6px;padding:22px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;color:#FFFFFF;background:#0B7285;padding:3px 8px;border-radius:3px;margin-bottom:14px;">OPTION 2 &middot; on the link &middot; recommended</span>
+        <div style="background:#F9F7F4;border:1px solid #E8E2D9;border-radius:5px;padding:14px;margin-bottom:14px;">
+          <div style="font-size:12px;font-weight:600;margin-bottom:4px;">Amplification is an editorial decision</div>
+          <div style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+            <div style="flex:1;height:2px;background:#2D9E6B;"></div>
+            <span style="font-size:10px;font-weight:700;color:#2D9E6B;white-space:nowrap;">SUPPORTS &middot; DECISIVE</span>
+            <div style="flex:1;height:2px;background:#2D9E6B;"></div>
+          </div>
+          <div style="display:flex;gap:0;border:1px solid #E8E2D9;border-radius:5px;overflow:hidden;background:#FFFFFF;">
+            <span style="flex:1;text-align:center;font-size:11px;padding:6px 0;color:#6B7280;border-right:1px solid #E8E2D9;">Tangential</span>
+            <span style="flex:1;text-align:center;font-size:11px;padding:6px 0;color:#6B7280;border-right:1px solid #E8E2D9;">Relevant</span>
+            <span style="flex:1;text-align:center;font-size:11px;padding:6px 0;color:#FFFFFF;background:#2D9E6B;font-weight:600;">Decisive</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0;">The rating lives on the connector, not the card &mdash; which matches the data model, since the same claim can be decisive in one debate and tangential in another. Three named steps, no fourth thumb pair.</p>
+      </div>
+
+      <div style="flex:1;min-width:300px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:6px;padding:22px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;margin-bottom:14px;">OPTION 3 &middot; weight by thickness</span>
+        <div style="background:#F9F7F4;border:1px solid #E8E2D9;border-radius:5px;padding:14px;margin-bottom:14px;display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:44px;height:7px;background:#2D9E6B;border-radius:4px;"></div><span style="font-size:11.5px;color:#374151;">Amplification is an editorial decision</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:44px;height:4px;background:#2D9E6B;opacity:0.7;border-radius:4px;"></div><span style="font-size:11.5px;color:#374151;">Moderation technology already exists</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:44px;height:2px;background:#9CA3AF;border-radius:4px;"></div><span style="font-size:11.5px;color:#6B7280;">Platforms profit from harm</span></div>
+        </div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0;">No new control at all &mdash; connection strength is inferred from the child's own scores and drawn as line weight. Zero friction, but readers can't correct a link that's simply filed in the wrong place.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 · EDIT ENTRY OPTIONS ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">5 &middot; Where editing starts</h1>
+    <p style="color:#6B7280;font-size:15px;max-width:720px;margin:0 0 26px;">The low-quality vote should hand off to editing without feeling like a punishment for voting.</p>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:290px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:6px;padding:22px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;margin-bottom:14px;">ENTRY A &middot; prompt after a low score</span>
+        <div style="background:#FFFBEB;border:1px solid #FCD34D;border-radius:5px;padding:14px;margin-bottom:14px;">
+          <p style="font-size:12.5px;margin:0 0 10px;color:#1A202C;line-height:1.5;">You rated this poorly constructed. Want to help improve it?</p>
+          <div style="display:flex;gap:8px;"><span style="font-size:11px;font-weight:600;background:#D97706;color:#FFFFFF;padding:5px 12px;border-radius:4px;">Improve the wording</span><span style="font-size:11px;color:#6B7280;padding:5px 6px;">Not now</span></div>
+        </div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0;">Fires once, dismissible, never blocks the vote. This is the loop the requirements describe &mdash; it should be the default path in.</p>
+      </div>
+      <div style="flex:1;min-width:290px;background:#FFFFFF;border:1px solid #0B7285;border-radius:6px;padding:22px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;color:#FFFFFF;background:#0B7285;padding:3px 8px;border-radius:3px;margin-bottom:14px;">ENTRY B &middot; side panel &middot; recommended</span>
+        <div style="display:flex;gap:6px;margin-bottom:14px;height:110px;">
+          <div style="flex:1.1;background:#F9F7F4;border:1px solid #E8E2D9;border-radius:5px;padding:10px;"><div style="height:7px;width:70%;background:#E8E2D9;border-radius:3px;margin-bottom:6px;"></div><div style="height:5px;width:100%;background:#EFEBE4;border-radius:3px;margin-bottom:4px;"></div><div style="height:5px;width:92%;background:#EFEBE4;border-radius:3px;margin-bottom:4px;"></div><div style="height:5px;width:60%;background:#EFEBE4;border-radius:3px;"></div></div>
+          <div style="flex:1;background:#FFFFFF;border:1.5px solid #0B7285;border-radius:5px;padding:10px;"><div style="font-size:9px;font-weight:700;color:#0B7285;margin-bottom:6px;">EDITING</div><div style="height:22px;border:1px solid #E8E2D9;border-radius:3px;margin-bottom:6px;"></div><div style="height:38px;border:1px solid #E8E2D9;border-radius:3px;"></div></div>
+        </div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0;">Draft beside the live claim so the surrounding argument stays visible &mdash; you're editing in context, not in a vacuum. Collapses to full width on mobile.</p>
+      </div>
+      <div style="flex:1;min-width:290px;background:#FFFFFF;border:1px solid #E8E2D9;border-radius:6px;padding:22px;">
+        <span style="display:inline-block;font-size:11px;font-weight:700;color:#0B7285;background:#E3F7FA;padding:3px 8px;border-radius:3px;margin-bottom:14px;">ENTRY C &middot; full page</span>
+        <div style="background:#F9F7F4;border:1px solid #E8E2D9;border-radius:5px;padding:10px;margin-bottom:14px;height:110px;"><div style="height:9px;width:40%;background:#E8E2D9;border-radius:3px;margin-bottom:8px;"></div><div style="height:26px;border:1px solid #E8E2D9;background:#FFF;border-radius:3px;margin-bottom:6px;"></div><div style="height:48px;border:1px solid #E8E2D9;background:#FFF;border-radius:3px;"></div></div>
+        <p style="font-size:13px;color:#6B7280;line-height:1.6;margin:0;">Room for version history and diffs side by side. Right for a substantial rewrite or a revert &mdash; overkill for fixing a clause. Designed in full below.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 · EDIT PAGE ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">6 &middot; Edit page</h1>
+    <p style="color:#6B7280;font-size:15px;max-width:720px;margin:0 0 22px;">Wording, classification, tags and evidence on the left; the revision record on the right, with a diff you can read before you revert.</p>
+
+    <div style="background:#F9F7F4;border:1px solid #E8E2D9;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+      <header style="background:#FFFFFF;border-bottom:1px solid #E8E2D9;padding:18px 40px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="28" height="28" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#0B7285" stroke-width="2.5"/><ellipse cx="18" cy="18" rx="15" ry="6" fill="none" stroke="#0B7285" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="33" stroke="#0B7285" stroke-width="2"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:20px;font-weight:600;">Argument Atlas</span>
+        </div>
+        <nav style="display:flex;align-items:center;gap:20px;font-size:14px;">
+          <span style="font-size:13px;color:#6B7280;">Signed in as <strong style="color:#1A202C;">d.reyes</strong></span>
+          <span style="width:28px;height:28px;border-radius:50%;background:#0B7285;color:#FFFFFF;font-size:12px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;">DR</span>
+        </nav>
+      </header>
+
+      <div style="background:#FFFBEB;border-bottom:1px solid #FCD34D;padding:12px 40px;font-size:13px;color:#1A202C;">You're editing a live claim. Changes publish immediately, are attributed to you, and can be reverted by anyone.</div>
+
+      <main style="max-width:1060px;margin:0 auto;padding:32px 28px 72px;display:grid;grid-template-columns:1.55fr 1fr;gap:28px;align-items:start;">
+
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:24px;">
+            <label style="display:block;font-size:12px;font-weight:700;letter-spacing:0.04em;color:#6B7280;margin-bottom:8px;">CLAIM</label>
+            <input type="text" value="Amplification of harmful content is a deliberate product decision" style="width:100%;font-family:'Public Sans',sans-serif;font-size:15px;font-weight:600;color:#1A202C;padding:11px 13px;border:1px solid #E8E2D9;border-radius:5px;background:#FFFFFF;margin-bottom:6px;" />
+            <p style="font-size:11.5px;color:#6B7280;margin:0 0 20px;">One sentence. State the claim, not the evidence for it.</p>
+
+            <label style="display:block;font-size:12px;font-weight:700;letter-spacing:0.04em;color:#6B7280;margin-bottom:8px;">BODY</label>
+            <textarea rows="6" style="width:100%;font-family:'Public Sans',sans-serif;font-size:14px;line-height:1.6;color:#1A202C;padding:12px 13px;border:1px solid #E8E2D9;border-radius:5px;resize:vertical;">Platforms do not passively host content — their algorithms actively select and amplify it. When a recommendation engine surfaces outrage-inducing content because it maximises watch time, the platform is making an active editorial decision. Passive hosting and active amplification are not equivalent, and liability frameworks should reflect this.</textarea>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:24px;">
+            <h3 style="font-size:14px;font-weight:700;margin:0 0 16px;">Classification</h3>
+            <div style="margin-bottom:18px;">
+              <div style="font-size:12px;color:#6B7280;margin-bottom:8px;">Claim type</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="font-size:12px;font-weight:600;padding:6px 14px;border-radius:5px;background:#0B7285;color:#FFFFFF;">Fact</span>
+                <span style="font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #E8E2D9;color:#6B7280;">Opinion</span>
+                <span style="font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #E8E2D9;color:#6B7280;">Value</span>
+                <span style="font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #E8E2D9;color:#6B7280;">Proposal</span>
+              </div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div style="font-size:12px;color:#6B7280;margin-bottom:8px;">Evidence strength</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                <span style="font-size:12px;font-weight:600;padding:6px 14px;border-radius:5px;background:#2D9E6B;color:#FFFFFF;">Strong</span>
+                <span style="font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #E8E2D9;color:#6B7280;">Moderate</span>
+                <span style="font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #E8E2D9;color:#6B7280;">Weak</span>
+                <span style="font-size:12px;padding:6px 14px;border-radius:5px;border:1px solid #E8E2D9;color:#6B7280;">None</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:#6B7280;margin-bottom:8px;">Tags</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+                <span style="font-size:11px;font-weight:600;color:#0B7285;background:#E3F7FA;padding:5px 10px;border-radius:20px;">Technology &nbsp;&times;</span>
+                <span style="font-size:11px;font-weight:600;color:#0B7285;background:#E3F7FA;padding:5px 10px;border-radius:20px;">Free Speech &nbsp;&times;</span>
+                <span style="font-size:12px;color:#6B7280;border:1px dashed #E8E2D9;padding:5px 12px;border-radius:20px;">+ Add tag</span>
+              </div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:24px;">
+            <h3 style="font-size:14px;font-weight:700;margin:0 0 14px;">Evidence</h3>
+            <div style="display:flex;gap:12px;align-items:baseline;padding-bottom:14px;border-bottom:1px solid #F0EDE7;margin-bottom:14px;">
+              <span style="font-size:10px;font-weight:700;color:#6B7280;border:1px solid #E8E2D9;padding:2px 7px;border-radius:3px;flex-shrink:0;">JOURNALISM</span>
+              <div style="flex:1;"><span style="font-size:13px;font-weight:600;">The Facebook Files (WSJ, 2021)</span><p style="font-size:11.5px;color:#6B7280;margin:2px 0 0;">wsj.com/articles/facebook-algorithm-change</p></div>
+              <span style="font-size:12px;color:#C0533A;">Remove</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <span style="font-size:12px;color:#6B7280;border:1px solid #E8E2D9;padding:8px 12px;border-radius:5px;">Evidence type &#9662;</span>
+              <input type="text" placeholder="Title or citation" style="flex:1;font-family:'Public Sans',sans-serif;font-size:12.5px;padding:8px 12px;border:1px solid #E8E2D9;border-radius:5px;" />
+              <input type="text" placeholder="URL" style="flex:1;font-family:'Public Sans',sans-serif;font-size:12.5px;padding:8px 12px;border:1px solid #E8E2D9;border-radius:5px;" />
+              <span style="font-size:12px;font-weight:600;color:#0B7285;border:1.5px solid #0B7285;padding:7px 14px;border-radius:5px;white-space:nowrap;">Attach</span>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:24px;">
+            <label style="display:block;font-size:12px;font-weight:700;letter-spacing:0.04em;color:#6B7280;margin-bottom:8px;">WHY THIS CHANGE?</label>
+            <input type="text" value="Clarified the causal claim; removed the rhetorical question" style="width:100%;font-family:'Public Sans',sans-serif;font-size:13.5px;color:#1A202C;padding:10px 13px;border:1px solid #E8E2D9;border-radius:5px;margin-bottom:6px;" />
+            <p style="font-size:11.5px;color:#6B7280;margin:0 0 20px;">Shown in the revision list. One line is plenty.</p>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <span style="font-size:14px;font-weight:600;background:#0B7285;color:#FFFFFF;padding:11px 24px;border-radius:6px;">Publish revision</span>
+              <span style="font-size:14px;font-weight:600;color:#6B7280;padding:11px 18px;">Discard</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:20px;">
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:22px;">
+            <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Revision history</h3>
+            <p style="font-size:11.5px;color:#6B7280;margin:0 0 16px;">4 revisions by 3 contributors</p>
+            <div style="display:flex;flex-direction:column;">
+              <sc-for list="{{ revisions }}" as="rev" hint-placeholder-count="4">
+                <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #F0EDE7;">
+                  <div style="width:7px;height:7px;border-radius:50%;background:#0B7285;margin-top:5px;flex-shrink:0;"></div>
+                  <div style="flex:1;">
+                    <div style="font-size:12.5px;font-weight:600;margin-bottom:2px;">{{ rev.who }} &middot; <span style="font-weight:400;color:#6B7280;">{{ rev.when }}</span></div>
+                    <p style="font-size:12px;color:#6B7280;line-height:1.5;margin:0 0 6px;">{{ rev.summary }}</p>
+                    <div style="display:flex;gap:12px;font-size:11.5px;font-weight:600;">
+                      <a href="#">View diff</a>
+                      <a href="#">Revert to this</a>
+                    </div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:22px;">
+            <h3 style="font-size:14px;font-weight:700;margin:0 0 4px;">Diff &mdash; rev 3 to rev 4</h3>
+            <p style="font-size:11.5px;color:#6B7280;margin:0 0 14px;">Quality score rose 3.1 &rarr; 4.2 after this change.</p>
+            <div style="font-size:12.5px;line-height:1.65;">
+              <div style="background:#FBEAE4;border-left:3px solid #C0533A;padding:8px 10px;margin-bottom:6px;color:#5C2A1D;"><span style="font-weight:700;">&minus;</span> Isn't it obvious that platforms are making editorial decisions when they amplify content?</div>
+              <div style="background:#E9F6EF;border-left:3px solid #2D9E6B;padding:8px 10px;color:#1D4F38;"><span style="font-weight:700;">+</span> When a recommendation engine surfaces outrage-inducing content because it maximises watch time, the platform is making an active editorial decision.</div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border:1px solid #E8E2D9;border-radius:8px;padding:22px;">
+            <h3 style="font-size:14px;font-weight:700;margin:0 0 10px;">Structural changes</h3>
+            <p style="font-size:12.5px;color:#6B7280;line-height:1.6;margin:0 0 12px;">Moving this claim between supporting and contradicting, or re-parenting it to another claim, needs moderator approval.</p>
+            <span style="font-size:12px;font-weight:600;color:#0B7285;border:1.5px solid #0B7285;padding:8px 14px;border-radius:5px;display:inline-block;">Request a structural change</span>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400}}">
+class Component extends DCLogic {
+  state = { open: null };
+
+  mk(list) {
+    return list.map(r => ({
+      ...r,
+      isOpen: this.state.open === r.id,
+      hover: () => this.setState({ open: r.id })
+    }));
+  }
+
+  renderVals() {
+    return {
+      clearHover: () => this.setState({ open: null }),
+      scatterDots: [
+        {left:78,top:15},{left:82,top:22},{left:70,top:10},{left:88,top:28},
+        {left:75,top:35},{left:65,top:20},{left:60,top:45},{left:90,top:12},
+        {left:55,top:60},{left:40,top:25},{left:72,top:8},{left:85,top:40},
+        {left:30,top:70},{left:68,top:18}
+      ],
+      supports: this.mk([
+        {
+          id: 's1',
+          claim: 'Amplification is an editorial decision, not passive hosting',
+          score: '4.4 / 4.2',
+          type: 'FACT',
+          evidence: 'STRONG EVIDENCE',
+          detail: 'Recommendation engines actively select and rank content to maximise watch time. Choosing what to surface is an editorial act, and liability frameworks already treat editorial acts differently from carriage.',
+          pro: ['Internal research documented the effect', 'Ranking weights are set by staff', 'Ad revenue rises with time-on-feed'],
+          con: ['Ranking is automated at a scale no human reviews']
+        },
+        {
+          id: 's2',
+          claim: 'Moderation technology exists — liability supplies the missing incentive',
+          score: '4.1 / 4.0',
+          type: 'FACT',
+          evidence: 'STRONG EVIDENCE',
+          detail: 'Platforms already run sophisticated detection for spam, copyright and advertiser-unfriendly material. The capability is not in question; the commercial reason to point it at harm is.',
+          pro: ['Copyright detection runs at full scale today', 'Advertiser-safety filters are already automatic'],
+          con: ['Harm is contextual in a way copyright is not', 'False positives carry a speech cost']
+        },
+        {
+          id: 's3',
+          claim: 'Platforms profit directly from the harm they host',
+          score: '3.2 / 2.8',
+          type: 'FACT',
+          evidence: 'MODERATE EVIDENCE',
+          detail: 'Outrage and conflict drive more engagement than measured discourse, and engagement is sold to advertisers. An entity profiting from harm has an obligation to bear some of its cost.',
+          pro: ['Engagement metrics correlate with conflict', 'Ad load scales with session length'],
+          con: ['Profit alone does not establish legal duty']
+        }
+      ]),
+      contradicts: this.mk([
+        {
+          id: 'c1',
+          claim: 'These protections are the legal foundation of the participatory web',
+          score: '4.3 / 4.4',
+          type: 'FACT',
+          evidence: 'STRONG EVIDENCE',
+          detail: 'The immunity that lets platforms host user content without reviewing every post in advance is what makes Wikipedia, Reddit and community forums possible. Undermining it does not just touch the largest platforms.',
+          pro: ['Volunteer-run forums cannot pre-review', 'Wikipedia relies on the same shield'],
+          con: ['The provision predates algorithmic ranking']
+        },
+        {
+          id: 'c2',
+          claim: 'Liability would entrench the incumbents it aims to constrain',
+          score: '3.8 / 4.0',
+          type: 'FACT',
+          evidence: 'MODERATE EVIDENCE',
+          detail: 'Large firms can absorb compliance costs; a startup or a cooperative network cannot. The predictable result is less competition, not better moderation.',
+          pro: ['Compliance cost scales poorly for small teams', 'Legal risk deters investment in challengers'],
+          con: ['Thresholds could exempt smaller services']
+        },
+        {
+          id: 'c3',
+          claim: 'Responsibility belongs to whoever chose to publish',
+          score: '3.0 / 3.1',
+          type: 'PROPOSAL',
+          evidence: 'MODERATE EVIDENCE',
+          detail: 'A postal service is not liable for a defamatory letter it carries. Allocating responsibility to the author reflects who actually made the choice to speak.',
+          pro: ['Consistent with carrier precedent', 'Keeps moral responsibility with the author'],
+          con: ['Carriers do not rank or recommend', 'Authors are often anonymous or judgment-proof']
+        }
+      ]),
+      revisions: [
+        { who: 'd.reyes', when: '2 days ago', summary: 'Clarified the causal claim; removed the rhetorical question.' },
+        { who: 'a.okafor', when: '3 weeks ago', summary: 'Attached the WSJ investigation as evidence; raised evidence strength to strong.' },
+        { who: 'd.reyes', when: '1 month ago', summary: 'Split a two-part claim so the amplification point stands alone.' },
+        { who: 'm.whitlam', when: '2 months ago', summary: 'Created.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

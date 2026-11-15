@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Public Sans', sans-serif; background: #F7F4EE; }
+    a { color: #14636B; text-decoration: none; }
+    a:hover { color: #0E484E; text-decoration: underline; }
+  </style>
+</helmet>
+
+<div style="max-width:1240px;margin:0 auto;padding:56px 32px 120px;display:flex;flex-direction:column;gap:64px;color:#171512;">
+
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">Claim page &mdash; hover cards, both directions</h1>
+    <p style="color:#6E6558;font-size:15px;max-width:780px;margin:0 0 26px;">Every row in every direction has the same card. Scores explain themselves on hover rather than in body copy; the connection bars use the same weights as the row marks; voting on the connection sits beside the bar for the value you're voting for.</p>
+
+    <div style="background:#F7F4EE;border:1px solid #DCD5C8;">
+      <header style="background:#FFFFFF;border-bottom:2px solid #171512;padding:16px 36px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="24" height="24" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#171512" stroke-width="2.5"/><ellipse cx="18" cy="18" rx="15" ry="6" fill="none" stroke="#171512" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="33" stroke="#171512" stroke-width="2"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;">Argument Atlas</span>
+        </div>
+        <span style="display:inline-block;white-space:nowrap;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:#14636B;letter-spacing:0.06em;border:1px solid #14636B;padding:6px 12px;">SIGN IN</span>
+      </header>
+
+      <main style="max-width:1000px;margin:0 auto;padding:36px 28px 220px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6E6558;margin-bottom:16px;letter-spacing:0.03em;"><a href="#">CLAIMS</a> / <a href="#">TECHNOLOGY</a> / AMPLIFICATION IS EDITORIAL</div>
+        <h2 style="font-family:'Source Serif 4',serif;font-size:27px;font-weight:600;line-height:1.22;margin:0 0 12px;max-width:800px;">Amplification of harmful content is a deliberate product decision</h2>
+        <p style="font-size:15px;color:#4A443B;line-height:1.65;margin:0 0 34px;max-width:740px;">Platforms do not passively host content &mdash; their algorithms actively select and amplify it. Choosing what to surface is an editorial act, and liability frameworks already treat editorial acts differently from carriage.</p>
+
+        <div style="margin-bottom:38px;">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #14636B;">
+            <h3 style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.1em;margin:0;color:#14636B;">WHERE THIS CLAIM IS USED &nbsp;(4)</h3>
+            <span style="font-size:12px;color:#6E6558;">2 of these sit in other debates</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;" onMouseLeave="{{ clearHover }}">
+            <sc-for list="{{ usedIn }}" as="row" hint-placeholder-count="4">
+              <div style="position:relative;" onMouseEnter="{{ row.hover }}">
+                <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#FFFFFF;border:1px solid #DCD5C8;cursor:pointer;">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.08em;padding:3px 7px;flex-shrink:0;width:92px;text-align:center;color:{{ row.fg }};background:{{ row.bg }};">{{ row.relation }}</span>
+                  <div style="flex:1;">
+                    <div style="font-size:13.5px;font-weight:500;line-height:1.35;">{{ row.claim }}</div>
+                    <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6E6558;letter-spacing:0.04em;margin-top:3px;">{{ row.context }}</div>
+                  </div>
+                  <span style="display:flex;gap:2px;align-items:flex-end;height:11px;width:26px;flex-shrink:0;">
+                    <span style="width:7px;height:4px;background:{{ row.s1 }};"></span>
+                    <span style="width:7px;height:7px;background:{{ row.s2 }};"></span>
+                    <span style="width:7px;height:11px;background:{{ row.s3 }};"></span>
+                  </span>
+                </div>
+                <sc-if value="{{ row.isOpen }}">
+                  <div style="position:absolute;top:calc(100% - 2px);left:0;width:520px;max-width:100%;z-index:40;background:#FFFFFF;border:1px solid #14636B;box-shadow:0 14px 30px rgba(23,21,18,0.18);">
+                    <div style="padding:16px 18px;border-bottom:1px solid #E7E1D6;">
+                      <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:8px;">THE CLAIM IT FEEDS INTO</div>
+                      <p style="font-size:13px;color:#3A362F;line-height:1.6;margin:0 0 14px;">{{ row.detail }}</p>
+                      <div style="display:flex;gap:18px;align-items:center;">
+                        <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+                          <div style="position:relative;display:flex;align-items:center;gap:9px;" onMouseEnter="{{ row.hoverAgree }}">
+                            <span style="font-size:11.5px;width:80px;color:#6E6558;border-bottom:1px dotted #A39B8D;cursor:help;">People agree</span>
+                            <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.agreePct }};"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:24px;text-align:right;">{{ row.agree }}</span>
+                            <sc-if value="{{ row.agreeTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:250px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">Out of 5. Whether raters accept the claim is true &mdash; independent of how well it is argued.</span></sc-if>
+                          </div>
+                          <div style="position:relative;display:flex;align-items:center;gap:9px;" onMouseEnter="{{ row.hoverQuality }}">
+                            <span style="font-size:11.5px;width:80px;color:#6E6558;border-bottom:1px dotted #A39B8D;cursor:help;">Well made</span>
+                            <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.qualityPct }};"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:24px;text-align:right;">{{ row.quality }}</span>
+                            <sc-if value="{{ row.qualityTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:250px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">Out of 5. Whether the claim is argued properly &mdash; evidence, logic, clarity. You can rate it well made and still disagree.</span></sc-if>
+                          </div>
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#A39B8D;letter-spacing:0.05em;">{{ row.raters }} RATERS</span>
+                        </div>
+                        <div style="width:118px;flex-shrink:0;">
+                          <div style="position:relative;width:118px;height:118px;border:1px solid #DCD5C8;background:#FFFFFF;">
+                            <div style="position:absolute;left:0;top:0;width:50%;height:50%;background:#F3EFE7;"></div>
+                            <div style="position:absolute;left:50%;top:0;width:50%;height:50%;background:#E8EFE6;"></div>
+                            <div style="position:absolute;left:0;top:50%;width:50%;height:50%;background:#FBFAF7;"></div>
+                            <div style="position:absolute;left:50%;top:50%;width:50%;height:50%;background:#F7E7E1;"></div>
+                            <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DCD5C8;"></div>
+                            <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:#DCD5C8;"></div>
+                            <sc-for list="{{ row.dots }}" as="dot" hint-placeholder-count="10">
+                              <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:#171512;opacity:0.7;transform:translate(-50%,-50%);left:{{ dot.left }}%;top:{{ dot.top }}%;"></div>
+                            </sc-for>
+                          </div>
+                          <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.05em;color:#A39B8D;margin-top:4px;"><span>DISAGREE</span><span>AGREE</span></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div style="padding:16px 18px;background:#FBF8F2;border-bottom:1px solid #E7E1D6;">
+                      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;">
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:{{ row.fg }};">AS USED THERE &middot; {{ row.relation }}</span>
+                        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#A39B8D;letter-spacing:0.05em;">YOUR VOTE</span>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:8px;">
+                        <sc-for list="{{ row.dist }}" as="d" hint-placeholder-count="3">
+                          <div style="position:relative;display:flex;align-items:center;gap:10px;" onMouseEnter="{{ d.hover }}">
+                            <span style="font-size:11px;width:70px;color:#4A443B;border-bottom:1px dotted #A39B8D;cursor:help;">{{ d.label }}</span>
+                            <div style="flex:1;display:flex;align-items:center;height:11px;"><div style="width:{{ d.pct }};background:{{ row.fg }};height:{{ d.h }}px;"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;width:22px;text-align:right;color:#6E6558;">{{ d.n }}</span>
+                            <span style="font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border:1px solid #DCD5C8;background:#FFFFFF;color:#6E6558;cursor:pointer;flex-shrink:0;">Vote</span>
+                            <sc-if value="{{ d.isTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:270px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">{{ d.tip }}</span></sc-if>
+                          </div>
+                        </sc-for>
+                      </div>
+                    </div>
+
+                    <div style="padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                      <span style="font-size:11px;color:#A39B8D;">Editors can set this connection &mdash; the community view above is the reference.</span>
+                      <a href="#" style="font-size:12px;font-weight:600;white-space:nowrap;">Read more and rate it &rarr;</a>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;">
+          <div>
+            <div style="margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #4F7A52;"><h3 style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.1em;margin:0;color:#3D5F40;">WHAT SUPPORTS IT &nbsp;(3)</h3></div>
+            <div style="display:flex;flex-direction:column;gap:2px;" onMouseLeave="{{ clearHover }}">
+              <sc-for list="{{ supports }}" as="row" hint-placeholder-count="3">
+                <div style="position:relative;" onMouseEnter="{{ row.hover }}">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#FFFFFF;border:1px solid #DCD5C8;cursor:pointer;">
+                    <span style="display:flex;gap:2px;align-items:flex-end;height:11px;width:26px;flex-shrink:0;">
+                      <span style="width:7px;height:4px;background:{{ row.s1 }};"></span>
+                      <span style="width:7px;height:7px;background:{{ row.s2 }};"></span>
+                      <span style="width:7px;height:11px;background:{{ row.s3 }};"></span>
+                    </span>
+                    <span style="font-size:13.5px;font-weight:500;flex:1;line-height:1.35;">{{ row.claim }}</span>
+                  </div>
+                  <sc-if value="{{ row.isOpen }}">
+                    <div style="position:absolute;bottom:calc(100% - 2px);left:0;width:520px;max-width:100%;z-index:40;background:#FFFFFF;border:1px solid #4F7A52;box-shadow:0 14px 30px rgba(23,21,18,0.18);">
+                      <div style="padding:16px 18px;border-bottom:1px solid #E7E1D6;">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:8px;">THE CLAIM ITSELF</div>
+                        <p style="font-size:13px;color:#3A362F;line-height:1.6;margin:0 0 12px;">{{ row.detail }}</p>
+                        <div style="display:flex;gap:6px;margin-bottom:14px;">
+                          <span style="font-size:9px;font-weight:700;color:#171512;border:1px solid #171512;padding:2px 7px;letter-spacing:0.05em;">{{ row.type }}</span>
+                          <span style="font-size:9px;font-weight:700;color:#FFFFFF;background:#4F7A52;padding:2px 7px;letter-spacing:0.05em;">{{ row.evidence }}</span>
+                        </div>
+                        <div style="display:flex;gap:18px;align-items:center;">
+                          <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+                            <div style="position:relative;display:flex;align-items:center;gap:9px;" onMouseEnter="{{ row.hoverAgree }}">
+                              <span style="font-size:11.5px;width:80px;color:#6E6558;border-bottom:1px dotted #A39B8D;cursor:help;">People agree</span>
+                              <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.agreePct }};"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:24px;text-align:right;">{{ row.agree }}</span>
+                              <sc-if value="{{ row.agreeTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:250px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">Out of 5. Whether raters accept the claim is true &mdash; independent of how well it is argued.</span></sc-if>
+                            </div>
+                            <div style="position:relative;display:flex;align-items:center;gap:9px;" onMouseEnter="{{ row.hoverQuality }}">
+                              <span style="font-size:11.5px;width:80px;color:#6E6558;border-bottom:1px dotted #A39B8D;cursor:help;">Well made</span>
+                              <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.qualityPct }};"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:24px;text-align:right;">{{ row.quality }}</span>
+                              <sc-if value="{{ row.qualityTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:250px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">Out of 5. Whether the claim is argued properly &mdash; evidence, logic, clarity. You can rate it well made and still disagree.</span></sc-if>
+                            </div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#A39B8D;letter-spacing:0.05em;">{{ row.raters }} RATERS</span>
+                          </div>
+                          <div style="width:118px;flex-shrink:0;">
+                            <div style="position:relative;width:118px;height:118px;border:1px solid #DCD5C8;background:#FFFFFF;">
+                              <div style="position:absolute;left:0;top:0;width:50%;height:50%;background:#F3EFE7;"></div>
+                              <div style="position:absolute;left:50%;top:0;width:50%;height:50%;background:#E8EFE6;"></div>
+                              <div style="position:absolute;left:0;top:50%;width:50%;height:50%;background:#FBFAF7;"></div>
+                              <div style="position:absolute;left:50%;top:50%;width:50%;height:50%;background:#F7E7E1;"></div>
+                              <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DCD5C8;"></div>
+                              <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:#DCD5C8;"></div>
+                              <sc-for list="{{ row.dots }}" as="dot" hint-placeholder-count="10">
+                                <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:#171512;opacity:0.7;transform:translate(-50%,-50%);left:{{ dot.left }}%;top:{{ dot.top }}%;"></div>
+                              </sc-for>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.05em;color:#A39B8D;margin-top:4px;"><span>DISAGREE</span><span>AGREE</span></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style="padding:16px 18px;background:#FBF8F2;border-bottom:1px solid #E7E1D6;">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#3D5F40;">AS USED HERE &middot; SUPPORTS</span>
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#A39B8D;letter-spacing:0.05em;">YOUR VOTE</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                          <sc-for list="{{ row.dist }}" as="d" hint-placeholder-count="3">
+                            <div style="position:relative;display:flex;align-items:center;gap:10px;" onMouseEnter="{{ d.hover }}">
+                              <span style="font-size:11px;width:70px;color:#4A443B;border-bottom:1px dotted #A39B8D;cursor:help;">{{ d.label }}</span>
+                              <div style="flex:1;display:flex;align-items:center;height:11px;"><div style="width:{{ d.pct }};background:#4F7A52;height:{{ d.h }}px;"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;width:22px;text-align:right;color:#6E6558;">{{ d.n }}</span>
+                              <span style="font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border:1px solid #DCD5C8;background:#FFFFFF;color:#6E6558;cursor:pointer;flex-shrink:0;">Vote</span>
+                              <sc-if value="{{ d.isTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:270px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">{{ d.tip }}</span></sc-if>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </div>
+
+                      <div style="padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                        <span style="font-size:11px;color:#A39B8D;">{{ row.ownGraph }}</span>
+                        <a href="#" style="font-size:12px;font-weight:600;white-space:nowrap;">Read more and rate it &rarr;</a>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div>
+            <div style="margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #B24A2E;"><h3 style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.1em;margin:0;color:#B24A2E;">WHAT CONTRADICTS IT &nbsp;(2)</h3></div>
+            <div style="display:flex;flex-direction:column;gap:2px;" onMouseLeave="{{ clearHover }}">
+              <sc-for list="{{ contradicts }}" as="row" hint-placeholder-count="2">
+                <div style="position:relative;" onMouseEnter="{{ row.hover }}">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#FFFFFF;border:1px solid #DCD5C8;cursor:pointer;">
+                    <span style="display:flex;gap:2px;align-items:flex-end;height:11px;width:26px;flex-shrink:0;">
+                      <span style="width:7px;height:4px;background:{{ row.s1 }};"></span>
+                      <span style="width:7px;height:7px;background:{{ row.s2 }};"></span>
+                      <span style="width:7px;height:11px;background:{{ row.s3 }};"></span>
+                    </span>
+                    <span style="font-size:13.5px;font-weight:500;flex:1;line-height:1.35;">{{ row.claim }}</span>
+                  </div>
+                  <sc-if value="{{ row.isOpen }}">
+                    <div style="position:absolute;bottom:calc(100% - 2px);right:0;width:520px;max-width:100%;z-index:40;background:#FFFFFF;border:1px solid #B24A2E;box-shadow:0 14px 30px rgba(23,21,18,0.18);">
+                      <div style="padding:16px 18px;border-bottom:1px solid #E7E1D6;">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:8px;">THE CLAIM ITSELF</div>
+                        <p style="font-size:13px;color:#3A362F;line-height:1.6;margin:0 0 12px;">{{ row.detail }}</p>
+                        <div style="display:flex;gap:6px;margin-bottom:14px;">
+                          <span style="font-size:9px;font-weight:700;color:#171512;border:1px solid #171512;padding:2px 7px;letter-spacing:0.05em;">{{ row.type }}</span>
+                          <span style="font-size:9px;font-weight:700;color:#FFFFFF;background:#4F7A52;padding:2px 7px;letter-spacing:0.05em;">{{ row.evidence }}</span>
+                        </div>
+                        <div style="display:flex;gap:18px;align-items:center;">
+                          <div style="flex:1;display:flex;flex-direction:column;gap:9px;">
+                            <div style="position:relative;display:flex;align-items:center;gap:9px;" onMouseEnter="{{ row.hoverAgree }}">
+                              <span style="font-size:11.5px;width:80px;color:#6E6558;border-bottom:1px dotted #A39B8D;cursor:help;">People agree</span>
+                              <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.agreePct }};"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:24px;text-align:right;">{{ row.agree }}</span>
+                              <sc-if value="{{ row.agreeTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:250px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">Out of 5. Whether raters accept the claim is true &mdash; independent of how well it is argued.</span></sc-if>
+                            </div>
+                            <div style="position:relative;display:flex;align-items:center;gap:9px;" onMouseEnter="{{ row.hoverQuality }}">
+                              <span style="font-size:11.5px;width:80px;color:#6E6558;border-bottom:1px dotted #A39B8D;cursor:help;">Well made</span>
+                              <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.qualityPct }};"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:24px;text-align:right;">{{ row.quality }}</span>
+                              <sc-if value="{{ row.qualityTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:250px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">Out of 5. Whether the claim is argued properly &mdash; evidence, logic, clarity. You can rate it well made and still disagree.</span></sc-if>
+                            </div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#A39B8D;letter-spacing:0.05em;">{{ row.raters }} RATERS</span>
+                          </div>
+                          <div style="width:118px;flex-shrink:0;">
+                            <div style="position:relative;width:118px;height:118px;border:1px solid #DCD5C8;background:#FFFFFF;">
+                              <div style="position:absolute;left:0;top:0;width:50%;height:50%;background:#F3EFE7;"></div>
+                              <div style="position:absolute;left:50%;top:0;width:50%;height:50%;background:#E8EFE6;"></div>
+                              <div style="position:absolute;left:0;top:50%;width:50%;height:50%;background:#FBFAF7;"></div>
+                              <div style="position:absolute;left:50%;top:50%;width:50%;height:50%;background:#F7E7E1;"></div>
+                              <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#DCD5C8;"></div>
+                              <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:#DCD5C8;"></div>
+                              <sc-for list="{{ row.dots }}" as="dot" hint-placeholder-count="10">
+                                <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:#171512;opacity:0.7;transform:translate(-50%,-50%);left:{{ dot.left }}%;top:{{ dot.top }}%;"></div>
+                              </sc-for>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:0.05em;color:#A39B8D;margin-top:4px;"><span>DISAGREE</span><span>AGREE</span></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div style="padding:16px 18px;background:#FBF8F2;border-bottom:1px solid #E7E1D6;">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:11px;">
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#B24A2E;">AS USED HERE &middot; CONTRADICTS</span>
+                          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:#A39B8D;letter-spacing:0.05em;">YOUR VOTE</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                          <sc-for list="{{ row.dist }}" as="d" hint-placeholder-count="3">
+                            <div style="position:relative;display:flex;align-items:center;gap:10px;" onMouseEnter="{{ d.hover }}">
+                              <span style="font-size:11px;width:70px;color:#4A443B;border-bottom:1px dotted #A39B8D;cursor:help;">{{ d.label }}</span>
+                              <div style="flex:1;display:flex;align-items:center;height:11px;"><div style="width:{{ d.pct }};background:#B24A2E;height:{{ d.h }}px;"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;width:22px;text-align:right;color:#6E6558;">{{ d.n }}</span>
+                              <span style="font-size:10px;font-weight:600;letter-spacing:0.04em;padding:4px 10px;border:1px solid #DCD5C8;background:#FFFFFF;color:#6E6558;cursor:pointer;flex-shrink:0;">Vote</span>
+                              <sc-if value="{{ d.isTip }}"><span style="position:absolute;bottom:calc(100% + 6px);left:0;width:270px;z-index:60;background:#171512;color:#F7F4EE;padding:9px 11px;font-size:11.5px;line-height:1.5;">{{ d.tipAgainst }}</span></sc-if>
+                            </div>
+                          </sc-for>
+                        </div>
+                      </div>
+
+                      <div style="padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;">
+                        <span style="font-size:11px;color:#A39B8D;">{{ row.ownGraph }}</span>
+                        <a href="#" style="font-size:12px;font-weight:600;white-space:nowrap;">Read more and rate it &rarr;</a>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <!-- EDITOR CONTROL -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:26px;font-weight:600;margin:0 0 6px;">Editor control over a connection</h1>
+    <p style="color:#6E6558;font-size:15px;max-width:760px;margin:0 0 22px;">Votes are the community signal; an editor sets the connection's stated strength, with the distribution in front of them. In the side panel's Evidence tab, per connection.</p>
+
+    <div style="max-width:640px;background:#FFFFFF;border:1px solid #171512;">
+      <div style="padding:16px 20px;border-bottom:1px solid #E7E1D6;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:8px;">EDITING CONNECTION</div>
+        <p style="font-size:13.5px;line-height:1.5;margin:0;"><strong>Internal research documented the amplification effect</strong> <span style="color:#6E6558;">supports</span> <strong>Amplification is a deliberate product decision</strong></p>
+      </div>
+      <div style="padding:16px 20px;background:#FBF8F2;border-bottom:1px solid #E7E1D6;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:11px;">WHAT RATERS SAY &middot; 115 VOTES</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:11.5px;width:74px;color:#4A443B;">Decisive</span><div style="flex:1;display:flex;align-items:center;height:11px;"><div style="width:70%;background:#4F7A52;height:7px;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E6558;width:34px;text-align:right;">81</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:11.5px;width:74px;color:#4A443B;">Relevant</span><div style="flex:1;display:flex;align-items:center;height:11px;"><div style="width:19%;background:#4F7A52;height:4px;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E6558;width:34px;text-align:right;">22</span></div>
+          <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:11.5px;width:74px;color:#4A443B;">Tangential</span><div style="flex:1;display:flex;align-items:center;height:11px;"><div style="width:10%;background:#4F7A52;height:2px;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#6E6558;width:34px;text-align:right;">12</span></div>
+        </div>
+      </div>
+      <div style="padding:16px 20px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:10px;">STATED STRENGTH</div>
+        <div style="display:flex;border:1px solid #DCD5C8;margin-bottom:12px;">
+          <span style="flex:1;text-align:center;font-size:12px;padding:8px 0;color:#6E6558;border-right:1px solid #DCD5C8;">Tangential</span>
+          <span style="flex:1;text-align:center;font-size:12px;padding:8px 0;color:#6E6558;border-right:1px solid #DCD5C8;">Relevant</span>
+          <span style="flex:1;text-align:center;font-size:12px;padding:8px 0;background:#4F7A52;color:#FFFFFF;font-weight:600;">Decisive</span>
+        </div>
+        <input type="text" value="Matches the community view; the internal research is what the parent claim rests on." style="width:100%;font-family:'Public Sans',sans-serif;font-size:12.5px;color:#171512;padding:9px 11px;border:1px solid #DCD5C8;margin-bottom:12px;" />
+        <div style="display:flex;gap:10px;align-items:center;">
+          <span style="font-size:12.5px;font-weight:600;background:#171512;color:#F7F4EE;padding:9px 18px;">Save connection</span>
+          <span style="font-size:12px;color:#6E6558;">Recorded in history &middot; anyone can revert</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400}}">
+class Component extends DCLogic {
+  state = { open: null, tip: null };
+
+  dots(agree, quality) {
+    const out = [];
+    const cx = agree / 5 * 100, cy = 100 - (quality / 5 * 100);
+    const jitter = [[-14,9],[8,-11],[-6,-5],[13,6],[-19,-13],[4,14],[17,-4],[-9,17],[10,2],[-3,-18]];
+    jitter.forEach(([dx, dy]) => {
+      out.push({
+        left: Math.max(6, Math.min(94, cx + dx)),
+        top: Math.max(6, Math.min(94, cy + dy))
+      });
+    });
+    return out;
+  }
+
+  mk(list, colorFor) {
+    const defs = {
+      Decisive: { s: 'The parent claim largely stands or falls on this one.', a: 'It defeats the parent claim if accepted.' },
+      Relevant: { s: 'It adds real weight, but the parent claim survives without it.', a: 'It counts against the parent claim without settling it.' },
+      Tangential: { s: 'True perhaps, but it does little work for this claim.', a: 'True perhaps, but it does not land against this claim.' }
+    };
+    const heights = { Decisive: 7, Relevant: 4, Tangential: 2 };
+    return list.map(r => {
+      const total = r.d[0] + r.d[1] + r.d[2];
+      const order = [['Decisive', r.d[2]], ['Relevant', r.d[1]], ['Tangential', r.d[0]]];
+      const strong = r.strength;
+      return {
+        ...r,
+        isOpen: this.state.open === r.id,
+        hover: () => this.setState({ open: r.id, tip: null }),
+        hoverAgree: () => this.setState({ tip: r.id + '-agree' }),
+        hoverQuality: () => this.setState({ tip: r.id + '-quality' }),
+        agreeTip: this.state.tip === r.id + '-agree',
+        qualityTip: this.state.tip === r.id + '-quality',
+        agreePct: (r.agree / 5 * 100) + '%',
+        qualityPct: (r.quality / 5 * 100) + '%',
+        dots: this.dots(r.agree, r.quality),
+        s1: '#' + '000',
+        dist: order.map(([label, n]) => ({
+          label,
+          n,
+          pct: (n / total * 100) + '%',
+          h: heights[label],
+          tip: defs[label].s,
+          tipAgainst: defs[label].a,
+          isTip: this.state.tip === r.id + '-' + label,
+          hover: () => this.setState({ tip: r.id + '-' + label })
+        })),
+        ...this.ladder(strong, colorFor)
+      };
+    });
+  }
+
+  ladder(strength, color) {
+    const off = '#EFEAE0';
+    return {
+      s1: color,
+      s2: strength === 'TANGENTIAL' ? off : color,
+      s3: strength === 'DECISIVE' ? color : off
+    };
+  }
+
+  renderVals() {
+    const usedInRaw = [
+      { id:'u1', relation:'SUPPORTS', fg:'#3D5F40', bg:'#E8EFE6', strength:'DECISIVE',
+        claim:'Social media platforms should be held legally responsible for content posted by users',
+        context:'TECHNOLOGY · LAW — 86 raters', agree:3.9, quality:4.2, raters:86, d:[10,19,57],
+        detail:'The headline claim in the platform liability debate. If amplification is editorial, the case for liability is much stronger — which is why this connection carries so much of that debate.' },
+      { id:'u2', relation:'SUPPORTS', fg:'#3D5F40', bg:'#E8EFE6', strength:'RELEVANT',
+        claim:'Ranked feeds should carry the same duties as editorial publishing',
+        context:'TECHNOLOGY — 41 raters', agree:3.6, quality:3.8, raters:41, d:[7,26,14],
+        detail:'A narrower proposal about duties rather than liability. This claim supports it, though the duties argument can stand on other grounds.' },
+      { id:'u3', relation:'CONTRADICTS', fg:'#B24A2E', bg:'#F7E7E1', strength:'RELEVANT',
+        claim:'Platforms are neutral conduits and should be regulated as infrastructure',
+        context:'ANOTHER DEBATE · DEMOCRACY — 63 raters', agree:2.8, quality:3.4, raters:63, d:[9,31,18],
+        detail:'A claim from the democracy debate that this one cuts against: if ranking is an editorial choice, the conduit framing is hard to sustain.' },
+      { id:'u4', relation:'SUPPORTS', fg:'#3D5F40', bg:'#E8EFE6', strength:'TANGENTIAL',
+        claim:'Inflammatory rhetoric works by bypassing deliberation',
+        context:'ANOTHER DEBATE · RHETORIC — 39 raters', agree:4.0, quality:3.9, raters:39, d:[22,11,4],
+        detail:'Cited from the rhetoric debate. Related in subject matter, but it says little about whether the product decision was deliberate.' }
+    ];
+
+    return {
+      clearHover: () => this.setState({ open: null, tip: null }),
+      usedIn: this.mk(usedInRaw, '#14636B').map((r, i) => ({ ...r, ...this.ladder(usedInRaw[i].strength, usedInRaw[i].fg) })),
+      supports: this.mk([
+        { id:'s1', claim:'Internal research documented the amplification effect', strength:'DECISIVE', type:'FACT', evidence:'STRONG EVIDENCE',
+          agree:4.4, quality:4.2, raters:86, d:[12,22,81], ownGraph:'Its own graph: 3 supporting · 1 contradicting',
+          detail:'Leaked internal research reported that the platform\u2019s own scientists documented divisive content outperforming, and that the finding reached leadership.' },
+        { id:'s2', claim:'Ranking weights are set by staff, not emergent', strength:'RELEVANT', type:'FACT', evidence:'STRONG EVIDENCE',
+          agree:4.1, quality:4.0, raters:58, d:[9,44,21], ownGraph:'Its own graph: 2 supporting · 2 contradicting',
+          detail:'Ranking systems are configured, tested and tuned by product teams against chosen objectives. The objective function is a human decision even when the output is automated.' },
+        { id:'s3', claim:'Ad revenue rises with time spent in feed', strength:'TANGENTIAL', type:'FACT', evidence:'MODERATE EVIDENCE',
+          agree:3.9, quality:3.1, raters:44, d:[26,14,6], ownGraph:'Its own graph: 1 supporting · 0 contradicting',
+          detail:'Longer sessions carry more ad impressions. True, and widely accepted \u2014 but it establishes a motive rather than showing the editorial choice was made.' }
+      ], '#4F7A52'),
+      contradicts: this.mk([
+        { id:'c1', claim:'Ranking is automated at a scale no human reviews', strength:'DECISIVE', type:'FACT', evidence:'STRONG EVIDENCE',
+          agree:4.2, quality:4.3, raters:71, d:[8,17,64], ownGraph:'Its own graph: 2 supporting · 1 contradicting',
+          detail:'Billions of ranking decisions happen per day with no human in the loop for any individual item. If editorial responsibility requires review, nothing here is reviewed.' },
+        { id:'c2', claim:'Users choose what they engage with', strength:'TANGENTIAL', type:'OPINION', evidence:'WEAK EVIDENCE',
+          agree:2.6, quality:2.4, raters:52, d:[33,11,5], ownGraph:'Its own graph: 0 supporting · 3 contradicting',
+          detail:'Engagement is a choice within a set of options someone else selected. The argument does not reach the question of who assembled the options.' }
+      ], '#B24A2E')
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: 'Public Sans', sans-serif; background: #F7F4EE; }
+    a { color: #14636B; text-decoration: none; }
+    a:hover { color: #0E484E; text-decoration: underline; }
+  </style>
+</helmet>
+
+<div style="max-width:1240px;margin:0 auto;padding:56px 32px 120px;display:flex;flex-direction:column;gap:76px;color:#171512;">
+
+  <!-- ============ 1 · BOTH DIRECTIONS ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">1 &middot; Both directions of the graph</h1>
+    <p style="color:#6E6558;font-size:15px;max-width:760px;margin:0 0 26px;">Downward: what supports and contradicts this claim. Upward: where this claim is doing work elsewhere. The upward view is what turns a list of debates into an atlas &mdash; and it's the honest test of a claim, since a claim cited as decisive in four places has more riding on it.</p>
+
+    <div style="background:#F7F4EE;border:1px solid #DCD5C8;overflow:visible;">
+      <header style="background:#FFFFFF;border-bottom:2px solid #171512;padding:16px 36px;display:flex;align-items:center;justify-content:space-between;">
+        <div style="display:flex;align-items:center;gap:11px;">
+          <svg width="24" height="24" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15" fill="none" stroke="#171512" stroke-width="2.5"/><ellipse cx="18" cy="18" rx="15" ry="6" fill="none" stroke="#171512" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="33" stroke="#171512" stroke-width="2"/></svg>
+          <span style="font-family:'Source Serif 4',serif;font-size:19px;font-weight:700;">Argument Atlas</span>
+        </div>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:#14636B;letter-spacing:0.06em;border:1px solid #14636B;padding:6px 12px;">SIGN IN</span>
+      </header>
+
+      <main style="max-width:1000px;margin:0 auto;padding:36px 28px 70px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#6E6558;margin-bottom:16px;letter-spacing:0.03em;"><a href="#">CLAIMS</a> / <a href="#">TECHNOLOGY</a> / AMPLIFICATION IS EDITORIAL</div>
+        <h2 style="font-family:'Source Serif 4',serif;font-size:27px;font-weight:600;line-height:1.22;margin:0 0 12px;max-width:800px;">Amplification of harmful content is a deliberate product decision</h2>
+        <p style="font-size:15px;color:#4A443B;line-height:1.65;margin:0 0 34px;max-width:740px;">Platforms do not passively host content &mdash; their algorithms actively select and amplify it. Choosing what to surface is an editorial act, and liability frameworks already treat editorial acts differently from carriage.</p>
+
+        <!-- UPWARD -->
+        <div style="margin-bottom:38px;">
+          <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;padding-bottom:8px;border-bottom:2px solid #14636B;">
+            <h3 style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.1em;margin:0;color:#14636B;">WHERE THIS CLAIM IS USED &nbsp;(4)</h3>
+            <span style="font-size:12px;color:#6E6558;">2 of these sit in other debates</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:2px;margin-top:10px;">
+            <sc-for list="{{ usedIn }}" as="u" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#FFFFFF;border:1px solid #DCD5C8;">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.08em;padding:3px 7px;flex-shrink:0;width:92px;text-align:center;color:{{ u.fg }};background:{{ u.bg }};">{{ u.relation }}</span>
+                <div style="flex:1;">
+                  <div style="font-size:13.5px;font-weight:500;line-height:1.35;">{{ u.claim }}</div>
+                  <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6E6558;letter-spacing:0.04em;margin-top:3px;">{{ u.context }}</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+                  <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#6E6558;letter-spacing:0.05em;">{{ u.strength }}</span>
+                  <div style="width:26px;display:flex;align-items:center;"><div style="width:100%;border-radius:2px;background:{{ u.fg }};height:{{ u.weight }}px;opacity:{{ u.opacity }};"></div></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- DOWNWARD -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;">
+          <div>
+            <div style="margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #4F7A52;"><h3 style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.1em;margin:0;color:#3D5F40;">WHAT SUPPORTS IT &nbsp;(3)</h3></div>
+            <div style="display:flex;flex-direction:column;gap:2px;" onMouseLeave="{{ clearHover }}">
+              <sc-for list="{{ supports }}" as="row" hint-placeholder-count="3">
+                <div style="position:relative;" onMouseEnter="{{ row.hover }}">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#FFFFFF;border:1px solid #DCD5C8;cursor:pointer;">
+                    <div style="width:26px;flex-shrink:0;display:flex;align-items:center;"><div style="width:100%;background:#4F7A52;border-radius:2px;height:{{ row.weight }}px;opacity:{{ row.opacity }};"></div></div>
+                    <span style="font-size:13.5px;font-weight:500;flex:1;line-height:1.35;">{{ row.claim }}</span>
+                  </div>
+                  <sc-if value="{{ row.isOpen }}">
+                    <div style="position:absolute;top:{{ row.top }};bottom:{{ row.bottom }};left:0;width:452px;max-width:100%;z-index:40;background:#FFFFFF;border:1px solid #4F7A52;box-shadow:0 14px 30px rgba(23,21,18,0.18);">
+                      <div style="padding:16px 18px;border-bottom:1px solid #E7E1D6;">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:8px;">THE CLAIM ITSELF</div>
+                        <p style="font-size:13px;color:#3A362F;line-height:1.6;margin:0 0 12px;">{{ row.detail }}</p>
+                        <div style="display:flex;gap:6px;margin-bottom:14px;">
+                          <span style="font-size:9px;font-weight:700;color:#171512;border:1px solid #171512;padding:2px 7px;letter-spacing:0.05em;">{{ row.type }}</span>
+                          <span style="font-size:9px;font-weight:700;color:#FFFFFF;background:#4F7A52;padding:2px 7px;letter-spacing:0.05em;">{{ row.evidence }}</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                          <div style="display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:11.5px;width:96px;color:#6E6558;">People agree</span>
+                            <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.agreePct }};"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:26px;text-align:right;">{{ row.agree }}</span>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:11.5px;width:96px;color:#6E6558;">Well made</span>
+                            <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.qualityPct }};"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:26px;text-align:right;">{{ row.quality }}</span>
+                          </div>
+                        </div>
+                        <p style="font-size:11px;color:#6E6558;line-height:1.5;margin:9px 0 0;">Out of 5, from {{ row.raters }} raters. Agreement is whether people accept the claim; well-made is whether it's argued properly &mdash; you can score high on one and low on the other.</p>
+                      </div>
+
+                      <div style="padding:16px 18px;background:#FBF8F2;border-bottom:1px solid #E7E1D6;">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#3D5F40;margin-bottom:8px;">AS USED HERE &middot; SUPPORTS THIS CLAIM</div>
+                        <p style="font-size:11.5px;color:#6E6558;line-height:1.55;margin:0 0 12px;">How much work it does for <em>this</em> claim, rated separately from whether it's true. Decisive: the claim largely stands or falls on it. Relevant: it adds real weight. Tangential: true, but does little here.</p>
+                        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+                          <sc-for list="{{ row.dist }}" as="d" hint-placeholder-count="3">
+                            <div style="display:flex;align-items:center;gap:10px;">
+                              <span style="font-size:11px;width:76px;color:#4A443B;">{{ d.label }}</span>
+                              <div style="flex:1;height:9px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;width:{{ d.pct }};opacity:{{ d.op }};"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;width:22px;text-align:right;color:#6E6558;">{{ d.n }}</span>
+                            </div>
+                          </sc-for>
+                        </div>
+                        <div style="display:flex;border:1px solid #DCD5C8;background:#FFFFFF;margin-bottom:8px;">
+                          <span style="flex:1;text-align:center;font-size:10.5px;padding:5px 0;color:#6E6558;border-right:1px solid #DCD5C8;">Tangential</span>
+                          <span style="flex:1;text-align:center;font-size:10.5px;padding:5px 0;color:#6E6558;border-right:1px solid #DCD5C8;">Relevant</span>
+                          <span style="flex:1;text-align:center;font-size:10.5px;padding:5px 0;color:#6E6558;">Decisive</span>
+                        </div>
+                        <a href="#" style="font-size:11.5px;font-weight:600;">Argue this connection is stronger &rarr;</a>
+                      </div>
+
+                      <div style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:11.5px;color:#6E6558;">{{ row.ownGraph }}</span>
+                        <a href="#" style="font-size:12px;font-weight:600;">Open this claim &rarr;</a>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div>
+            <div style="margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid #B24A2E;"><h3 style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.1em;margin:0;color:#B24A2E;">WHAT CONTRADICTS IT &nbsp;(2)</h3></div>
+            <div style="display:flex;flex-direction:column;gap:2px;" onMouseLeave="{{ clearHover }}">
+              <sc-for list="{{ contradicts }}" as="row" hint-placeholder-count="2">
+                <div style="position:relative;" onMouseEnter="{{ row.hover }}">
+                  <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#FFFFFF;border:1px solid #DCD5C8;cursor:pointer;">
+                    <div style="width:26px;flex-shrink:0;display:flex;align-items:center;"><div style="width:100%;background:#B24A2E;border-radius:2px;height:{{ row.weight }}px;opacity:{{ row.opacity }};"></div></div>
+                    <span style="font-size:13.5px;font-weight:500;flex:1;line-height:1.35;">{{ row.claim }}</span>
+                  </div>
+                  <sc-if value="{{ row.isOpen }}">
+                    <div style="position:absolute;top:{{ row.top }};bottom:{{ row.bottom }};right:0;width:452px;max-width:100%;z-index:40;background:#FFFFFF;border:1px solid #B24A2E;box-shadow:0 14px 30px rgba(23,21,18,0.18);">
+                      <div style="padding:16px 18px;border-bottom:1px solid #E7E1D6;">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:8px;">THE CLAIM ITSELF</div>
+                        <p style="font-size:13px;color:#3A362F;line-height:1.6;margin:0 0 12px;">{{ row.detail }}</p>
+                        <div style="display:flex;gap:6px;margin-bottom:14px;">
+                          <span style="font-size:9px;font-weight:700;color:#171512;border:1px solid #171512;padding:2px 7px;letter-spacing:0.05em;">{{ row.type }}</span>
+                          <span style="font-size:9px;font-weight:700;color:#FFFFFF;background:#4F7A52;padding:2px 7px;letter-spacing:0.05em;">{{ row.evidence }}</span>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                          <div style="display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:11.5px;width:96px;color:#6E6558;">People agree</span>
+                            <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.agreePct }};"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:26px;text-align:right;">{{ row.agree }}</span>
+                          </div>
+                          <div style="display:flex;align-items:center;gap:10px;">
+                            <span style="font-size:11.5px;width:96px;color:#6E6558;">Well made</span>
+                            <div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:{{ row.qualityPct }};"></div></div>
+                            <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;width:26px;text-align:right;">{{ row.quality }}</span>
+                          </div>
+                        </div>
+                        <p style="font-size:11px;color:#6E6558;line-height:1.5;margin:9px 0 0;">Out of 5, from {{ row.raters }} raters. Agreement is whether people accept the claim; well-made is whether it's argued properly.</p>
+                      </div>
+
+                      <div style="padding:16px 18px;background:#FBF8F2;border-bottom:1px solid #E7E1D6;">
+                        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:0.1em;color:#B24A2E;margin-bottom:8px;">AS USED HERE &middot; CONTRADICTS THIS CLAIM</div>
+                        <p style="font-size:11.5px;color:#6E6558;line-height:1.55;margin:0 0 12px;">How much damage it does to <em>this</em> claim, rated separately from whether it's true. Decisive: it defeats the claim. Relevant: it counts against it. Tangential: true, but doesn't land here.</p>
+                        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
+                          <sc-for list="{{ row.dist }}" as="d" hint-placeholder-count="3">
+                            <div style="display:flex;align-items:center;gap:10px;">
+                              <span style="font-size:11px;width:76px;color:#4A443B;">{{ d.label }}</span>
+                              <div style="flex:1;height:9px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#B24A2E;width:{{ d.pct }};opacity:{{ d.op }};"></div></div>
+                              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;width:22px;text-align:right;color:#6E6558;">{{ d.n }}</span>
+                            </div>
+                          </sc-for>
+                        </div>
+                        <div style="display:flex;border:1px solid #DCD5C8;background:#FFFFFF;margin-bottom:8px;">
+                          <span style="flex:1;text-align:center;font-size:10.5px;padding:5px 0;color:#6E6558;border-right:1px solid #DCD5C8;">Tangential</span>
+                          <span style="flex:1;text-align:center;font-size:10.5px;padding:5px 0;color:#6E6558;border-right:1px solid #DCD5C8;">Relevant</span>
+                          <span style="flex:1;text-align:center;font-size:10.5px;padding:5px 0;color:#6E6558;">Decisive</span>
+                        </div>
+                        <a href="#" style="font-size:11.5px;font-weight:600;">Argue this connection is weaker &rarr;</a>
+                      </div>
+
+                      <div style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:11.5px;color:#6E6558;">{{ row.ownGraph }}</span>
+                        <a href="#" style="font-size:12px;font-weight:600;">Open this claim &rarr;</a>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:#6E6558;margin:18px 0 0;">No weight legend &mdash; the hover card explains the bar in the row it belongs to.</p>
+      </main>
+    </div>
+  </section>
+
+  <!-- ============ 2 · CARD LAYOUTS ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">2 &middot; Three card layouts</h1>
+    <p style="color:#6E6558;font-size:15px;max-width:760px;margin:0 0 26px;">All three carry the same content and hold the same separation &mdash; the claim on its own, then the claim as used here. They differ in how hard they work to keep those apart. Shown pinned open.</p>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start;">
+
+      <div style="flex:1;min-width:330px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">L1 &middot; Stacked bands <span style="font-size:10px;font-weight:700;color:#14636B;letter-spacing:0.06em;">&nbsp;AS BUILT ABOVE</span></div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.6;margin:0 0 12px;">Two bands, different grounds. Simple to scan top-to-bottom; the card gets tall.</p>
+        <div style="background:#FFFFFF;border:1px solid #4F7A52;box-shadow:0 6px 18px rgba(23,21,18,0.1);">
+          <div style="padding:14px 16px;border-bottom:1px solid #E7E1D6;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:7px;">THE CLAIM ITSELF</div>
+            <p style="font-size:12.5px;line-height:1.55;margin:0 0 10px;color:#3A362F;">Internal research documented that ranking amplified divisive content, and that leadership knew.</p>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;"><span style="font-size:11px;width:76px;color:#6E6558;">People agree</span><div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:88%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;">4.4</span></div>
+            <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;width:76px;color:#6E6558;">Well made</span><div style="flex:1;height:6px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:84%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;">4.2</span></div>
+          </div>
+          <div style="padding:14px 16px;background:#FBF8F2;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:0.1em;color:#3D5F40;margin-bottom:9px;">AS USED HERE &middot; SUPPORTS</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10.5px;width:64px;color:#4A443B;">Decisive</span><div style="flex:1;height:8px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;width:71%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#6E6558;">81</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10.5px;width:64px;color:#4A443B;">Relevant</span><div style="flex:1;height:8px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;opacity:0.65;width:19%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#6E6558;">22</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10.5px;width:64px;color:#4A443B;">Tangential</span><div style="flex:1;height:8px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;opacity:0.4;width:10%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#6E6558;">12</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:330px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">L2 &middot; Split column</div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.6;margin:0 0 12px;">A vertical rule does the separating. Shorter card, and the two readings sit side by side for comparison &mdash; needs the width.</p>
+        <div style="background:#FFFFFF;border:1px solid #4F7A52;box-shadow:0 6px 18px rgba(23,21,18,0.1);display:grid;grid-template-columns:1.15fr 1fr;">
+          <div style="padding:14px 16px;border-right:1px solid #E7E1D6;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:0.1em;color:#6E6558;margin-bottom:7px;">ON ITS OWN</div>
+            <p style="font-size:12px;line-height:1.55;margin:0 0 10px;color:#3A362F;">Internal research documented that ranking amplified divisive content.</p>
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><span style="font-size:10px;width:52px;color:#6E6558;">Agree</span><div style="flex:1;height:5px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:88%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;">4.4</span></div>
+            <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;width:52px;color:#6E6558;">Made</span><div style="flex:1;height:5px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#171512;width:84%;"></div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;">4.2</span></div>
+          </div>
+          <div style="padding:14px 16px;background:#FBF8F2;">
+            <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;font-weight:600;letter-spacing:0.1em;color:#3D5F40;margin-bottom:9px;">AS USED HERE</div>
+            <div style="display:flex;flex-direction:column;gap:5px;">
+              <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;width:56px;color:#4A443B;">Decisive</span><div style="flex:1;height:7px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;width:71%;"></div></div></div>
+              <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;width:56px;color:#4A443B;">Relevant</span><div style="flex:1;height:7px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;opacity:0.65;width:19%;"></div></div></div>
+              <div style="display:flex;align-items:center;gap:7px;"><span style="font-size:10px;width:56px;color:#4A443B;">Tangential</span><div style="flex:1;height:7px;background:#EFEAE0;position:relative;"><div style="position:absolute;left:0;top:0;bottom:0;background:#4F7A52;opacity:0.4;width:10%;"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1;min-width:330px;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">L3 &middot; Ledger</div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.6;margin:0 0 12px;">Everything as labelled rows in one table. Densest and most scannable across many cards; least warm, and the prose has to be short.</p>
+        <div style="background:#FFFFFF;border:1px solid #4F7A52;box-shadow:0 6px 18px rgba(23,21,18,0.1);padding:14px 16px;">
+          <p style="font-size:12.5px;line-height:1.55;margin:0 0 12px;color:#3A362F;">Internal research documented that ranking amplified divisive content, and that leadership knew.</p>
+          <div style="display:flex;flex-direction:column;">
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #E7E1D6;"><span style="font-size:11px;color:#6E6558;">Agreement</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;">4.4 / 5 &nbsp;<span style="color:#6E6558;">(86)</span></span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #E7E1D6;"><span style="font-size:11px;color:#6E6558;">Construction</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;">4.2 / 5</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #E7E1D6;"><span style="font-size:11px;color:#6E6558;">Used here as</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#3D5F40;font-weight:600;">SUPPORTS</span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #E7E1D6;align-items:center;"><span style="font-size:11px;color:#6E6558;">Connection</span><span style="display:flex;align-items:center;gap:7px;"><span style="display:flex;gap:2px;align-items:flex-end;height:12px;"><span style="width:7px;height:4px;background:#4F7A52;opacity:0.4;"></span><span style="width:7px;height:7px;background:#4F7A52;opacity:0.65;"></span><span style="width:7px;height:12px;background:#4F7A52;"></span></span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;">DECISIVE</span></span></div>
+            <div style="display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid #E7E1D6;"><span style="font-size:11px;color:#6E6558;">Its own graph</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;">3 for &middot; 1 against</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 · WEIGHT STUDY ============ -->
+  <section>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:30px;font-weight:600;margin:0 0 6px;">3 &middot; Reading connection weight at a glance</h1>
+    <p style="color:#6E6558;font-size:15px;max-width:760px;margin:0 0 26px;">The row-level mark has to survive being seen a hundred times in a list without becoming noise. Four ways, same three claims each.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;">
+
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">W1 &middot; Bar thickness <span style="font-size:10px;font-weight:700;color:#14636B;letter-spacing:0.06em;">&nbsp;CURRENT</span></div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.55;margin:0 0 10px;">7 / 4 / 2px with matching opacity. Reads instantly; the 2px tangential bar nearly vanishes, which may be the point or may be a problem.</p>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><div style="width:26px;"><div style="width:100%;height:7px;background:#4F7A52;border-radius:2px;"></div></div><span style="font-size:13px;">Amplification is an editorial decision</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><div style="width:26px;"><div style="width:100%;height:4px;background:#4F7A52;opacity:0.65;border-radius:2px;"></div></div><span style="font-size:13px;">Moderation technology already exists</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><div style="width:26px;"><div style="width:100%;height:2px;background:#4F7A52;opacity:0.4;border-radius:2px;"></div></div><span style="font-size:13px;">Platforms profit from harm</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">W2 &middot; Bar length</div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.55;margin:0 0 10px;">Constant 4px height, length carries the value. Quantities compare more accurately by length than thickness &mdash; but it looks like a progress bar, and reads as completeness.</p>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><div style="width:32px;"><div style="width:100%;height:4px;background:#4F7A52;"></div></div><span style="font-size:13px;">Amplification is an editorial decision</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><div style="width:32px;"><div style="width:62%;height:4px;background:#4F7A52;"></div></div><span style="font-size:13px;">Moderation technology already exists</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><div style="width:32px;"><div style="width:28%;height:4px;background:#4F7A52;"></div></div><span style="font-size:13px;">Platforms profit from harm</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">W3 &middot; Three-step ladder</div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.55;margin:0 0 10px;">A tiny three-bar meter, filled to the step. Explicitly ordinal &mdash; you can see it's one of three, not a continuous score. Slightly busier per row.</p>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><span style="display:flex;gap:2px;align-items:flex-end;height:11px;width:26px;"><span style="width:7px;height:4px;background:#4F7A52;"></span><span style="width:7px;height:7px;background:#4F7A52;"></span><span style="width:7px;height:11px;background:#4F7A52;"></span></span><span style="font-size:13px;">Amplification is an editorial decision</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><span style="display:flex;gap:2px;align-items:flex-end;height:11px;width:26px;"><span style="width:7px;height:4px;background:#4F7A52;"></span><span style="width:7px;height:7px;background:#4F7A52;"></span><span style="width:7px;height:11px;background:#EFEAE0;"></span></span><span style="font-size:13px;">Moderation technology already exists</span></div>
+          <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;"><span style="display:flex;gap:2px;align-items:flex-end;height:11px;width:26px;"><span style="width:7px;height:4px;background:#4F7A52;"></span><span style="width:7px;height:7px;background:#EFEAE0;"></span><span style="width:7px;height:11px;background:#EFEAE0;"></span></span><span style="font-size:13px;">Platforms profit from harm</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:4px;">W4 &middot; Rule weight on the row</div>
+        <p style="font-size:12.5px;color:#6E6558;line-height:1.55;margin:0 0 10px;">No separate mark at all &mdash; the row's own left rule thickens. Quietest option and the most broadsheet, but with nothing to hover, the explanation has to live in the card.</p>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="display:flex;align-items:center;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;border-left:6px solid #4F7A52;"><span style="font-size:13px;">Amplification is an editorial decision</span></div>
+          <div style="display:flex;align-items:center;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;border-left:3px solid #4F7A52;"><span style="font-size:13px;">Moderation technology already exists</span></div>
+          <div style="display:flex;align-items:center;padding:11px 13px;background:#FFFFFF;border:1px solid #DCD5C8;border-left:1px solid #4F7A52;"><span style="font-size:13px;">Platforms profit from harm</span></div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:#6E6558;margin:22px 0 0;max-width:760px;">My pick is <strong>W3</strong> in the list and <strong>W1</strong> in the compact upward section: the ladder says &ldquo;one of three&rdquo; without a legend, which is exactly what removing the legend requires.</p>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400}}">
+class Component extends DCLogic {
+  state = { open: null };
+
+  mk(list) {
+    return list.map((r, i) => ({
+      ...r,
+      top: 'auto',
+      bottom: 'calc(100% - 2px)',
+      isOpen: this.state.open === r.id,
+      hover: () => this.setState({ open: r.id }),
+      weight: r.strength === 'DECISIVE' ? 7 : r.strength === 'RELEVANT' ? 4 : 2,
+      opacity: r.strength === 'DECISIVE' ? 1 : r.strength === 'RELEVANT' ? 0.65 : 0.4,
+      agreePct: (r.agree / 5 * 100) + '%',
+      qualityPct: (r.quality / 5 * 100) + '%',
+      dist: [
+        { label: 'Decisive', n: r.d[2], pct: (r.d[2] / (r.d[0] + r.d[1] + r.d[2]) * 100) + '%', op: 1 },
+        { label: 'Relevant', n: r.d[1], pct: (r.d[1] / (r.d[0] + r.d[1] + r.d[2]) * 100) + '%', op: 0.65 },
+        { label: 'Tangential', n: r.d[0], pct: (r.d[0] / (r.d[0] + r.d[1] + r.d[2]) * 100) + '%', op: 0.4 }
+      ]
+    }));
+  }
+
+  renderVals() {
+    return {
+      clearHover: () => this.setState({ open: null }),
+      usedIn: [
+        { relation: 'SUPPORTS', fg: '#3D5F40', bg: '#E8EFE6', strength: 'DECISIVE', weight: 7, opacity: 1,
+          claim: 'Social media platforms should be held legally responsible for content posted by users',
+          context: 'TECHNOLOGY · LAW — 86 raters' },
+        { relation: 'SUPPORTS', fg: '#3D5F40', bg: '#E8EFE6', strength: 'RELEVANT', weight: 4, opacity: 0.65,
+          claim: 'Ranked feeds should carry the same duties as editorial publishing',
+          context: 'TECHNOLOGY — 41 raters' },
+        { relation: 'CONTRADICTS', fg: '#B24A2E', bg: '#F7E7E1', strength: 'RELEVANT', weight: 4, opacity: 0.65,
+          claim: 'Platforms are neutral conduits and should be regulated as infrastructure',
+          context: 'ANOTHER DEBATE · DEMOCRACY — 63 raters' },
+        { relation: 'SUPPORTS', fg: '#3D5F40', bg: '#E8EFE6', strength: 'TANGENTIAL', weight: 2, opacity: 0.4,
+          claim: 'Inflammatory rhetoric works by bypassing deliberation',
+          context: 'ANOTHER DEBATE · RHETORIC — 39 raters' }
+      ],
+      supports: this.mk([
+        { id:'s1', claim:'Internal research documented the amplification effect', strength:'DECISIVE', type:'FACT', evidence:'STRONG EVIDENCE',
+          agree:4.4, quality:4.2, raters:86, d:[12,22,81], ownGraph:'Its own graph: 3 supporting · 1 contradicting',
+          detail:'Leaked internal research reported that the platform\u2019s own scientists documented divisive content outperforming, and that the finding reached leadership.' },
+        { id:'s2', claim:'Ranking weights are set by staff, not emergent', strength:'RELEVANT', type:'FACT', evidence:'STRONG EVIDENCE',
+          agree:4.1, quality:4.0, raters:58, d:[9,44,21], ownGraph:'Its own graph: 2 supporting · 2 contradicting',
+          detail:'Ranking systems are configured, tested and tuned by product teams against chosen objectives. The objective function is a human decision even when the output is automated.' },
+        { id:'s3', claim:'Ad revenue rises with time spent in feed', strength:'TANGENTIAL', type:'FACT', evidence:'MODERATE EVIDENCE',
+          agree:3.9, quality:3.1, raters:44, d:[26,14,6], ownGraph:'Its own graph: 1 supporting · 0 contradicting',
+          detail:'Longer sessions carry more ad impressions. True, and widely accepted \u2014 but it establishes a motive rather than showing the editorial choice was made.' }
+      ]),
+      contradicts: this.mk([
+        { id:'c1', claim:'Ranking is automated at a scale no human reviews', strength:'DECISIVE', type:'FACT', evidence:'STRONG EVIDENCE',
+          agree:4.2, quality:4.3, raters:71, d:[8,17,64], ownGraph:'Its own graph: 2 supporting · 1 contradicting',
+          detail:'Billions of ranking decisions happen per day with no human in the loop for any individual item. If editorial responsibility requires review, nothing here is reviewed.' },
+        { id:'c2', claim:'Users choose what they engage with', strength:'TANGENTIAL', type:'OPINION', evidence:'WEAK EVIDENCE',
+          agree:2.6, quality:2.4, raters:52, d:[33,11,5], ownGraph:'Its own graph: 0 supporting · 3 contradicting',
+          detail:'Engagement is a choice within a set of options someone else selected. The argument does not reach the question of who assembled the options.' }
+      ])
+    };
+  }
+}
+</script>
+</body>
+</html>

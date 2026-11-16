@@ -21,7 +21,9 @@ export function SiteHeader() {
         <Link href="/graph" className={styles.navLink}>
           Graph
         </Link>
-        <span className={styles.navLink}>About</span>
+        <Link href="/about" className={styles.navLink}>
+          About
+        </Link>
         <ThemeToggle />
         <AuthNavItem />
       </nav>

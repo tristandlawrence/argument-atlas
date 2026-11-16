@@ -14,7 +14,7 @@ export async function StaticBanner() {
       <span>
         A static copy of the prototype{taken ? ` taken on ${taken}` : ""}. You can read everything; voting, challenging and editing do nothing here.
         {" "}
-        <Link href="/claims">Browse the claims →</Link>
+        <Link href="/about/prototype">What we are testing and how to help →</Link>
       </span>
     </div>
   );

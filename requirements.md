@@ -30,7 +30,24 @@ The platform's values — civic purpose, evidence discipline, respect for the ef
 
 ---
 
-## Core Principles
+## Principles
+
+The four principles drafted at the start (structure over time, community over individual, anonymised aggregate data, weak arguments surface organically) and the values in the overview (civic purpose, evidence discipline, respect for the effort of participation, changing your mind is honourable) are kept below as the working list the build is held to. Above them sits the public statement, which is what the product's About page says: the same original principles and values in plain language, with no design detail. The design rules that came out of the prototype (one claim says one thing, rating after reading, nothing said only by colour) stay in the working list, where they belong.
+
+### What we believe (the public statement)
+
+These are the principles drafted at the start of the project, written for a reader rather than a builder. The About page uses them as they stand.
+
+1. **Structure over time.** A debate here is not a feed that scrolls away. It is something that lasts, that people return to, and that gets better each time someone improves it.
+2. **Community over individual.** Arguments are looked after together. What matters is whether a point is well made, not who made it first.
+3. **Weak arguments fade on their own.** Nobody here stamps a claim "debunked". If an argument is weak, people can see that for themselves, and the community's view is the verdict.
+4. **Your views are counted, never exposed.** We ask a little about who you are so the overall picture means something. Your own opinions are never shown, shared or used about you.
+5. **This is for the public good.** The aim is a country that argues better: debates that are easier to follow, closer to the facts, and closer to what communities actually need.
+6. **Facts matter.** Claims should carry their evidence, and where evidence is missing we say so, as an invitation to find it.
+7. **Taking part is valued.** Reading carefully, giving an honest rating, and improving someone else's argument are all real contributions, and the site treats them that way.
+8. **Changing your mind is honourable.** Being moved by a good argument is the point, not a weakness. It is the thing this site most wants to see.
+
+### The working list
 
 - **Structure over time**: debates and arguments are persistent, improvable objects — not a feed
 - **Community over individual**: arguments are collaboratively maintained; attribution is secondary to quality
@@ -41,6 +58,85 @@ The platform's values — civic purpose, evidence discipline, respect for the ef
 - **A claim is one proposition.** If it needs "and", "because" or a dash to hold together, it is two claims. The structure can only do its work when each node can be judged on its own.
 - **The crux is a claim, not a paragraph.** Where a debate actually turns is itself something people disagree about, and it gets the same treatment as any other claim: its own supports, contradicts and votes.
 - **Changing your mind is data.** The platform's most valuable signal is a vote that moved after reading. It is recorded (in aggregate), never discarded, and never shown against a person.
+
+---
+
+## Who this is for
+
+The product serves several groups that need different things from the same atlas. They are listed in the order the ecosystem needs them to arrive, not in order of importance: without the first, nothing else works.
+
+### The engaged public, by level of engagement
+
+| Level | Situation | What they do | What they get | What they give | How it improves debate | What could go wrong |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Reader** | Has ten minutes and a debate they half-understand | Reads one debate: the context, where it turns, the strongest claim on each side | A map of the argument instead of a feed of takes | Nothing yet, and that is fine | Fewer people arguing past each other | Reads the ratings before the claims and anchors on them |
+| **Rater** | Has an opinion and wants it to count | Rates claims on agreement and quality, separately | A place where "well made but I disagree" is a legitimate answer | The two signals, plus a changed vote now and then | Opinion data that distinguishes persuasion from popularity | Rates the title, not the claim |
+| **Contributor** | Knows something the debate is missing | Adds a claim, an evidence item, or a voice; challenges a misplaced connection | Their point held in common, not lost in a thread | New nodes and sources | The atlas gets more complete and better sourced | Duplicates and bundled claims, until merge and the authoring standard bite |
+| **Editor** | Cares about a debate and can hold both sides | Splits claims, rolls up arguments, marks where the debate turns, retires the stale | Shaping power over the thing they care about | The judgement the model depends on | Debates keep their shape as they move | Editors become a faction; contested status and open history are the backstop |
+| **Steward** | Has an afternoon a quarter | Runs the research pass on one debate: what moved, what to reframe, which voices to swap | A debate that stays current | The lifecycle | Debates do not go stale between elections | Nobody shows up; then stale marking has to carry the load |
+
+### Institutions
+
+| Group | Situation | What they do | What they get | What they give | How it improves debate | What could go wrong |
+| --- | --- | --- | --- | --- | --- | --- |
+| **Pollsters and researchers** | Want to know not just what people think but which arguments move them | Read aggregate cross-tabs, the quadrant distribution, and the persuasion and mind-change data once it exists | A supplement to polling that measures persuasion, with the same cross-tab shape they already report | Scrutiny of the method, and occasionally a question worth seeding | Public argument gets measured, not just public opinion | They treat a self-selected sample as a poll; the product says plainly it is not one |
+| **Political parties and campaigns** | Want their proposal argued well and to know what lands | Enter their proposal as a named, dated *specific* under the generic question; read the steelman against it | The best case against them, made by their opponents, in one place | Concrete proposals with a proposer attached | Debates have real options in them, not only critiques | They rate their own proposals up. They are welcome as **named proposers, not as raters**; the model treats their votes like anyone's, in aggregate, and the proposer field makes the provenance visible |
+| **News outlets and journalists** | Need the state of a debate fast, with sources, without a partisan frame | Use the context, timeline and voices; curate voices for a debate they cover | A sourced map of an argument on deadline | Voices (their own pieces and others'), and the research pass if they adopt a debate | Coverage that names where a debate turns rather than who shouted | They cherry-pick the quadrant that suits the story; the quadrants are always shown together |
+| **Civic educators and facilitators** | Run classes, community forums, deliberative events | Use a debate as the reading; run a session that feeds claims and ratings back in | Material that is structured for discussion | Groups of first-time contributors with a facilitator present | Debate skills, practised on real debates | Sessions produce bundled claims in bulk; social play mode is designed to prevent this |
+
+The engaged public comes first because every institution's use depends on an atlas that is already shaped and rated by people who care. The institutions' main contribution is content and scrutiny, not judgement.
+
+---
+
+## The experiment: where we are and what we are asking
+
+**The hypothesis.** This approach depends on judgement: shaping arguments, naming where a debate turns, retiring what has gone stale. The hypothesis is that a volunteer editor community and a contributing public can sustain that judgement at scale, and that readers find the result more useful than what they have now. If that is false, no amount of product polish rescues it, which is why the feedback round asks about the model and not the interface.
+
+**Where we are.** Phase 0: a local prototype and a read-only snapshot of it on GitHub Pages, seeded with six debates checked against the public record in November 2026. Nothing is hardened, nobody can sign up, and votes on the snapshot do not persist. The point of the snapshot is to be looked at.
+
+**Who we are asking.** Friends and colleagues, for this round. Feedback is unfiltered. People who want a public thread can use the repository's Discussions; everyone else can simply reply.
+
+**What we are asking.**
+
+1. Is there a user group that would find this useful that we have missed?
+2. Is there a mechanism for engaging with this kind of data that we have missed?
+3. Would you engage with this site, or not? Why?
+4. What would make it more likely to be useful to you?
+5. Would you be willing to help with the experiment? The list of what we need is below.
+
+**What would tell us the approach works.** At least a handful of people say they would edit, not only read. At least one pollster, researcher or journalist says the data would be useful to them. No group tells us the model is unintelligible after the two-minute tour. A timebox for the round will be set when the project owner asks for one.
+
+**What we need (help wanted).**
+
+- Editors: adopt one debate and run its research pass.
+- A pollster or survey researcher: check the demographic option sets and the cross-tab design.
+- A journalist: curate voices for one debate.
+- A developer: Phase 1 hardening (identity, validation, rate limiting).
+- A designer: the mobile pass.
+- A facilitator: trial the social play mode with a small group.
+- Someone with privacy-law experience: the policy.
+- An analyst: the persuasion and mind-change data once it exists.
+
+**Acknowledgement.** We know that whether this works is a question about people, not software. We will consider this experiment a success when it tells us clearly either that an editor community can be formed and kept, or that it cannot and why.
+
+### Engagement plan **(to be written after this round)**
+
+The ecosystem has to be grown in order, because each layer depends on the one before. The plan is not written yet; this is the approach it will take and where we are against it.
+
+1. **An editor core first.** Five to ten people who each adopt a debate, run its research pass and hold it in shape. Nothing else is viable without them. *Status: not started; the feedback round is partly a search for them.*
+2. **Contributing readers on a few debates.** Rather than many debates thinly, a handful deeply, so that raters and contributors find live arguments and visible editors. *Status: the seed is built this way deliberately.*
+3. **Pollsters and researchers as consumers.** Once there is rating data, invite the people who can tell us whether its shape is useful; their scrutiny improves the method before the data is relied on. *Status: one conversation sought in this round.*
+4. **Journalists as curators.** Voices and research passes are a natural fit for people who already track a debate for a living. *Status: after the first editor core exists.*
+5. **Parties as named proposers, last.** Only once the `SPECIFIES` relation and proposer metadata exist, so that their contributions are visible as theirs. *Status: Phase 2 model work.*
+6. **Social play as a cold-start mechanism.** See below. *Status: unscheduled.*
+
+The plan will set, for each layer, how people are found, what the first ask is, what keeps them, and what we measure. It is written after this round so that it can use what the round tells us.
+
+### Social play mode **(deferred, unscheduled)**
+
+Suggested by Ryan, a reviewer, as a "Jackbox party" for debate: a group in one room, a shared screen, and phones. Someone submits a debate; everyone writes one argument for and one against; the room rates them, live, on the two signals; the results appear on the shared screen as the quadrant plot filling in. At the end the claims, connections and ratings land in the atlas as ordinary content tagged to the session, and the editors' queue gets a batch to shape.
+
+Why it fits: it is a contribution mechanism, not a different product. It answers the cold-start problem for arguments, it teaches the two-signal rating by making people feel the difference between "I agree" and "that was well put", and it gives facilitators a format. The design constraints when it is scheduled: the authoring standard has to be enforced at input (one proposition per card, a length limit), session content enters the atlas marked as unreviewed until an editor shapes it, and the fun must not depend on ratings being public per person, which the privacy principle forbids.
 
 ---
 
@@ -697,6 +793,8 @@ The site runs on a developer's machine with the new seed, for the project owner 
 - Graph view prototype and header controls moved to the top-right (done).
 - Homepage browser with topic, type, evidence, quadrant and status filters (done); split into a front door with recommended slices and a `/claims` browser with cards and table views (done); proposal texture and per-topic palette (done).
 - Read-only snapshot published to GitHub Pages for reviewers (done).
+- About page (public statement of principles, who this is for) and About this prototype page (where we are, what we are asking, help wanted) published on the snapshot; GitHub Discussions opened for feedback (done).
+- Engagement plan written from what the feedback round tells us (after this round).
 - No privacy policy, no request validation, no rate limiting, no invite gate. None of these matters while the only data is seed data on one laptop. They are all Phase 1 and they all block anyone else signing up.
 - Feedback gathered on: whether the claim graph reads clearly; whether the crux-as-claim pattern helps or confuses; whether the two voting signals and connection strength are understood without explanation; what the hover card gets wrong; what is missing from the claim page.
 - Exit: a written list of what the prototype got wrong, folded into Phase 1 and Phase 2 before either starts.
@@ -766,6 +864,7 @@ The features that make it safe for many people to add content, in the order they
 ### Deliberately not scheduled
 
 - Watchlists and notifications: wait for evidence that editors need them.
+- Social play mode (Ryan's "Jackbox party" idea): a contribution mechanism for groups in a room; see The experiment.
 - External polling ingestion, social integrations, third-party API: wait for the data to be worth comparing.
 
 ---

@@ -1,0 +1,279 @@
+.main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 28px 80px;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.main p {
+  margin: 0 0 12px;
+}
+
+.crumb {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-2);
+  letter-spacing: 0.03em;
+  margin-bottom: 18px;
+}
+
+.crumb a {
+  color: var(--text-2);
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  margin: 0 0 16px;
+}
+
+.lede {
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text);
+  max-width: 720px;
+}
+
+.sideNote {
+  font-size: 13.5px;
+  color: var(--text-2);
+  padding: 10px 12px;
+  background: var(--surface-alt);
+  border-left: 3px solid var(--accent);
+  max-width: 720px;
+}
+
+.section {
+  margin-top: 36px;
+}
+
+.sectionHeading {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--text);
+}
+
+.sectionSub {
+  font-size: 13.5px;
+  color: var(--text-2);
+}
+
+.subHeading {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 600;
+  margin: 22px 0 10px;
+}
+
+.principles {
+  padding-left: 22px;
+  margin: 0;
+}
+
+.principles li {
+  margin-bottom: 10px;
+}
+
+.principles strong {
+  font-family: var(--font-serif);
+  font-size: 16px;
+}
+
+.threeUp {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.cell {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 14px 16px;
+}
+
+.cell h3 {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.cell p {
+  font-size: 13.5px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+.steps {
+  padding-left: 18px;
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
+.steps li {
+  margin-bottom: 4px;
+}
+
+.ladder {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rung {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 16px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+}
+
+@media (max-width: 560px) {
+  .rung {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rungLevel {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding-top: 3px;
+}
+
+.rungBody p {
+  margin: 0 0 4px;
+  font-size: 13.5px;
+}
+
+.rungSituation {
+  color: var(--text-2);
+  font-style: italic;
+}
+
+.rungGives {
+  color: var(--supports-ink);
+}
+
+.institutions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.institution {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 14px 16px;
+}
+
+.institution h4 {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.institution p {
+  font-size: 13.5px;
+  margin: 0 0 6px;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  margin-right: 6px;
+}
+
+.caveat {
+  color: var(--text-2);
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.links a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--primary);
+}
+
+.questions {
+  padding-left: 22px;
+  margin: 0 0 14px;
+}
+
+.questions li {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.button {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--surface);
+  background: var(--text);
+  border: 1px solid var(--text);
+  padding: 9px 14px;
+  text-decoration: none;
+}
+
+.plain {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.plain li {
+  margin-bottom: 6px;
+}
+
+.help {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.helpRow {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  font-size: 13.5px;
+}
+
+@media (max-width: 560px) {
+  .helpRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.helpRole {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding-top: 2px;
+}

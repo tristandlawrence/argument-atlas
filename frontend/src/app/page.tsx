@@ -35,6 +35,9 @@ export default async function Home() {
           <Link href="/graph" className={styles.secondaryLink}>
             See the atlas as a graph →
           </Link>
+          <Link href="/about/prototype" className={styles.secondaryLink}>
+            About this prototype →
+          </Link>
         </div>
       </section>
 

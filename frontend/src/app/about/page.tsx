@@ -8,16 +8,14 @@ import styles from "./about.module.css";
  */
 
 const PRINCIPLES: { title: string; body: string }[] = [
-  { title: "The argument is the unit, not the person.", body: "Debates here are made of claims, each held in common and improved over time. Nobody owns a claim, and nothing is ranked by who said it or when." },
-  { title: "One claim says one thing.", body: "If it needs “and” or “because” to hold together, it is two claims. That is what lets you agree with part of an argument and say so." },
-  { title: "Agreement and quality are judged separately.", body: "You can find a claim well made and still disagree with it. The claims that are well made and unpersuasive are the ones worth reading first, because they are the other side at its best." },
-  { title: "The community’s verdict is the verdict.", body: "There is no “debunked” stamp and no moderator label. A weak claim is one few people agree with and few think well made, and that shows on its own." },
-  { title: "Evidence is attached, not asserted.", body: "A fact carries its sources. A claim without them says so, as an invitation, not a judgement." },
-  { title: "Where a debate turns is named, dated and re-checked.", body: "Every debate marks the claim it currently turns on. Nothing is permanently the crux; the mark carries the date it was last confirmed and is reviewed when the world moves." },
-  { title: "Changing your mind is honourable, and it is data.", body: "A vote that moves after reading is the most valuable thing this site can record. It is counted in aggregate and never shown against a person." },
-  { title: "Your opinions are counted, never exposed.", body: "We collect a few demographics to make the aggregates useful, the way polls do. No individual vote is ever joined to a person, and small groups are never reported." },
-  { title: "Reading comes before rating.", body: "Nobody is asked to judge a claim above the material that explains it." },
-  { title: "Nothing is said only by colour or position.", body: "Every relationship between claims is stated in words, so the site reads the same for everyone." },
+  { title: "Structure over time.", body: "A debate here is not a feed that scrolls away. It is something that lasts, that people return to, and that gets better each time someone improves it." },
+  { title: "Community over individual.", body: "Arguments are looked after together. What matters is whether a point is well made, not who made it first." },
+  { title: "Weak arguments fade on their own.", body: "Nobody here stamps a claim \u201cdebunked\u201d. If an argument is weak, people can see that for themselves, and the community\u2019s view is the verdict." },
+  { title: "Your views are counted, never exposed.", body: "We ask a little about who you are so the overall picture means something. Your own opinions are never shown, shared or used about you." },
+  { title: "This is for the public good.", body: "The aim is a country that argues better: debates that are easier to follow, closer to the facts, and closer to what communities actually need." },
+  { title: "Facts matter.", body: "Claims should carry their evidence, and where evidence is missing we say so, as an invitation to find it." },
+  { title: "Taking part is valued.", body: "Reading carefully, giving an honest rating, and improving someone else\u2019s argument are all real contributions, and the site treats them that way." },
+  { title: "Changing your mind is honourable.", body: "Being moved by a good argument is the point, not a weakness. It is the thing this site most wants to see." },
 ];
 
 const PUBLIC_LADDER: { level: string; situation: string; does: string; gives: string }[] = [

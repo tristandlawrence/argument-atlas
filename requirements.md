@@ -32,20 +32,20 @@ The platform's values — civic purpose, evidence discipline, respect for the ef
 
 ## Principles
 
-The four principles drafted at the start (structure over time, community over individual, anonymised aggregate data, weak arguments surface organically) and the values in the overview (civic purpose, evidence discipline, respect for the effort of participation, changing your mind is honourable) are kept below as the working list the build is held to. Above them sits the public statement, which is what the product's About page says. The public statement is a rewrite of the same ideas for a reader who has two minutes, with the lessons of the prototype folded in; it adds nothing the working list does not already commit to.
+The four principles drafted at the start (structure over time, community over individual, anonymised aggregate data, weak arguments surface organically) and the values in the overview (civic purpose, evidence discipline, respect for the effort of participation, changing your mind is honourable) are kept below as the working list the build is held to. Above them sits the public statement, which is what the product's About page says: the same original principles and values in plain language, with no design detail. The design rules that came out of the prototype (one claim says one thing, rating after reading, nothing said only by colour) stay in the working list, where they belong.
 
 ### What we believe (the public statement)
 
-1. **The argument is the unit, not the person.** Debates here are made of claims, each held in common and improved over time. Nobody owns a claim, and nothing is ranked by who said it or when.
-2. **One claim says one thing.** If it needs "and" or "because" to hold together, it is two claims. That is what lets you agree with part of an argument and say so.
-3. **Agreement and quality are judged separately.** You can find a claim well made and still disagree with it. The claims that are well made and unpersuasive are the ones worth reading first, because they are the other side at its best.
-4. **The community's verdict is the verdict.** There is no "debunked" stamp and no moderator label. A weak claim is one few people agree with and few think well made, and that shows on its own.
-5. **Evidence is attached, not asserted.** A fact carries its sources. A claim without them says so, as an invitation, not a judgement.
-6. **Where a debate turns is named, dated and re-checked.** Every debate marks the claim it currently turns on. Nothing is permanently the crux; the mark carries the date it was last confirmed, and it is reviewed when the world moves.
-7. **Changing your mind is honourable, and it is data.** A vote that moves after reading is the most valuable thing this site can record. It is counted in aggregate and never shown against a person.
-8. **Your opinions are counted, never exposed.** We collect a few demographics to make the aggregates useful, the way polls do. No individual vote is ever joined to a person, and small groups are never reported.
-9. **Reading comes before rating.** Nobody is asked to judge a claim above the material that explains it.
-10. **Nothing is said only by colour or position.** Every relationship between claims is stated in words, so the site reads the same for everyone.
+These are the principles drafted at the start of the project, written for a reader rather than a builder. The About page uses them as they stand.
+
+1. **Structure over time.** A debate here is not a feed that scrolls away. It is something that lasts, that people return to, and that gets better each time someone improves it.
+2. **Community over individual.** Arguments are looked after together. What matters is whether a point is well made, not who made it first.
+3. **Weak arguments fade on their own.** Nobody here stamps a claim "debunked". If an argument is weak, people can see that for themselves, and the community's view is the verdict.
+4. **Your views are counted, never exposed.** We ask a little about who you are so the overall picture means something. Your own opinions are never shown, shared or used about you.
+5. **This is for the public good.** The aim is a country that argues better: debates that are easier to follow, closer to the facts, and closer to what communities actually need.
+6. **Facts matter.** Claims should carry their evidence, and where evidence is missing we say so, as an invitation to find it.
+7. **Taking part is valued.** Reading carefully, giving an honest rating, and improving someone else's argument are all real contributions, and the site treats them that way.
+8. **Changing your mind is honourable.** Being moved by a good argument is the point, not a weakness. It is the thing this site most wants to see.
 
 ### The working list
 

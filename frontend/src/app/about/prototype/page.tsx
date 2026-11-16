@@ -6,39 +6,37 @@ const DISCUSSION_URL = "https://github.com/tristandlawrence/argument-atlas/discu
 const REPO_URL = "https://github.com/tristandlawrence/argument-atlas";
 
 const QUESTIONS = [
-  "Is there a user group that would find this useful that we have missed?",
-  "Is there a mechanism for engaging with this kind of data that we have missed?",
-  "Would you engage with this site, or not? Why?",
+  "Is there a group of people who would find this useful that we have missed?",
+  "Is there a way of engaging with debates like these that we have missed?",
+  "Would you use this site, or not? Why?",
   "What would make it more likely to be useful to you?",
-  "Would you be willing to help with the experiment? What we need is listed below.",
+  "Would you be willing to help? What we need is listed under “The solution”.",
 ];
 
 const HELP: { role: string; ask: string }[] = [
-  { role: "Editors", ask: "Adopt one debate and run its research pass: what moved, what to reframe, which voices to swap." },
-  { role: "A pollster or survey researcher", ask: "Check the demographic option sets and the cross-tab design before any real data exists." },
-  { role: "A journalist", ask: "Curate the voices for one debate you already follow." },
-  { role: "A developer", ask: "Phase 1 hardening: identity on every write, request validation, rate limiting." },
-  { role: "A designer", ask: "The mobile pass." },
-  { role: "A facilitator", ask: "Trial the social play mode with a small group in a room." },
-  { role: "Someone with privacy-law experience", ask: "The privacy policy, before anyone real signs up." },
-  { role: "An analyst", ask: "The persuasion and mind-change data, once it exists." },
+  { role: "Editors", ask: "Adopt one debate and keep it in shape: notice what has changed, what has gone stale, and where the argument now turns." },
+  { role: "A pollster or survey researcher", ask: "Tell us whether the opinion data would be useful, and how to collect it properly." },
+  { role: "A journalist", ask: "Point us to the best writing on one side or the other of a debate you already follow." },
+  { role: "A facilitator or teacher", ask: "Try a debate with a group and tell us what worked." },
+  { role: "A developer or designer", ask: "Help get it ready for real people to sign up and take part, on any device." },
+  { role: "Someone with privacy experience", ask: "Help us write a privacy policy people can trust." },
 ];
 
 const TOURS: { title: string; href: string; steps: string[] }[] = [
   {
     title: "Find where the nuclear debate turns",
     href: "/claim/australia-should-repeal-its-federal-ban-on-nuclear-power-generation",
-    steps: ["Read the context and the timeline.", "Find the row marked CONTENTIOUS in the right-hand column.", "Hover it to see the claim’s own arguments; click to open it."],
+    steps: ["Read the background.", "Find the argument marked CONTENTIOUS.", "Open it to see what supports and contradicts it."],
   },
   {
     title: "Find the best argument you disagree with",
     href: "/claims?quadrant=steelman",
-    steps: ["These are claims most raters judge well made but do not agree with.", "Open one and read what supports it.", "Ask whether the rating would move you."],
+    steps: ["These are arguments most people found well made but did not agree with.", "Open one and read it properly.", "Ask whether it moves you."],
   },
   {
-    title: "See what one claim holds up",
+    title: "See what one argument holds up",
     href: "/claims?status=cross",
-    steps: ["These claims are used in more than one debate.", "Open one and read “Where this claim is used”.", "That is the exposure the atlas makes visible."],
+    steps: ["These arguments are used in more than one debate.", "Open one and look at “Where this claim is used”.", "If it fell, several debates would move."],
   },
 ];
 
@@ -53,88 +51,41 @@ export default async function PrototypePage() {
       </div>
       <h1 className={styles.heading}>About this prototype</h1>
       <p className={styles.lede}>
-        What you are looking at is an experiment, and we would like your help deciding whether it works. This page says where we are, what we are testing, and what
-        we are asking for.
+        What you are looking at is an early experiment, and we would like your help deciding whether it is worth building. This page says what we are trying to
+        do, why, and what we are asking of you.
       </p>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>WHERE WE ARE</h2>
+        <h2 className={styles.sectionHeading}>THE AMBITION</h2>
         <p>
-          Phase zero. A working prototype runs on one laptop; this site is a read-only copy of it{taken ? `, taken on ${taken}` : ""}. It is seeded with six
-          debates, checked against the public record in November 2026, built as a graph of {meta?.claimCount ?? "about ninety"} claims. Nothing is hardened,
-          nobody can sign up, and votes here do not persist. That is deliberate: the point of this copy is to be looked at.
-        </p>
-        <p>
-          The things that would make it safe to open to real users, identity on every action, rate limiting, a privacy policy, are the next phase. The things
-          that would make it useful at scale, duplicate detection, merging, discussion, a moderator role, are the phase after. The full plan is in the{" "}
-          <a href={`${REPO_URL}/blob/main/requirements.md`} target="_blank" rel="noopener noreferrer">
-            requirements document
-          </a>
-          .
+          A country that argues better. Where anyone can see the shape of a public debate in a few minutes: what is actually being argued, the best case on each
+          side, what the evidence says, and where people genuinely disagree. And where, over time, we learn which arguments actually change people&rsquo;s minds,
+          not just which ones are loudest.
         </p>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>WHAT WE ARE TESTING</h2>
+        <h2 className={styles.sectionHeading}>THE PROBLEM</h2>
         <p>
-          This approach depends on judgement: shaping arguments, naming where a debate turns, retiring what has gone stale. Our hypothesis is that a volunteer
-          editor community and a contributing public can sustain that judgement at scale, and that readers find the result more useful than what they have now.
+          Public debate mostly happens in feeds, where the newest and angriest post wins and yesterday&rsquo;s argument disappears. People talk past each other
+          because nobody can see the whole argument at once. Polls tell us what people think, but not why, or what would move them. And good arguments made by
+          the other side are rarely seen by the people who most need to hear them.
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionHeading}>THE SOLUTION</h2>
+        <p>
+          Take each debate apart into its arguments, and look after them together, the way an encyclopedia looks after its articles. Each argument says one thing
+          and carries its evidence. People rate whether they agree, and separately whether it is well made. Each debate names the point it currently turns on,
+          and that is checked again as the world moves.
         </p>
         <p>
-          If that is false, no amount of polish rescues it. So the questions below are about the model, not the interface. We know that whether this works is a
-          question about people, not software, and we will call the experiment a success when it tells us clearly either that an editor community can be formed
-          and kept, or that it cannot and why.
+          None of that works without people. The arguments need shaping, the debates need keeping up to date, and the judgement involved can&rsquo;t be
+          automated. So the solution is really a community: readers who become raters, raters who add what is missing, and a core of editors who care about a
+          debate enough to look after it. That is what we need help with.
         </p>
-        <p className={styles.sideNote}>
-          How we intend to grow it, in order: an editor core first, then contributing readers on a few debates, then pollsters and researchers as consumers,
-          then journalists as curators, then parties as named proposers. The engagement plan itself is written after this round, from what you tell us.
-        </p>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>A TWO-MINUTE TOUR</h2>
-        <div className={styles.threeUp}>
-          {TOURS.map((t) => (
-            <div className={styles.cell} key={t.title}>
-              <h3>
-                <Link href={t.href}>{t.title} →</Link>
-              </h3>
-              <ol className={styles.steps}>
-                {t.steps.map((s) => (
-                  <li key={s}>{s}</li>
-                ))}
-              </ol>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>WHAT WE ARE ASKING</h2>
-        <p className={styles.sectionSub}>This round is friends and colleagues. Unfiltered is fine. Reply to whoever sent you the link, or use the public thread.</p>
-        <ol className={styles.questions}>
-          {QUESTIONS.map((q) => (
-            <li key={q}>{q}</li>
-          ))}
-        </ol>
-        <p>
-          <a className={styles.button} href={`${DISCUSSION_URL}`} target="_blank" rel="noopener noreferrer">
-            Answer in the public thread on GitHub →
-          </a>
-        </p>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>WHAT WOULD TELL US IT WORKS</h2>
-        <ul className={styles.plain}>
-          <li>At least a handful of people say they would edit, not only read.</li>
-          <li>At least one pollster, researcher or journalist says the data would be useful to them.</li>
-          <li>No group tells us the model is unintelligible after the two-minute tour.</li>
-        </ul>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>WHAT WE NEED</h2>
+        <h3 className={styles.subHeading}>Who we need</h3>
         <div className={styles.help}>
           {HELP.map((h) => (
             <div className={styles.helpRow} key={h.role}>
@@ -143,19 +94,74 @@ export default async function PrototypePage() {
             </div>
           ))}
         </div>
+        <h3 className={styles.subHeading}>How we would grow it</h3>
+        <p>
+          In order: a small group of editors first, then readers and raters on a few well-kept debates, then pollsters and researchers who can tell us whether the
+          data is useful, then journalists, and only then political parties, as named proposers of their own policies. We will write that plan properly once we
+          have heard from you.
+        </p>
+        <h3 className={styles.subHeading}>Ideas we have parked</h3>
+        <p>
+          <strong>Social play.</strong> Suggested by Ryan: a party game for debate. A room, a shared screen and everyone&rsquo;s phones. Someone picks a debate,
+          everyone writes one argument for and one against, and the room rates them live. Afterwards the arguments join the site for editors to shape. It could be
+          a great way to start new debates and to show people what &ldquo;well made, but I disagree&rdquo; feels like.
+        </p>
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionHeading}>IDEAS WE HAVE PARKED</h2>
+        <h2 className={styles.sectionHeading}>WHAT WE ARE TESTING TODAY</h2>
         <p>
-          <strong>Social play.</strong> Suggested by Ryan: a &ldquo;party game&rdquo; for debate, a room, a shared screen and phones, where everyone writes one argument
-          for and one against and the room rates them live, with the results landing in the atlas afterwards for editors to shape. It fits the model well as a
-          way to start arguments from nothing and to teach the two-signal rating by feel. Unscheduled, and in the requirements.
+          Whether this approach can work at all. It depends on people making careful judgements about how arguments fit together, and on enough people being
+          willing to do that well. We want to know whether you can see the value, whether you would take part, and who else should be involved.
+        </p>
+        <p className={styles.sideNote}>
+          This is a read-only copy of the prototype{taken ? `, taken on ${taken}` : ""}, with six debates from November 2026. You can explore everything, but votes
+          and edits won&rsquo;t be saved. Please judge the idea, not the polish.
+        </p>
+        <h3 className={styles.subHeading}>A two-minute tour</h3>
+        <div className={styles.threeUp}>
+          {TOURS.map((t) => (
+            <div className={styles.cell} key={t.title}>
+              <h3>
+                <Link href={t.href}>{t.title} →</Link>
+              </h3>
+              <ol className={styles.steps}>
+                {t.steps.map((st) => (
+                  <li key={st}>{st}</li>
+                ))}
+              </ol>
+            </div>
+          ))}
+        </div>
+        <h3 className={styles.subHeading}>What we are asking you</h3>
+        <ol className={styles.questions}>
+          {QUESTIONS.map((q) => (
+            <li key={q}>{q}</li>
+          ))}
+        </ol>
+        <p className={styles.sectionSub}>Any answer is useful, including &ldquo;no&rdquo;. Reply to whoever sent you the link, or use the public thread.</p>
+        <p>
+          <a className={styles.button} href={DISCUSSION_URL} target="_blank" rel="noopener noreferrer">
+            Answer in the public thread →
+          </a>
+        </p>
+      </section>
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionHeading}>HOW WE WILL KNOW IF IT WORKS</h2>
+        <ul className={styles.plain}>
+          <li>Some people say they would help shape debates, not only read them.</li>
+          <li>At least one pollster, researcher or journalist says this would be useful to them.</li>
+          <li>Nobody tells us they couldn&rsquo;t understand it after the two-minute tour.</li>
+        </ul>
+        <p>
+          Whether this works is a question about people, not technology. We will count the experiment a success if it tells us clearly either that a community
+          like this can be built and kept going, or that it can&rsquo;t, and why.
         </p>
       </section>
 
       <p className={styles.sideNote}>
-        Argument Atlas is the technology project of Engage for Australia. The code and the requirements are public at{" "}
+        Argument Atlas is the technology project of Engage for Australia. Everything, including the plans, is public at{" "}
         <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
           github.com/tristandlawrence/argument-atlas
         </a>
